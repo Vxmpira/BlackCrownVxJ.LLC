@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlackCrown | Proof</title>
+<meta name="description" content="Real results from operators using BlackCrown's market intelligence, personal AI, and private network.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --vanta:#000000;--ink-2:#060608;--ink-3:#0A0A0D;--white:#FFFFFF;--bone:#E8E8EF;--mute:#85838F;
+    --pink:#FF2D95;--pink-soft:#FF6FB6;--pink-deep:#C81E73;
+    --line:rgba(255,45,149,.20);--line-soft:rgba(255,255,255,.07);
+    --glow-pink:0 0 6px rgba(255,45,149,.36),0 0 18px rgba(255,45,149,.16);
+    --glow-white:0 0 8px rgba(255,255,255,.24);--logo-glow:0 0 11px rgba(255,255,255,.38);
+    --max:1200px;--pad:clamp(1.25rem,5vw,4.5rem);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--vanta);color:var(--bone);font-family:'Manrope',system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--pink);color:#0A0008}
+  :focus-visible{outline:2px solid var(--pink);outline-offset:3px;border-radius:3px}
+  .wrap{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink)}
+  .display{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:.98;letter-spacing:-0.02em}
+  .neon{color:var(--pink);text-shadow:var(--glow-pink)}
+
+  .grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:screen;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+  .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+    padding:1rem var(--pad);transition:background .35s ease,border-color .35s ease,backdrop-filter .35s ease;border-bottom:1px solid transparent}
+  .nav.scrolled{background:rgba(0,0,0,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:.6rem}
+  .brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.02em;font-size:1.18rem;color:var(--white);text-shadow:var(--logo-glow)}
+  .nav-links{display:flex;gap:2.1rem}
+  .nav-links a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);transition:color .25s,text-shadow .25s}
+  .nav-links a:hover,.nav-links a.active{color:var(--pink);text-shadow:var(--glow-pink)}
+  .btn{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+    padding:.72rem 1.3rem;border-radius:8px;cursor:pointer;display:inline-block;transition:transform .2s ease,background .25s ease,box-shadow .25s ease,color .25s ease,border-color .25s ease}
+  .btn.solid{background:var(--pink);color:#0A0008;border:1px solid var(--pink);box-shadow:var(--glow-pink)}
+  .btn.solid:hover{background:var(--pink-soft);box-shadow:0 0 12px rgba(255,45,149,.5),0 0 30px rgba(255,45,149,.28);transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:var(--bone);border:1px solid rgba(255,255,255,.22)}
+  .btn.ghost:hover{border-color:var(--pink);color:var(--pink);box-shadow:var(--glow-pink);text-shadow:var(--glow-pink);transform:translateY(-2px)}
+
+  .phero{padding:11rem 0 4rem;position:relative;overflow:hidden}
+  .phero .aura{position:absolute;top:-20%;left:30%;width:50vw;max-width:560px;height:50vw;max-height:560px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,45,149,.13),transparent 66%);filter:blur(60px);z-index:0}
+  .phero .wrap{position:relative;z-index:1}
+  .phero .eyebrow{display:block;margin-bottom:1.4rem}
+  .phero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.6rem,8vw,5.6rem);line-height:.94;letter-spacing:-0.03em;color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.4rem;max-width:16ch}
+  .phero p{font-size:clamp(1.05rem,2vw,1.3rem);color:var(--mute);max-width:48ch}
+
+  .sec{padding:clamp(4rem,9vw,6.5rem) 0;border-top:1px solid var(--line-soft)}
+  .sec-head{margin-bottom:3rem;max-width:780px}
+  .sec-head .eyebrow{display:block;margin-bottom:1rem}
+  .sec-head h2{font-size:clamp(1.9rem,5vw,3.2rem);color:var(--white)}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .stat{background:var(--ink-2);padding:2.6rem 2rem}
+  .stat .num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.6rem,6vw,4rem);color:var(--white);text-shadow:var(--glow-white);line-height:1;letter-spacing:-0.03em}
+  .stat .num span{color:var(--pink);text-shadow:var(--glow-pink)}
+  .stat .lab{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:1rem;display:block}
+
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+  .quote{position:relative;background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:2.2rem 2rem;display:flex;flex-direction:column;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+  .quote:hover{transform:translateY(-5px);border-color:var(--pink);box-shadow:0 0 16px rgba(255,45,149,.22),0 14px 36px rgba(0,0,0,.6)}
+  .quote .ex{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink-deep);border:1px solid var(--line);border-radius:4px;padding:.2rem .5rem;align-self:flex-start;margin-bottom:1.4rem}
+  .quote blockquote{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1.15rem;line-height:1.4;color:var(--bone);flex:1}
+  .quote .who{margin-top:1.6rem}
+  .quote .who .n{color:var(--white);font-weight:700;font-size:.98rem}
+  .quote .who .r{color:var(--mute);font-size:.85rem}
+
+  .cases{display:grid;gap:1.5rem}
+  .case{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:2.4rem 2.2rem;display:flex;gap:2rem;flex-wrap:wrap;align-items:flex-start}
+  .case .meta{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink);min-width:140px}
+  .case .body{flex:1;min-width:260px}
+  .case h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:var(--white);margin-bottom:.8rem;line-height:1.1}
+  .case p{color:var(--mute);font-size:1rem;max-width:60ch}
+  .case .link{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);margin-top:1.4rem;display:inline-block}
+
+  .logos{display:flex;gap:1rem;flex-wrap:wrap}
+  .logos .chip{flex:1;min-width:150px;height:88px;border:1px dashed var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+
+  .cta{text-align:center;padding:clamp(4rem,9vw,6rem) 0}
+  .cta h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2rem,6vw,3.6rem);color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.2rem}
+  .cta p{color:var(--mute);max-width:46ch;margin:0 auto 2.2rem}
+  .cta .row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
+
+  footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--ink-2)}
+  .foot-grid{display:flex;justify-content:space-between;gap:3rem;flex-wrap:wrap;margin-bottom:3.5rem}
+  .foot-brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.35rem;color:var(--white);text-shadow:var(--logo-glow);display:flex;align-items:center;gap:.6rem}
+  .foot-brand p{color:var(--mute);font-size:.95rem;margin-top:.9rem;max-width:30ch}
+  .foot-col h4{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink);margin-bottom:1.2rem}
+  .foot-col a{display:block;color:var(--mute);font-size:.95rem;margin-bottom:.6rem;transition:color .25s}
+  .foot-col a:hover{color:var(--pink)}
+  .foot-bottom{padding-top:2rem;border-top:1px solid var(--line-soft);font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:880px){.stats,.quotes{grid-template-columns:1fr}.nav-links{display:none}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<nav class="nav" id="nav">
+  <a class="brand" href="/" aria-label="BlackCrown home">
+    <svg width="28" height="23" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 6px rgba(255,45,149,.7))" aria-hidden="true">
+      <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
+      <line x1="7" y1="28" x2="29" y2="28"/>
+    </svg>
+    <span class="wordmark">BlackCrown</span>
+  </a>
+  <div class="nav-links">
+    <a href="/#ethos">Mission</a>
+    <a href="/#products">Products</a>
+    <a href="/proof.html" class="active">Proof</a>
+    <a href="/#contact">Contact</a>
+  </div>
+  <a href="/#contact" class="btn solid">Get in touch</a>
+</nav>
+
+<header class="phero">
+  <div class="aura"></div>
+  <div class="wrap">
+    <span class="eyebrow reveal">Proof</span>
+    <h1 class="reveal">Receipts, not <span class="neon">promises</span>.</h1>
+    <p class="reveal">What operators do once they have the edge. As BlackCrown grows, the real numbers, stories, and names land right here.</p>
+  </div>
+</header>
+
+<!-- ======================================================================
+     PLACEHOLDER CONTENT BELOW. Swap in real figures, quotes, and case
+     studies before sharing this page. Nothing here is a real claim yet.
+     ====================================================================== -->
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">By the numbers</span>
+      <h2 class="display">The impact, measured.</h2>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><div class="num">00<span>+</span></div><span class="lab">Members in the Collective</span></div>
+      <div class="stat"><div class="num">00<span>+</span></div><span class="lab">Markets tracked by Korvus</span></div>
+      <div class="stat"><div class="num">00<span>+</span></div><span class="lab">Operators using the AI</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">In their words</span>
+      <h2 class="display">What operators say.</h2>
+    </div>
+    <div class="quotes">
+      <div class="quote reveal">
+        <span class="ex">Example</span>
+        <blockquote>"Drop a real client quote here. Keep it specific, and lead with the outcome they got."</blockquote>
+        <div class="who"><div class="n">Client name</div><div class="r">Role, Company</div></div>
+      </div>
+      <div class="quote reveal">
+        <span class="ex">Example</span>
+        <blockquote>"A second quote. The best ones name a concrete before and after, not vague praise."</blockquote>
+        <div class="who"><div class="n">Client name</div><div class="r">Role, Company</div></div>
+      </div>
+      <div class="quote reveal">
+        <span class="ex">Example</span>
+        <blockquote>"A third quote. Short, real, and signed by someone with a name people can verify."</blockquote>
+        <div class="who"><div class="n">Client name</div><div class="r">Role, Company</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Case studies</span>
+      <h2 class="display">The full story.</h2>
+    </div>
+    <div class="cases">
+      <div class="case reveal">
+        <div class="meta">Case 01<br>Trading</div>
+        <div class="body">
+          <h3>Headline of the result.</h3>
+          <p>Describe the situation, what BlackCrown did, and the measurable outcome. Replace this with a real story when you have one worth telling.</p>
+          <a class="link" href="#">Read the story</a>
+        </div>
+      </div>
+      <div class="case reveal">
+        <div class="meta">Case 02<br>AI / Commerce</div>
+        <div class="body">
+          <h3>Headline of the result.</h3>
+          <p>A second example. Pair a clear problem with a clear, verifiable win, and let the numbers carry it.</p>
+          <a class="link" href="#">Read the story</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Trusted by</span>
+      <h2 class="display">Operators and partners.</h2>
+    </div>
+    <div class="logos reveal">
+      <div class="chip">Your logos here</div>
+      <div class="chip">Your logos here</div>
+      <div class="chip">Your logos here</div>
+      <div class="chip">Your logos here</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap reveal">
+    <h2 class="display">Want results like these?</h2>
+    <p>Tell us what you're building, and we'll show you where BlackCrown fits.</p>
+    <div class="row">
+      <a href="/#contact" class="btn solid">Get in touch</a>
+      <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" class="btn ghost">Join the Collective</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="wordmark">
+          <svg width="24" height="20" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 5px rgba(255,45,149,.7))" aria-hidden="true">
+            <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
+            <line x1="7" y1="28" x2="29" y2="28"/>
+          </svg>
+          BlackCrown
+        </span>
+        <p>Market intelligence, AI, and a private network for independent operators.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Products</h4>
+        <a href="https://korvus.industries" target="_blank" rel="noopener">Korvus Industries</a>
+        <a href="https://blackcrown-intelligence.com" target="_blank" rel="noopener">BlackCrown Intelligence</a>
+        <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">The Collective</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="mailto:BlackCrownVxJ.LLC@outlook.com">Email us</a>
+        <a href="tel:+17032989426">(703) 298-9426</a>
+      </div>
+    </div>
+    <div class="foot-bottom">© 2026 BlackCrownVxJ LLC</div>
+  </div>
+</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>24);
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+  const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

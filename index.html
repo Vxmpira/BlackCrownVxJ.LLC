@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BlackCrown | Intelligence and tools for independent operators</title>
 <meta name="description" content="BlackCrown builds market intelligence, a personal AI, and a private network for independent traders, founders, and operators across trading, AI, and commerce.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -129,7 +132,12 @@
 
   /* ---------- MANIFESTO ---------- */
   .manifesto{overflow:hidden}
-  .manifesto .ghost{position:absolute;right:-3%;top:50%;transform:translateY(-50%);width:min(480px,52vw);z-index:0;opacity:.06;pointer-events:none;color:var(--pink)}
+  .manifesto .ghost{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(540px,72vw);z-index:0;pointer-events:none;
+    filter:drop-shadow(0 0 7px rgba(255,45,149,.22));animation:crownfloat 9s ease-in-out infinite}
+  .manifesto .ghost .gb{stroke:var(--pink);stroke-width:.5;opacity:.12;fill:none;stroke-linejoin:round;stroke-linecap:round}
+  .manifesto .ghost .gt{stroke:var(--pink);stroke-width:.6;opacity:.85;fill:none;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:8 120;animation:crowntrace 5s linear infinite}
+  @keyframes crowntrace{from{stroke-dashoffset:128}to{stroke-dashoffset:0}}
+  @keyframes crownfloat{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,-54%)}}
   .manifesto .wrap{position:relative;z-index:1}
   .manifesto blockquote{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(1.9rem,5vw,3.6rem);line-height:1.12;
     letter-spacing:-0.02em;max-width:16ch;margin-bottom:2.2rem;color:var(--white)}
@@ -288,9 +296,10 @@
 </div>
 
 <section class="sec manifesto" id="ethos">
-  <svg class="ghost" viewBox="0 0 36 30" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-    <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-    <line x1="7" y1="28" x2="29" y2="28"/>
+  <svg class="ghost" viewBox="0 0 36 30" fill="none" aria-hidden="true">
+    <path class="gb" d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
+    <line class="gb" x1="7" y1="28" x2="29" y2="28"/>
+    <path class="gt" d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
   </svg>
   <div class="wrap">
     <span class="eyebrow reveal">What we stand for</span>
