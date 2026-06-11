@@ -494,6 +494,31 @@
   document.querySelectorAll('.eyebrow').forEach(el=>sio.observe(el));
 
   window.addEventListener('load', ()=> requestAnimationFrame(()=> document.getElementById('top').classList.add('loaded')));
+
+  /* ---------- Clean URLs: scroll to sections without leaving a #hash in the bar ---------- */
+  function bcScrollTo(id){
+    const t = document.getElementById(id);
+    if(!t) return false;
+    if(id==='top'){ window.scrollTo({top:0,behavior:'smooth'}); return true; }
+    const off = (nav ? nav.offsetHeight : 64) + 6;
+    const y = t.getBoundingClientRect().top + window.pageYOffset - off;
+    window.scrollTo({top:y,behavior:'smooth'});
+    return true;
+  }
+  function bcCleanUrl(){ history.replaceState(null,'',location.pathname+location.search); }
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const id = a.getAttribute('href').slice(1);
+      if(!id) return;
+      if(bcScrollTo(id)){ e.preventDefault(); bcCleanUrl(); }
+    });
+  });
+  window.addEventListener('load',()=>{
+    if(location.hash){
+      const id = location.hash.slice(1);
+      setTimeout(()=>{ bcScrollTo(id); bcCleanUrl(); }, 60);
+    }
+  });
 </script>
 </body>
 </html>
