@@ -31,7 +31,7 @@
     --pad:clamp(1.25rem,5vw,4.5rem);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;overflow-x:hidden}
   body{background:var(--vanta);color:var(--bone);font-family:'Manrope',system-ui,sans-serif;font-size:17px;line-height:1.65;
     -webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
@@ -218,6 +218,14 @@
   .hero.loaded .cta-row{opacity:1;transform:none;transition:all .7s ease .55s}
 
   @media(max-width:880px){.grid3,.prod-grid{grid-template-columns:1fr}.nav-links{display:none}.hud{display:none}}
+  @media(max-width:600px){
+    .hero{padding:6.5rem 0 3.5rem}
+    .chart{opacity:.38}
+    .aura.a2{display:none}
+    .hero h1{font-size:clamp(2.7rem,13vw,4.6rem)}
+    .hero .lead{max-width:100%}
+    .hero .cta-row .btn{flex:1 1 auto;text-align:center}
+  }
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
     html{scroll-behavior:auto}
