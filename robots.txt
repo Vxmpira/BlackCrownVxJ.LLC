@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# The proof page is a template for now. Delete the line below once it has
+# real content, and add it to sitemap.xml so Google can index it.
+Disallow: /proof.html
+
+Sitemap: https://blackcrownvxj.com/sitemap.xml
