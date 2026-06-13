@@ -528,5 +528,24 @@
     }
   });
 </script>
+
+<!-- BlackCrown analytics beacon: logs a visit and product click-throughs to the studio -->
+<script>
+  (function(){
+    var EP = "https://admin.blackcrownvxj.com/api/track";
+    function hit(e, k){
+      try { new Image().src = EP + "?e=" + e + "&k=" + encodeURIComponent(k) + "&_=" + Date.now(); } catch(_) {}
+    }
+    hit("visit", "brand");
+    document.addEventListener("click", function(ev){
+      var a = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
+      if(!a) return;
+      var h = a.getAttribute("href") || "";
+      if(/korvus\.industries/i.test(h)) hit("click", "korvus");
+      else if(/blackcrown-intelligence\.com/i.test(h)) hit("click", "intelligence");
+      else if(/discord\.(gg|com)/i.test(h)) hit("click", "collective");
+    }, true);
+  })();
+</script>
 </body>
 </html>
