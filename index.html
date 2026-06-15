@@ -155,10 +155,18 @@ img{max-width:100%;display:block}
 @keyframes pulse{0%,100%{opacity:.6;transform:translateX(-50%) scale(1)}50%{opacity:.95;transform:translateX(-50%) scale(1.05)}}
 @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,-26px)}}
 
-/* faint candlestick field along the bottom edge */
-.field{position:absolute;left:0;right:0;bottom:0;height:42%;z-index:1;pointer-events:none;opacity:.5;
-  -webkit-mask-image:linear-gradient(to top,#000 0,transparent 100%);mask-image:linear-gradient(to top,#000 0,transparent 100%)}
+/* hero market chart: candles + sweeping trend line */
+.field{position:absolute;left:0;right:0;top:0;bottom:0;height:100%;z-index:1;pointer-events:none;opacity:.62;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 17%,#000 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 17%,#000 100%)}
 .field svg{width:100%;height:100%;display:block}
+/* dark vignette so the centered headline stays readable over the chart */
+.hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse 56% 46% at 50% 50%,rgba(8,4,10,.86) 0%,rgba(8,4,10,.52) 42%,rgba(8,4,10,0) 72%)}
+#bcLine{opacity:.92}
+.bc-ring{transform-box:fill-box;transform-origin:center center;animation:bcRing 2.6s ease-out infinite}
+.bc-core{animation:bcCore 2.6s ease-in-out infinite}
+@keyframes bcRing{0%{transform:scale(.35);opacity:.6}70%{opacity:.1}100%{transform:scale(2.4);opacity:0}}
+@keyframes bcCore{0%,100%{opacity:.95}50%{opacity:.5}}
 
 .hud{position:absolute;top:6.2rem;right:var(--pad);z-index:3;font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.16em;
   text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:.5rem}
@@ -401,7 +409,9 @@ footer{border-top:1px solid var(--line);padding:3.6rem 0 2.4rem;background:var(-
   *{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
   .reveal,.hero-inner>*{opacity:1;transform:none}
-  .field,.ptile-screen .scan{display:none}
+  .ptile-screen .scan{display:none}
+  #bcArea{opacity:1!important}
+  .bc-ring{opacity:.16}
   .hc-trace{stroke-dashoffset:0}
 }
 
@@ -432,8 +442,22 @@ footer{border-top:1px solid var(--line);padding:3.6rem 0 2.4rem;background:var(-
   <div class="aura a1"></div>
   <div class="aura a2"></div>
   <div class="field" aria-hidden="true">
-    <svg viewBox="0 0 1200 360" preserveAspectRatio="xMidYMax slice">
+    <svg viewBox="0 0 1440 720" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="bcLineFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#FF2D95" stop-opacity="0.30"/>
+          <stop offset="55%" stop-color="#FF2D95" stop-opacity="0.07"/>
+          <stop offset="100%" stop-color="#FF2D95" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="bcGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
       <g id="candles"></g>
+      <path id="bcArea" fill="url(#bcLineFill)" opacity="0"></path>
+      <path id="bcLine" fill="none" stroke="#FF2D95" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#bcGlow)"></path>
+      <g id="bcNode"></g>
     </svg>
   </div>
   <div class="hud"><span class="dot"></span><span id="clock">SYS // ONLINE</span></div>
@@ -650,42 +674,126 @@ footer{border-top:1px solid var(--line);padding:3.6rem 0 2.4rem;background:var(-
     setInterval(tick, 1000);
   }
 
-  /* faint candlestick field (home hero) */
+  /* hero market chart: realistic candles + sweeping trend line with a live node */
   (function () {
     var g = document.getElementById("candles");
     if (!g) return;
-    var NS = "http://www.w3.org/2000/svg",
-      n = 26;
+    var NS = "http://www.w3.org/2000/svg";
+    var VBW = 1440, VBH = 720, padX = 44, usableW = VBW - padX * 2;
+
+    function mulberry32(a) {
+      return function () {
+        a |= 0; a = (a + 0x6d2b79f5) | 0;
+        var t = Math.imul(a ^ (a >>> 15), 1 | a);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    /* --- realistic OHLC series: uptrend with pullbacks, higher highs/lows --- */
+    var n = 42, rnd = mulberry32(20240613);
+    var price = 100, vol = 4.7, drift = 1.05, c = [], lo = 1e9, hi = -1e9, run = 0;
     for (var i = 0; i < n; i++) {
-      var x = 24 + i * (1152 / (n - 1));
-      var mid = 360 - Math.sin(i * 0.5) * 30 - (i % 7) * 4;
-      var bodyH = 16 + ((i * 53) % 4) * 11;
-      var wickH = bodyH + 16 + ((i * 31) % 3) * 11;
-      var up = (i * 7) % 2 === 0;
+      var open = price;
+      // momentum: short red clusters inside a broader uptrend
+      if (run <= 0 && rnd() < 0.30) run = -(1 + Math.floor(rnd() * 3));
+      else if (run >= 0 && rnd() < 0.55) run = 1 + Math.floor(rnd() * 4);
+      var dir = run < 0 ? -1 : 1; run += run < 0 ? 1 : -1;
+      var body = (drift * (dir > 0 ? 1 : 0.55)) + dir * Math.abs(rnd() * 2 - 1) * vol;
+      var close = open + body;
+      var h = Math.max(open, close) + Math.abs(rnd()) * vol * 1.15;
+      var l = Math.min(open, close) - Math.abs(rnd()) * vol * 1.15;
+      c.push({ o: open, c: close, h: h, l: l });
+      if (l < lo) lo = l; if (h > hi) hi = h;
+      price = close;
+    }
+    var cTop = 360, cBot = 652;
+    function cy(p) { return cBot - ((p - lo) / (hi - lo)) * (cBot - cTop); }
+    var step = usableW / (n - 1), bw = Math.max(5, step * 0.42);
+    for (var i = 0; i < n; i++) {
+      var d = c[i], x = padX + i * step, up = d.c >= d.o;
       var wick = document.createElementNS(NS, "line");
-      wick.setAttribute("x1", x);
-      wick.setAttribute("x2", x);
-      wick.setAttribute("y1", mid - wickH / 2);
-      wick.setAttribute("y2", mid + wickH / 2);
-      wick.setAttribute("stroke", "#FF2D95");
-      wick.setAttribute("stroke-width", "1.2");
-      wick.setAttribute("opacity", "0.26");
+      wick.setAttribute("x1", x); wick.setAttribute("x2", x);
+      wick.setAttribute("y1", cy(d.h)); wick.setAttribute("y2", cy(d.l));
+      wick.setAttribute("stroke", "#FF2D95"); wick.setAttribute("stroke-width", "1.4");
+      wick.setAttribute("opacity", up ? "0.34" : "0.30");
       g.appendChild(wick);
-      var body = document.createElementNS(NS, "rect");
-      body.setAttribute("x", x - 5);
-      body.setAttribute("width", 10);
-      body.setAttribute("y", mid - bodyH / 2);
-      body.setAttribute("height", bodyH);
-      if (up) {
-        body.setAttribute("fill", "#FF2D95");
-        body.setAttribute("opacity", "0.28");
-      } else {
-        body.setAttribute("fill", "none");
-        body.setAttribute("stroke", "#FF2D95");
-        body.setAttribute("stroke-width", "1.2");
-        body.setAttribute("opacity", "0.38");
+      var rect = document.createElementNS(NS, "rect");
+      var yo = cy(d.o), yc = cy(d.c), top = Math.min(yo, yc), bh = Math.max(2.5, Math.abs(yc - yo));
+      rect.setAttribute("x", x - bw / 2); rect.setAttribute("width", bw);
+      rect.setAttribute("y", top); rect.setAttribute("height", bh);
+      if (up) { rect.setAttribute("fill", "#FF2D95"); rect.setAttribute("opacity", "0.32"); }
+      else {
+        rect.setAttribute("fill", "#0A0008"); rect.setAttribute("stroke", "#FF2D95");
+        rect.setAttribute("stroke-width", "1.4"); rect.setAttribute("opacity", "0.5");
       }
-      g.appendChild(body);
+      g.appendChild(rect);
+    }
+
+    /* --- bold trend line sweeping up to a glowing node (the brand motif) --- */
+    var m = 64, r2 = mulberry32(7731), v = [];
+    for (var i = 0; i < m; i++) {
+      var t = i / (m - 1);
+      v.push(
+        0.10 + t * 0.74 +
+        Math.sin(t * Math.PI * 2.4) * 0.085 * (0.4 + 0.6 * t) +
+        Math.sin(t * Math.PI * 5.3 + 1.1) * 0.04 +
+        (r2() * 2 - 1) * 0.015
+      );
+    }
+    v[m - 1] = Math.max(v[m - 1], 0.985); // strong finish, top-right
+    var lTop = 150, lBot = 524, lRight = VBW - 78;
+    var pts = [];
+    for (var i = 0; i < m; i++) pts.push([padX + (i / (m - 1)) * (lRight - padX), lBot - v[i] * (lBot - lTop)]);
+
+    function smooth(p) {
+      if (p.length < 2) return "";
+      var d = "M" + p[0][0].toFixed(1) + "," + p[0][1].toFixed(1);
+      for (var i = 0; i < p.length - 1; i++) {
+        var p0 = p[i - 1] || p[i], p1 = p[i], p2 = p[i + 1], p3 = p[i + 2] || p2;
+        var c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+        var c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+        d += "C" + c1x.toFixed(1) + "," + c1y.toFixed(1) + " " + c2x.toFixed(1) + "," + c2y.toFixed(1) + " " + p2[0].toFixed(1) + "," + p2[1].toFixed(1);
+      }
+      return d;
+    }
+
+    var dLine = smooth(pts);
+    var line = document.getElementById("bcLine");
+    var area = document.getElementById("bcArea");
+    var nx = pts[m - 1][0], ny = pts[m - 1][1];
+    if (line && area) {
+      line.setAttribute("d", dLine);
+      area.setAttribute("d", dLine + " L" + nx.toFixed(1) + "," + VBH + " L" + pts[0][0].toFixed(1) + "," + VBH + " Z");
+      try {
+        var len = line.getTotalLength();
+        line.style.strokeDasharray = len;
+        line.style.strokeDashoffset = len;
+        requestAnimationFrame(function () {
+          line.style.transition = "stroke-dashoffset 2.2s cubic-bezier(.25,.8,.2,1)";
+          line.style.strokeDashoffset = "0";
+          area.style.transition = "opacity 1.1s ease 1s";
+          area.style.opacity = "1";
+        });
+      } catch (e) { area.style.opacity = "1"; }
+    }
+
+    var node = document.getElementById("bcNode");
+    if (node) {
+      function ring(delay) {
+        var r = document.createElementNS(NS, "circle");
+        r.setAttribute("cx", nx); r.setAttribute("cy", ny); r.setAttribute("r", 9);
+        r.setAttribute("fill", "none"); r.setAttribute("stroke", "#FF2D95");
+        r.setAttribute("stroke-width", "1.5"); r.setAttribute("class", "bc-ring");
+        r.style.animationDelay = delay; return r;
+      }
+      node.appendChild(ring("0s"));
+      node.appendChild(ring("1.2s"));
+      var core = document.createElementNS(NS, "circle");
+      core.setAttribute("cx", nx); core.setAttribute("cy", ny); core.setAttribute("r", 6);
+      core.setAttribute("fill", "#FF2D95"); core.setAttribute("class", "bc-core");
+      core.setAttribute("filter", "url(#bcGlow)");
+      node.appendChild(core);
     }
   })();
 
