@@ -142,19 +142,28 @@
 
   /* ---------- mission ---------- */
   .mission{overflow:hidden}
-  .mission .ghost{position:absolute;top:50%;right:-4%;width:min(46vw,540px);transform:translateY(-50%);opacity:.5;pointer-events:none}
+  .mission .ghost{position:absolute;top:50%;right:-4%;width:min(46vw,540px);transform:translate(0,calc(-50% + var(--py,0px)));opacity:.5;pointer-events:none;will-change:transform}
   .mission .ghost .gb{stroke:var(--line);stroke-width:.4;fill:none}
   .mission .ghost .gt{stroke:var(--pink);stroke-width:.5;fill:none;stroke-dasharray:140;stroke-dashoffset:140;filter:drop-shadow(0 0 4px rgba(255,45,149,.5))}
   .mission .ghost.in .gt{animation:plDraw 2.4s ease forwards}
   .mission .wrap{position:relative;z-index:1}
   .mission blockquote{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2rem,6vw,4rem);line-height:1.02;letter-spacing:-0.02em;color:var(--white);text-shadow:var(--glow-white);max-width:18ch;margin-bottom:1.6rem}
+  .mission blockquote .neon{position:relative}
+  .mission blockquote .neon::after{content:"";position:absolute;left:0;bottom:-.06em;height:3px;width:100%;background:var(--pink);box-shadow:var(--glow-pink);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.8,.2,1) .35s}
+  .mission blockquote.in .neon::after{transform:scaleX(1)}
   .mission .body{color:var(--bone);opacity:.86;max-width:60ch;font-size:clamp(1rem,1.5vw,1.18rem)}
 
   /* ---------- products ---------- */
   .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
-  .ptile{display:flex;flex-direction:column;background:var(--ink-2);border:1px solid var(--line);border-radius:16px;overflow:hidden;
-    transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
-  .ptile:hover{transform:translateY(-7px);border-color:var(--pink);box-shadow:0 0 18px rgba(255,45,149,.20),0 22px 48px rgba(0,0,0,.65)}
+  .ptile{position:relative;display:flex;flex-direction:column;background:var(--ink-2);border:1px solid var(--line);border-radius:16px;overflow:hidden;opacity:0;
+    transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,30px)) translateZ(0);
+    transition:opacity .7s ease,transform .55s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
+  .ptile.in{opacity:1;--ty:0px}
+  .ptile:hover{--ty:-8px;border-color:var(--pink);box-shadow:0 0 18px rgba(255,45,149,.22),0 22px 48px rgba(0,0,0,.65)}
+  .ptile.tilting{transition:transform .09s linear,border-color .4s ease,box-shadow .4s ease}
+  .ptile::after{content:"";position:absolute;inset:0;z-index:3;border-radius:16px;pointer-events:none;opacity:0;transition:opacity .35s ease;
+    background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),rgba(255,45,149,.14),transparent 60%)}
+  .ptile:hover::after{opacity:1}
   .ptile-screen{position:relative;height:172px;background:linear-gradient(180deg,#0b0b0f,#050507);border-bottom:1px solid var(--line-soft);overflow:hidden}
   .ptile-screen svg{position:absolute;inset:0;width:100%;height:100%}
   .ptile-screen .scan{position:absolute;left:0;right:0;top:0;height:38%;pointer-events:none;
@@ -191,10 +200,14 @@
   .contact{text-align:left}
   .contact h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.2rem,7vw,4.4rem);line-height:1;letter-spacing:-0.02em;color:var(--white);text-shadow:var(--glow-white);margin-bottom:2.4rem}
   .lines{display:flex;flex-direction:column;border-top:1px solid var(--line-soft)}
-  .lines a{display:flex;align-items:baseline;gap:1.4rem;padding:1.5rem .2rem;border-bottom:1px solid var(--line-soft);
-    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.15rem,3vw,1.9rem);color:var(--bone);transition:color .25s,padding-left .25s}
+  .lines a{position:relative;display:flex;align-items:baseline;gap:1.4rem;padding:1.5rem .2rem;border-bottom:1px solid var(--line-soft);
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.15rem,3vw,1.9rem);color:var(--bone);opacity:0;transform:translateX(-18px);
+    transition:color .25s,padding-left .3s cubic-bezier(.2,.8,.2,1),opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+  .lines a.in{opacity:1;transform:none}
   .lines a:hover{color:var(--pink);text-shadow:var(--glow-pink);padding-left:1rem}
   .lines a .k{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);min-width:64px}
+  .lines a::after{content:"↗";margin-left:auto;color:var(--pink);font-size:.78em;opacity:0;transform:translateX(-8px);text-shadow:var(--glow-pink);transition:opacity .3s ease,transform .3s ease}
+  .lines a:hover::after{opacity:1;transform:none}
   .contact .note{color:var(--mute);margin-top:2rem;max-width:54ch}
 
   /* ---------- footer ---------- */
@@ -207,6 +220,8 @@
   .foot-col a:hover{color:var(--pink)}
   .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:2rem;border-top:1px solid var(--line-soft);
     font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+  .foot-grid .reveal:nth-child(2){transition-delay:.1s}
+  .foot-grid .reveal:nth-child(3){transition-delay:.2s}
 
   /* ---------- reveal ---------- */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
@@ -223,6 +238,9 @@
     html{scroll-behavior:auto}
     .reveal,.intro-el,.scroll-cue{opacity:1;transform:none}
     .hero-title .w{opacity:1;transform:none}
+    .ptile{opacity:1;--ty:0px;--rx:0deg;--ry:0deg}
+    .lines a{opacity:1;transform:none}
+    .mission blockquote .neon::after{transform:scaleX(1)}
     #preloader{display:none}
     .mv-line,.mission .ghost .gt,#preloader .pl-crown path,#preloader .pl-crown line{stroke-dashoffset:0}
   }
@@ -313,7 +331,7 @@
 
     <div class="tiles">
 
-      <a class="ptile reveal" href="/korvus.html" aria-label="Explore Korvus Industries">
+      <a class="ptile" href="/korvus.html" aria-label="Explore Korvus Industries">
         <div class="ptile-screen">
           <div class="scan"></div>
           <span class="ptile-tag"><span class="d"></span>Information</span>
@@ -336,7 +354,7 @@
         </div>
       </a>
 
-      <a class="ptile reveal" href="/intelligence.html" aria-label="Explore BlackCrown Intelligence">
+      <a class="ptile" href="/intelligence.html" aria-label="Explore BlackCrown Intelligence">
         <div class="ptile-screen">
           <div class="scan"></div>
           <span class="ptile-tag"><span class="d"></span>Intelligence</span>
@@ -363,7 +381,7 @@
         </div>
       </a>
 
-      <a class="ptile reveal" href="/collective.html" aria-label="Explore The Collective">
+      <a class="ptile" href="/collective.html" aria-label="Explore The Collective">
         <div class="ptile-screen">
           <div class="scan"></div>
           <span class="ptile-tag"><span class="d"></span>Network</span>
@@ -395,7 +413,7 @@
   <div class="wrap">
     <span class="eyebrow reveal" data-scramble style="display:block;margin-bottom:1rem">Get in touch</span>
     <h2 class="reveal">Let's build.</h2>
-    <div class="lines reveal">
+    <div class="lines">
       <a href="mailto:BlackCrownVxJ.LLC@outlook.com"><span class="k">Email</span>BlackCrownVxJ.LLC@outlook.com</a>
       <a href="tel:+17032989426"><span class="k">Call</span>(703) 298-9426</a>
     </div>
@@ -406,7 +424,7 @@
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <div class="foot-brand">
+      <div class="foot-brand reveal">
         <span class="wordmark">
           <svg width="24" height="20" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 5px rgba(255,45,149,.7))" aria-hidden="true">
             <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
@@ -416,19 +434,19 @@
         </span>
         <p>Market intelligence, AI, and a private network for independent operators.</p>
       </div>
-      <div class="foot-col">
+      <div class="foot-col reveal">
         <h4>Products</h4>
         <a href="/korvus.html">Korvus Industries</a>
         <a href="/intelligence.html">BlackCrown Intelligence</a>
         <a href="/collective.html">The Collective</a>
       </div>
-      <div class="foot-col">
+      <div class="foot-col reveal">
         <h4>Contact</h4>
         <a href="mailto:BlackCrownVxJ.LLC@outlook.com">Email us</a>
         <a href="tel:+17032989426">(703) 298-9426</a>
       </div>
     </div>
-    <div class="foot-bottom">
+    <div class="foot-bottom reveal">
       <span>© 2026 BlackCrownVxJ LLC</span>
       <span>Built, not handed down.</span>
     </div>
@@ -456,6 +474,62 @@
     es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:0.14});
   document.querySelectorAll('.reveal, .mission .ghost').forEach(function(el){ io.observe(el); });
+
+  /* staggered cascade for grouped children (tiles, contact lines) */
+  function stagger(container, childSel, step){
+    if(!container) return;
+    var kids = container.querySelectorAll(childSel);
+    var so = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        kids.forEach(function(k, i){
+          if(reduce){ k.classList.add('in'); }
+          else { setTimeout(function(){ k.classList.add('in'); }, i*step); }
+        });
+        so.unobserve(e.target);
+      });
+    }, {threshold:0.18});
+    so.observe(container);
+  }
+  stagger(document.querySelector('.tiles'), '.ptile', 120);
+  stagger(document.querySelector('.lines'), 'a', 110);
+
+  /* pointer tilt + cursor spotlight on product tiles */
+  if(matchMedia('(pointer:fine)').matches && !reduce){
+    document.querySelectorAll('.ptile').forEach(function(t){
+      t.addEventListener('pointermove', function(e){
+        var r = t.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;   // 0..1
+        var py = (e.clientY - r.top) / r.height;   // 0..1
+        t.classList.add('tilting');
+        t.style.setProperty('--ry', ((px - 0.5) * 9).toFixed(2) + 'deg');
+        t.style.setProperty('--rx', ((0.5 - py) * 7).toFixed(2) + 'deg');
+        t.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+        t.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+      });
+      t.addEventListener('pointerleave', function(){
+        t.classList.remove('tilting');
+        t.style.setProperty('--rx', '0deg');
+        t.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+
+  /* mission ghost crown parallax */
+  var ghost = document.querySelector('.mission .ghost');
+  var mission = document.getElementById('mission');
+  if(ghost && mission && !reduce){
+    var ghostRaf = 0;
+    window.addEventListener('scroll', function(){
+      if(ghostRaf) return;
+      ghostRaf = requestAnimationFrame(function(){
+        ghostRaf = 0;
+        var r = mission.getBoundingClientRect();
+        var prog = 1 - (r.top + r.height/2) / window.innerHeight;  // ~ -1..1 across viewport
+        ghost.style.setProperty('--py', (prog * 46).toFixed(1) + 'px');
+      });
+    }, {passive:true});
+  }
 
   /* scramble eyebrows when they enter view */
   var glyphs = 'ABCDEFGHJKLMNPRSTUVWXYZ0123456789#%/<>*';
