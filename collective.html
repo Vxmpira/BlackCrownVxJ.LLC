@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Collective — a private network for operators | BlackCrown</title>
+<title>The Collective: a private network for operators | BlackCrown</title>
 <meta name="description" content="The Collective is a curated room where operators in trading, AI and ecommerce trade real signal, pressure-test ideas, and move faster together. Members only, signal over noise.">
 <link rel="canonical" href="https://blackcrownvxj.com/collective.html">
-<meta property="og:title" content="The Collective — build alongside real operators">
+<meta property="og:title" content="The Collective: build alongside real operators">
 <meta property="og:description" content="A curated room where operators in trading, AI and ecommerce trade real signal, pressure-test ideas, and move faster together.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://blackcrownvxj.com/collective.html">
@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================================
-   BlackCrown — shared design system
+   BlackCrown - shared design system
    One house, three edges. Pink-on-black brand chrome; each product page can
    tint its own accent via --accent without leaving the BlackCrown frame.
    ========================================================================== */
@@ -143,7 +143,7 @@ img{max-width:100%;display:block}
 .sec-head p.kicker{color:var(--mute);max-width:60ch;margin-top:1.2rem;font-size:1.05rem}
 
 /* ============================================================================
-   HOME — HERO
+   HOME - HERO
    ========================================================================== */
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
   position:relative;padding:8rem 0 5rem;overflow:hidden}
@@ -167,7 +167,7 @@ img{max-width:100%;display:block}
 
 .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%}
 
-/* big animated crown — three glowing points = three products */
+/* big animated crown - three glowing points = three products */
 .hero-crown{width:clamp(180px,30vw,300px);margin-bottom:2rem}
 .hero-crown svg{width:100%;height:auto;display:block;overflow:visible}
 .hc-base{fill:none;stroke:var(--pink);stroke-width:1.1;opacity:.22;stroke-linejoin:round;stroke-linecap:round}
@@ -215,7 +215,7 @@ img{max-width:100%;display:block}
 .mission .body{max-width:58ch;color:var(--mute);font-size:1.08rem}
 
 /* ============================================================================
-   PRODUCT TILES — "the three points" (better boxes)
+   PRODUCT TILES - "the three points" (better boxes)
    ========================================================================== */
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
 .tiles .reveal:nth-child(2){transition-delay:.1s}
@@ -397,6 +397,17 @@ footer{border-top:1px solid var(--line);padding:3.6rem 0 2.4rem;background:var(-
   .contact .lines a{flex-wrap:wrap;gap:.25rem;font-size:1.25rem;overflow-wrap:anywhere}
   .contact .lines .k{flex-basis:100%;width:100%}
 }
+@media(max-width:600px){
+  :root{--pad:1.15rem}
+  .phero{padding:7rem 0 2.5rem}
+  .phero .cta-row .btn,.cta-band .cta-row .btn{flex:1 1 100%;justify-content:center}
+  .room{grid-template-columns:34% 66%}
+  .room-ch{font-size:.7rem}
+  .room-bub .txt{font-size:.86rem}
+  .room-rail{padding:.85rem .7rem}
+  .foot-grid{flex-direction:column;gap:1.8rem}
+  .foot-bottom{flex-direction:column;align-items:flex-start;gap:.7rem}
+}
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
@@ -560,7 +571,7 @@ footer{border-top:1px solid var(--line);padding:3.6rem 0 2.4rem;background:var(-
 
 <script>
 /* ============================================================================
-   BlackCrown — shared behaviors. Every block guards for missing elements,
+   BlackCrown - shared behaviors. Every block guards for missing elements,
    so this one file is safe to load on the home page and every product page.
    ========================================================================== */
 (function () {
