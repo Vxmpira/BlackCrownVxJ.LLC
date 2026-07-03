@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support | BlackCrown</title>
+<meta name="description" content="Reach the BlackCrown support desk. Send a question, a billing issue, a bug report, or a partnership request, and we route it to the right place.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://blackcrownvxj.com/support.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --vanta:#000000;--ink-2:#060608;--ink-3:#0A0A0D;--panel:#0C0C11;--white:#FFFFFF;--bone:#E8E8EF;--mute:#85838F;
+    --pink:#FF2D95;--pink-soft:#FF6FB6;
+    --line:rgba(255,45,149,.20);--line-soft:rgba(255,255,255,.09);
+    --glow-pink:0 0 6px rgba(255,45,149,.36),0 0 16px rgba(255,45,149,.16);
+    --logo-glow:0 0 11px rgba(255,255,255,.38);--glow-white:0 0 8px rgba(255,255,255,.24);
+    --ok:#5BE7A9;--err:#FF6B73;
+    --max:1080px;--pad:clamp(1.25rem,5vw,3rem);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--vanta);color:var(--bone);font-family:'Manrope',system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--pink);color:#0A0008}
+  :focus-visible{outline:2px solid var(--pink);outline-offset:3px;border-radius:3px}
+  .wrap{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink)}
+  .grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:screen;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+  .backbar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+    padding:1rem var(--pad);transition:background .35s ease,border-color .35s ease,backdrop-filter .35s ease;border-bottom:1px solid transparent}
+  .backbar.scrolled{background:rgba(0,0,0,.75);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:.6rem}
+  .brand .crownmark{filter:drop-shadow(0 0 6px rgba(255,45,149,.7))}
+  .brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.02em;font-size:1.12rem;color:var(--white);text-shadow:var(--logo-glow)}
+  .back-link{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);transition:color .25s}
+  .back-link:hover{color:var(--pink);text-shadow:var(--glow-pink)}
+  .back-link .arr{display:inline-block;transition:transform .25s ease}
+  .back-link:hover .arr{transform:translateX(-4px)}
+
+  .btn{position:relative;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+    padding:.85rem 1.5rem;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1px solid transparent;
+    transition:transform .2s ease,background .25s ease,box-shadow .25s ease,color .25s ease,border-color .25s ease}
+  .btn.solid{background:var(--pink);color:#0A0008;border-color:var(--pink);box-shadow:var(--glow-pink)}
+  .btn.solid:hover{background:var(--pink-soft);box-shadow:0 0 12px rgba(255,45,149,.5),0 0 30px rgba(255,45,149,.28);transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:var(--bone);border-color:rgba(255,255,255,.22)}
+  .btn.ghost:hover{border-color:var(--pink);color:var(--pink);box-shadow:var(--glow-pink);transform:translateY(-2px)}
+  .btn:disabled{opacity:.55;cursor:not-allowed;transform:none!important}
+
+  .shead{padding:9rem 0 2.6rem}
+  .shead .eyebrow{display:block;margin-bottom:1.2rem}
+  .shead h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.3rem,6vw,3.6rem);line-height:1;letter-spacing:-0.02em;color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.1rem}
+  .shead p{color:var(--mute);max-width:56ch;font-size:1.05rem}
+
+  .sgrid{display:grid;grid-template-columns:1.4fr .8fr;gap:2.4rem;padding-bottom:5rem;align-items:start}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(1.6rem,3vw,2.4rem)}
+  form .row{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+  .field{margin-bottom:1.2rem}
+  .field label{display:block;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:.5rem}
+  .field label .req{color:var(--pink)}
+  .field input,.field select,.field textarea{width:100%;background:var(--ink-3);border:1px solid var(--line-soft);border-radius:10px;color:var(--bone);
+    font-family:'Manrope',sans-serif;font-size:.98rem;padding:.85rem .9rem;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease}
+  .field textarea{min-height:150px;resize:vertical;line-height:1.6}
+  .field select{appearance:none;-webkit-appearance:none;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2385838F' stroke-width='2.4'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.4rem}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,45,149,.14);background:#0e0e14}
+  .field input::placeholder,.field textarea::placeholder{color:#55535e}
+  .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--err);box-shadow:0 0 0 3px rgba(255,107,115,.12)}
+  .field .hint{font-size:.74rem;color:var(--err);margin-top:.4rem;display:none}
+  .field.invalid .hint{display:block}
+  .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+  .form-foot{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:.5rem}
+  .form-note{font-size:.78rem;color:var(--mute);opacity:.8}
+
+  .status{display:none;border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.4rem;font-size:.92rem}
+  .status.show{display:block}
+  .status.ok{background:rgba(91,231,169,.08);border:1px solid rgba(91,231,169,.32);color:#bff5df}
+  .status.err{background:rgba(255,107,115,.08);border:1px solid rgba(255,107,115,.32);color:#ffd2d5}
+  .sent{display:none;text-align:center;padding:1rem 0}
+  .sent.show{display:block}
+  .sent .check{width:64px;height:64px;margin:0 auto 1.2rem;border-radius:50%;border:1px solid var(--ok);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(91,231,169,.3)}
+  .sent .check svg{width:30px;height:30px;color:var(--ok)}
+  .sent h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:var(--white);margin-bottom:.6rem}
+  .sent p{color:var(--mute);max-width:40ch;margin:0 auto 1.6rem}
+
+  .aside .card{margin-bottom:1.2rem}
+  .aside h4{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink);margin-bottom:1rem}
+  .aside .line{display:flex;flex-direction:column;padding:.7rem 0;border-bottom:1px solid var(--line-soft)}
+  .aside .line:last-child{border-bottom:none}
+  .aside .line .k{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:.2rem}
+  .aside .line a,.aside .line span{color:var(--bone);font-size:.98rem}
+  .aside .line a:hover{color:var(--pink)}
+  .aside .faq h4{margin-bottom:1rem}
+  .aside .faq .q{color:var(--white);font-weight:700;font-size:.95rem;margin-bottom:.3rem}
+  .aside .faq p{color:var(--mute);font-size:.9rem;margin-bottom:1rem}
+  .aside .faq p:last-child{margin-bottom:0}
+
+  footer{border-top:1px solid var(--line);padding:3.2rem 0 2.2rem;background:var(--ink-2)}
+  .foot-grid{display:flex;justify-content:space-between;gap:2.5rem;flex-wrap:wrap;margin-bottom:2.2rem}
+  .foot-brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;color:var(--white);text-shadow:var(--logo-glow);display:flex;align-items:center;gap:.6rem}
+  .foot-brand p{color:var(--mute);font-size:.9rem;margin-top:.8rem;max-width:30ch}
+  .foot-col h4{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink);margin-bottom:1rem}
+  .foot-col a{display:block;color:var(--mute);font-size:.92rem;margin-bottom:.55rem;transition:color .25s}
+  .foot-col a:hover{color:var(--pink)}
+  .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:1.6rem;border-top:1px solid var(--line-soft);font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+  .foot-links{display:flex;gap:1.3rem}
+  .foot-links a:hover{color:var(--pink)}
+
+  @media(max-width:860px){.sgrid{grid-template-columns:1fr}form .row{grid-template-columns:1fr}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="backbar" id="backbar">
+  <a class="brand" href="/" aria-label="BlackCrown home">
+    <svg class="crownmark" width="24" height="20" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+      <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/>
+    </svg>
+    <span class="wordmark">BlackCrown</span>
+  </a>
+  <a class="back-link" href="/"><span class="arr" aria-hidden="true">&#8592;</span> Back to home</a>
+</nav>
+
+<header class="shead">
+  <div class="wrap">
+    <span class="eyebrow">Support</span>
+    <h1>How can we help?</h1>
+    <p>Tell us what is going on. Pick a category, leave the details, and your message routes to the right place. A real person reads every one.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap sgrid">
+    <section class="card">
+      <div class="status" id="status" role="alert"></div>
+
+      <div class="sent" id="sent">
+        <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-11"/></svg></div>
+        <h3>Message sent.</h3>
+        <p>Thanks for reaching out. We will get back to you at the email you provided.</p>
+        <button type="button" class="btn ghost" id="again">Send another</button>
+      </div>
+
+      <form id="supportForm" novalidate>
+        <input type="checkbox" class="hp" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="row">
+          <div class="field" id="f-name">
+            <label for="name">Name <span class="req">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name">
+            <div class="hint">Please enter your name.</div>
+          </div>
+          <div class="field" id="f-email">
+            <label for="email">Email <span class="req">*</span></label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email">
+            <div class="hint">Please enter a valid email.</div>
+          </div>
+        </div>
+        <div class="field" id="f-concern">
+          <label for="concern">What is this about? <span class="req">*</span></label>
+          <select id="concern" name="concern">
+            <option value="" disabled selected>Select a category</option>
+            <option>General question</option>
+            <option>Account access</option>
+            <option>Payment or billing</option>
+            <option>Bug or technical issue</option>
+            <option>Feature request</option>
+            <option>Partnership or press</option>
+            <option>Other</option>
+          </select>
+          <div class="hint">Please choose a category.</div>
+        </div>
+        <div class="field" id="f-message">
+          <label for="message">Comment <span class="req">*</span></label>
+          <textarea id="message" name="message" placeholder="Tell us what happened, what you expected, and anything that helps us help you."></textarea>
+          <div class="hint">Please add a few details.</div>
+        </div>
+        <div class="form-foot">
+          <button type="submit" class="btn solid" id="submitBtn">Send message<span class="sheen"></span></button>
+          <span class="form-note">We reply to the email you enter above. We never share your details.</span>
+        </div>
+      </form>
+    </section>
+
+    <aside class="aside">
+      <div class="card">
+        <h4>Reach us directly</h4>
+        <div class="line"><span class="k">Email</span><a href="mailto:BlackCrownVxJ.LLC@outlook.com">BlackCrownVxJ.LLC@outlook.com</a></div>
+        <div class="line"><span class="k">Call</span><a href="tel:+17032989426">(703) 298-9426</a></div>
+        <div class="line"><span class="k">Community</span><a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">The Collective on Discord</a></div>
+      </div>
+      <div class="card faq">
+        <h4>Before you send</h4>
+        <div class="q">Billing and Korvus Pro</div>
+        <p>Include the email on your account so we can find your subscription fast.</p>
+        <div class="q">Bugs</div>
+        <p>Tell us which product, what you did, and what you expected to happen.</p>
+        <div class="q">Account access</div>
+        <p>Use the email tied to the account you are trying to reach.</p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="wordmark">
+          <svg width="22" height="18" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 5px rgba(255,45,149,.7))" aria-hidden="true">
+            <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/>
+          </svg>
+          BlackCrown
+        </span>
+        <p>Market intelligence, AI, and a private network for independent operators.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Products</h4>
+        <a href="/korvus.html">Korvus Industries</a>
+        <a href="/intelligence.html">BlackCrown Intelligence</a>
+        <a href="/collective.html">The Collective</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="/support.html">Support</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="mailto:BlackCrownVxJ.LLC@outlook.com">Email us</a>
+        <a href="tel:+17032989426">(703) 298-9426</a>
+        <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 BlackCrownVxJ LLC. All rights reserved.</span>
+      <span class="foot-links"><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var nav=document.getElementById('backbar');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>24);};
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  // ------------------------------------------------------------------
+  // To have submissions land in your inbox with no backend, paste a free
+  // Web3Forms access key below (get one in ~30s at web3forms.com using
+  // BlackCrownVxJ.LLC@outlook.com). Until then, the form falls back to
+  // opening a pre-filled email in the visitor's mail app, so it still works.
+  // ------------------------------------------------------------------
+  var ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+  var SUPPORT_EMAIL = "BlackCrownVxJ.LLC@outlook.com";
+  var hasKey = ACCESS_KEY && ACCESS_KEY.indexOf("YOUR_") !== 0 && ACCESS_KEY.length > 10;
+
+  var form=document.getElementById('supportForm');
+  var btn=document.getElementById('submitBtn');
+  var status=document.getElementById('status');
+  var sent=document.getElementById('sent');
+  var again=document.getElementById('again');
+
+  var fields=[
+    {id:'name',wrap:'f-name',check:function(v){return v.trim().length>=2;}},
+    {id:'email',wrap:'f-email',check:function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());}},
+    {id:'concern',wrap:'f-concern',check:function(v){return !!v;}},
+    {id:'message',wrap:'f-message',check:function(v){return v.trim().length>=5;}}
+  ];
+
+  function showStatus(kind,msg){ status.className='status show '+kind; status.textContent=msg; }
+  function clearStatus(){ status.className='status'; status.textContent=''; }
+
+  fields.forEach(function(f){
+    var el=document.getElementById(f.id);
+    el.addEventListener('input',function(){ document.getElementById(f.wrap).classList.remove('invalid'); });
+    el.addEventListener('change',function(){ document.getElementById(f.wrap).classList.remove('invalid'); });
+  });
+
+  function validate(){
+    var ok=true;
+    fields.forEach(function(f){
+      var el=document.getElementById(f.id);
+      var good=f.check(el.value);
+      document.getElementById(f.wrap).classList.toggle('invalid',!good);
+      if(!good) ok=false;
+    });
+    return ok;
+  }
+
+  function values(){
+    return {
+      name:document.getElementById('name').value.trim(),
+      email:document.getElementById('email').value.trim(),
+      concern:document.getElementById('concern').value,
+      message:document.getElementById('message').value.trim()
+    };
+  }
+
+  function mailtoFallback(v){
+    var subject='[Support: '+v.concern+'] from '+v.name;
+    var body='Name: '+v.name+'\nEmail: '+v.email+'\nCategory: '+v.concern+'\n\n'+v.message;
+    window.location.href='mailto:'+SUPPORT_EMAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+    showStatus('ok','Opening your email app with the details filled in. Send it and we will get back to you.');
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    clearStatus();
+    if(document.querySelector('input[name="botcheck"]').checked){ return; }
+    if(!validate()){ showStatus('err','Please fix the highlighted fields and try again.'); return; }
+    var v=values();
+
+    if(!hasKey){ mailtoFallback(v); return; }
+
+    btn.disabled=true; btn.textContent='Sending...';
+    fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        access_key:ACCESS_KEY,
+        subject:'[Support: '+v.concern+'] from '+v.name,
+        from_name:'BlackCrown Support',
+        name:v.name, email:v.email, concern:v.concern, message:v.message
+      })
+    }).then(function(r){return r.json();}).then(function(data){
+      btn.disabled=false; btn.textContent='Send message';
+      if(data.success){ form.style.display='none'; clearStatus(); sent.classList.add('show'); }
+      else { showStatus('err','Something went wrong sending your message. Please email '+SUPPORT_EMAIL+' directly.'); }
+    }).catch(function(){
+      btn.disabled=false; btn.textContent='Send message';
+      mailtoFallback(v);
+    });
+  });
+
+  if(again){ again.addEventListener('click',function(){
+    sent.classList.remove('show'); form.reset(); form.style.display=''; clearStatus();
+  }); }
+})();
+</script>
+</body>
+</html>

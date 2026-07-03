@@ -223,6 +223,76 @@
   .foot-grid .reveal:nth-child(2){transition-delay:.1s}
   .foot-grid .reveal:nth-child(3){transition-delay:.2s}
 
+
+  /* ---------- who / personas ---------- */
+  .mission .body{margin-bottom:0}
+  .personas{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:3rem}
+  .persona{position:relative;background:var(--ink-2);border:1px solid var(--line);border-radius:16px;padding:1.9rem 1.7rem;overflow:hidden;
+    opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
+  .persona.in{opacity:1;transform:none}
+  .persona:hover{border-color:var(--pink);box-shadow:0 0 16px rgba(255,45,149,.16),0 18px 40px rgba(0,0,0,.55);transform:translateY(-5px)}
+  .persona .pico{width:38px;height:38px;color:var(--pink);margin-bottom:1.1rem;filter:drop-shadow(0 0 6px rgba(255,45,149,.5))}
+  .persona .plabel{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink);display:block;margin-bottom:.5rem}
+  .persona h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;color:var(--white);margin-bottom:.6rem;letter-spacing:-0.01em}
+  .persona p{color:var(--bone);opacity:.82;font-size:.94rem}
+
+  /* ---------- product tiles: per-product accent + need line ---------- */
+  .ptile{--tile:var(--pink)}
+  .ptile .mv-line{stroke:var(--tile)}
+  .ptile .mv-net{stroke:var(--tile)}
+  .ptile .mv-node{fill:var(--tile)}
+  .ptile .mv-ring{stroke:var(--tile)}
+  .ptile .mv-dot{fill:var(--tile)}
+  .ptile .ptile-tag{color:var(--tile);text-shadow:0 0 6px color-mix(in srgb,var(--tile) 55%,transparent)}
+  .ptile .ptile-tag .d{background:var(--tile)}
+  .ptile .ptile-link{color:var(--tile);text-shadow:0 0 6px color-mix(in srgb,var(--tile) 55%,transparent)}
+  .ptile .scan{background:linear-gradient(180deg,color-mix(in srgb,var(--tile) 12%,transparent),transparent)}
+  .ptile:hover{--ty:-8px;border-color:var(--tile);box-shadow:0 0 20px color-mix(in srgb,var(--tile) 26%,transparent),0 22px 48px rgba(0,0,0,.65)}
+  .ptile::after{background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),var(--tile),transparent 60%);opacity:0}
+  .ptile:hover::after{opacity:.13}
+  .ptile-need{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.04em;color:var(--mute);margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--line-soft);line-height:1.5}
+  .ptile-need b{color:var(--tile);font-weight:500}
+
+  /* ---------- why ---------- */
+  .vgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}
+  .vcard{position:relative;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:16px;padding:1.9rem 1.8rem;overflow:hidden;
+    opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease}
+  .vcard.in{opacity:1;transform:none}
+  .vcard:hover{border-color:var(--line)}
+  .vcard::before{content:"";position:absolute;left:0;top:1.9rem;width:3px;height:26px;background:var(--pink);box-shadow:var(--glow-pink);border-radius:2px}
+  .vcard h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;color:var(--white);margin-bottom:.55rem;padding-left:1.1rem;letter-spacing:-0.01em}
+  .vcard p{color:var(--bone);opacity:.8;font-size:.95rem;padding-left:1.1rem}
+
+  /* ---------- connect ---------- */
+  .connect{position:relative;overflow:hidden}
+  .connect .aura{position:absolute;top:50%;left:50%;width:60vw;max-width:640px;height:60vw;max-height:640px;transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle,rgba(255,45,149,.12),transparent 64%);filter:blur(64px);z-index:0}
+  .connect .wrap{position:relative;z-index:1;text-align:center}
+  .connect h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,5vw,3.2rem);color:var(--white);text-shadow:var(--glow-white);letter-spacing:-0.02em;margin-bottom:1rem}
+  .connect p{color:var(--mute);max-width:52ch;margin:0 auto 2rem}
+  .connect .eyebrow{display:block;margin-bottom:1rem}
+  .connect .cta-row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.4rem}
+  .socials{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+  .soc{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:12px;border:1px solid var(--line);
+    color:var(--bone);background:var(--ink-2);transition:transform .25s ease,border-color .25s ease,color .25s ease,box-shadow .25s ease}
+  .soc svg{width:20px;height:20px}
+  .soc:hover{color:var(--pink);border-color:var(--pink);box-shadow:var(--glow-pink);transform:translateY(-3px)}
+
+  /* ---------- contact (slimmer) ---------- */
+  .contact .lines a{font-size:clamp(1rem,2vw,1.32rem);padding:1.1rem .2rem;font-weight:600}
+  .contact .lines a .k{min-width:56px}
+  .contact-actions{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:2rem}
+  .contact .note{margin-top:1.4rem}
+
+  /* ---------- footer extras ---------- */
+  .foot-socials{display:flex;gap:.6rem;margin-top:1.2rem}
+  .foot-socials .soc{width:38px;height:38px;border-radius:10px}
+  .foot-socials .soc svg{width:17px;height:17px}
+  .foot-disclaimer{color:var(--mute);opacity:.68;font-size:.76rem;line-height:1.6;max-width:94ch;margin-bottom:1.8rem;padding-top:1.6rem;border-top:1px solid var(--line-soft)}
+  .foot-links{display:flex;gap:1.3rem}
+  .foot-links a{transition:color .25s}
+  .foot-links a:hover{color:var(--pink)}
+
   /* ---------- reveal ---------- */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
   .reveal.in{opacity:1;transform:none}
@@ -231,6 +301,8 @@
   @media(max-width:880px){
     .nav-links{display:none}
     .tiles{grid-template-columns:1fr}
+    .personas{grid-template-columns:1fr}
+    .vgrid{grid-template-columns:1fr}
     .foot-grid{gap:2rem}
   }
   @media(prefers-reduced-motion:reduce){
@@ -240,6 +312,7 @@
     .hero-title .w{opacity:1;transform:none}
     .ptile{opacity:1;--ty:0px;--rx:0deg;--ry:0deg}
     .lines a{opacity:1;transform:none}
+    .persona,.vcard{opacity:1;transform:none}
     .mission blockquote .neon::after{transform:scaleX(1)}
     #preloader{display:none}
     .mv-line,.mission .ghost .gt,#preloader .pl-crown path,#preloader .pl-crown line{stroke-dashoffset:0}
@@ -272,6 +345,7 @@
   <div class="nav-links">
     <a href="#mission">Mission</a>
     <a href="#products">Products</a>
+    <a href="#connect">Connect</a>
     <a href="#contact">Contact</a>
   </div>
   <a href="#contact" class="btn solid">Get in touch<span class="sheen"></span></a>
@@ -315,9 +389,39 @@
     <path class="gt" d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
   </svg>
   <div class="wrap">
-    <span class="eyebrow reveal" data-scramble>What we stand for</span>
+    <span class="eyebrow reveal" data-scramble>Who we are</span>
     <blockquote class="reveal">A crown isn't handed down. It's <span class="neon">built</span>.</blockquote>
-    <p class="body reveal">BlackCrown builds for the independent operator: the trader watching the open, the founder shipping after hours, the person who would rather own the outcome than wait on it. Everything we ship has one purpose, and that's a sharper, faster edge.</p>
+    <p class="body reveal">BlackCrown is one house of tools for people who build their own edge. The trader watching the open, the founder shipping after hours, the operator scaling a store: everything we make exists to hand the individual the kind of edge that used to sit locked inside institutions. Three products, one crown, and no gatekeepers between you and the work.</p>
+  </div>
+</section>
+
+<section class="sec" id="who">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-scramble>Who it's for</span>
+      <h2>Built for the ones who build.</h2>
+      <p class="kicker">You do not wait for permission. Here is where each edge fits the way you already work.</p>
+    </div>
+    <div class="personas">
+      <div class="persona">
+        <svg class="pico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3 17 L9 11 L13 14 L21 5"/><path d="M15 5 h6 v6"/></svg>
+        <span class="plabel">The trader</span>
+        <h3>You live by the catalyst.</h3>
+        <p>You watch the open and know the tape moves on news. Korvus reads the wires overnight, so you walk in already knowing what moved and why.</p>
+      </div>
+      <div class="persona">
+        <svg class="pico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><rect x="13.5" y="13.5" width="7" height="7" rx="1"/></svg>
+        <span class="plabel">The builder</span>
+        <h3>You ship after hours.</h3>
+        <p>You think in projects and move fast. BlackCrown Intelligence holds your context across all of them and keeps every word you write yours.</p>
+      </div>
+      <div class="persona">
+        <svg class="pico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3.5 9 L5 4.5 h14 L20.5 9"/><path d="M4.5 9 v10.5 h15 V9"/><path d="M9.5 19.5 v-5.5 h5 v5.5"/></svg>
+        <span class="plabel">The operator</span>
+        <h3>You run the whole thing.</h3>
+        <p>You carry a store or a book of business alone. The Collective puts you in a room of people solving the same problems a step ahead of you.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -331,7 +435,7 @@
 
     <div class="tiles">
 
-      <a class="ptile" href="/korvus.html" aria-label="Explore Korvus Industries">
+      <a class="ptile" href="/korvus.html" style="--tile:#FF3B47" aria-label="Explore Korvus Industries">
         <div class="ptile-screen">
           <div class="scan"></div>
           <span class="ptile-tag"><span class="d"></span>Information</span>
@@ -350,11 +454,12 @@
           <div class="ptile-name">Korvus Industries</div>
           <div class="ptile-sub">korvus.industries</div>
           <p class="ptile-desc">A real-time news and market terminal that scores every headline for impact, so you read the move before the crowd reacts.</p>
-          <span class="ptile-link">Explore Korvus <span aria-hidden="true">→</span></span>
+          <div class="ptile-need"><b>For you if</b> the news always seems to hit after the move already happened.</div>
+          <span class="ptile-link">Explore Korvus <span aria-hidden="true">&#8594;</span></span>
         </div>
       </a>
 
-      <a class="ptile" href="/intelligence.html" aria-label="Explore BlackCrown Intelligence">
+      <a class="ptile" href="/intelligence.html" style="--tile:#E8C77F" aria-label="Explore BlackCrown Intelligence">
         <div class="ptile-screen">
           <div class="scan"></div>
           <span class="ptile-tag"><span class="d"></span>Intelligence</span>
@@ -377,11 +482,12 @@
           <div class="ptile-name">BlackCrown Intelligence</div>
           <div class="ptile-sub">blackcrown-intelligence.com</div>
           <p class="ptile-desc">A private AI workspace that holds your context across projects, keeps your data yours, and runs flat-out unlimited on Pro.</p>
-          <span class="ptile-link">Explore Crown <span aria-hidden="true">→</span></span>
+          <div class="ptile-need"><b>For you if</b> every AI tool forgets you and you do not trust it with your work.</div>
+          <span class="ptile-link">Explore Crown <span aria-hidden="true">&#8594;</span></span>
         </div>
       </a>
 
-      <a class="ptile" href="/collective.html" aria-label="Explore The Collective">
+      <a class="ptile" href="/collective.html" style="--tile:#FF2D95" aria-label="Explore The Collective">
         <div class="ptile-screen">
           <div class="scan"></div>
           <span class="ptile-tag"><span class="d"></span>Network</span>
@@ -401,10 +507,45 @@
           <div class="ptile-name">The Collective</div>
           <div class="ptile-sub">members only</div>
           <p class="ptile-desc">A curated room where operators in trading, AI, and ecommerce trade real signal, pressure-test ideas, and move faster together.</p>
-          <span class="ptile-link">Explore the Collective <span aria-hidden="true">→</span></span>
+          <div class="ptile-need"><b>For you if</b> building alone has started to feel slow and a little lonely.</div>
+          <span class="ptile-link">Explore the Collective <span aria-hidden="true">&#8594;</span></span>
         </div>
       </a>
 
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-scramble>Why BlackCrown</span>
+      <h2>One house. One standard.</h2>
+      <p class="kicker">Plenty of tools promise an edge. Here is what makes ours worth logging into.</p>
+    </div>
+    <div class="vgrid">
+      <div class="vcard"><h3>Built by an operator</h3><p>These tools come off the same desk that uses them every day, not out of a boardroom guessing at what you need.</p></div>
+      <div class="vcard"><h3>Edge, not hype</h3><p>No guru theater, no noise for the sake of noise. Just tools that make your next real decision sharper and faster.</p></div>
+      <div class="vcard"><h3>Your data stays yours</h3><p>Nothing you write, track, or share is sold or used to train a model. Privacy is the default, not a buried setting.</p></div>
+      <div class="vcard"><h3>Edges that compound</h3><p>Market intelligence, a private AI, and a real network live under one roof, so each edge quietly makes the others sharper.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec connect" id="connect">
+  <div class="aura"></div>
+  <div class="wrap">
+    <span class="eyebrow reveal" data-scramble>Connect</span>
+    <h2 class="reveal">Find the room.</h2>
+    <p class="reveal">The day to day lives in The Collective on Discord. That is where operators trade signal, pressure-test ideas, and share what is working right now. Come build with us, or just follow along.</p>
+    <div class="cta-row reveal">
+      <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" class="btn solid">Join the Discord<span class="sheen"></span></a>
+      <a href="/collective.html" class="btn ghost">About the Collective<span class="sheen"></span></a>
+    </div>
+    <div class="socials reveal">
+      <a class="soc" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.371-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.245.198.372.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.42 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.086-2.157-2.42 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.419-2.157 2.419z"/></svg></a>
+      <a class="soc" href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.2h3.68l-8.04 9.19L24 22.8h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.2h7.6l5.24 6.93zM17.61 20.6h2.04L6.49 3.29H4.3z"/></svg></a>
+      <a class="soc" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg></a>
     </div>
   </div>
 </section>
@@ -417,7 +558,11 @@
       <a href="mailto:BlackCrownVxJ.LLC@outlook.com"><span class="k">Email</span>BlackCrownVxJ.LLC@outlook.com</a>
       <a href="tel:+17032989426"><span class="k">Call</span>(703) 298-9426</a>
     </div>
-    <p class="note reveal">For partnerships, press, or early access to the Collective, send a note. We read every message and we'll get back to you.</p>
+    <p class="note reveal">Have a question, a bug, a billing issue, or a partnership in mind? The support desk routes it to the right place.</p>
+    <div class="contact-actions reveal">
+      <a href="/support.html" class="btn solid">Get support<span class="sheen"></span></a>
+      <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" class="btn ghost">Ask in the Discord<span class="sheen"></span></a>
+    </div>
   </div>
 </section>
 
@@ -433,6 +578,11 @@
           BlackCrown
         </span>
         <p>Market intelligence, AI, and a private network for independent operators.</p>
+        <div class="foot-socials">
+          <a class="soc" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.371-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.245.198.372.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.42 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.086-2.157-2.42 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.419-2.157 2.419z"/></svg></a>
+          <a class="soc" href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.2h3.68l-8.04 9.19L24 22.8h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.2h7.6l5.24 6.93zM17.61 20.6h2.04L6.49 3.29H4.3z"/></svg></a>
+          <a class="soc" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg></a>
+        </div>
       </div>
       <div class="foot-col reveal">
         <h4>Products</h4>
@@ -441,14 +591,25 @@
         <a href="/collective.html">The Collective</a>
       </div>
       <div class="foot-col reveal">
+        <h4>Company</h4>
+        <a href="/support.html">Support</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="foot-col reveal">
         <h4>Contact</h4>
         <a href="mailto:BlackCrownVxJ.LLC@outlook.com">Email us</a>
         <a href="tel:+17032989426">(703) 298-9426</a>
+        <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Discord</a>
       </div>
     </div>
+    <p class="foot-disclaimer">BlackCrown provides tools and information for independent operators. Nothing on this site is financial, investment, legal, or tax advice, and nothing here is a recommendation to buy or sell any security or instrument. Trading and investing carry a substantial risk of loss. You are solely responsible for your own decisions.</p>
     <div class="foot-bottom reveal">
-      <span>© 2026 BlackCrownVxJ LLC</span>
-      <span>Built, not handed down.</span>
+      <span>&copy; 2026 BlackCrownVxJ LLC. All rights reserved.</span>
+      <span class="foot-links">
+        <a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a>
+      </span>
     </div>
   </div>
 </footer>
@@ -493,6 +654,8 @@
   }
   stagger(document.querySelector('.tiles'), '.ptile', 120);
   stagger(document.querySelector('.lines'), 'a', 110);
+  stagger(document.querySelector('.personas'), '.persona', 110);
+  stagger(document.querySelector('.vgrid'), '.vcard', 90);
 
   /* pointer tilt + cursor spotlight on product tiles */
   if(matchMedia('(pointer:fine)').matches && !reduce){
