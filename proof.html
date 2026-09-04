@@ -39,11 +39,12 @@
   .nav.scrolled{background:rgba(0,0,0,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
   .brand{display:flex;align-items:center;gap:.6rem}
   .brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.02em;font-size:1.18rem;color:var(--white);text-shadow:var(--logo-glow)}
-  .nav-links{display:flex;gap:2.1rem}
+  .nav-links{display:flex;gap:2.1rem;align-items:center}
   .nav-links a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);transition:color .25s,text-shadow .25s}
   .nav-links a:hover,.nav-links a.active{color:var(--pink);text-shadow:var(--glow-pink)}
-  .nav-drop{position:relative}
-  .nav-drop-btn .caret{display:inline-block;margin-left:.35rem;font-size:.6rem;transition:transform .25s ease}
+  .nav-drop{position:relative;display:inline-flex;align-items:center}
+  .nav-drop-btn{display:inline-flex;align-items:center;gap:.45rem;line-height:1}
+  .nav-drop-btn .caret{width:9px;height:6px;opacity:.7;transition:transform .25s ease}
   .nav-drop:hover .nav-drop-btn .caret,.nav-drop:focus-within .nav-drop-btn .caret{transform:rotate(180deg)}
   .nav-drop-menu{position:absolute;top:100%;left:50%;min-width:252px;padding:.55rem;margin-top:.85rem;transform:translate(-50%,10px);
     background:rgba(5,5,8,.96);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:12px;
@@ -168,7 +169,7 @@
   <div class="nav-links" id="navLinks">
     <a href="/#ethos">Mission</a>
     <div class="nav-drop">
-      <a href="/#products" class="nav-drop-btn" aria-haspopup="true">Products<span class="caret" aria-hidden="true">▾</span></a>
+      <a href="/#products" class="nav-drop-btn" aria-haspopup="true">Products<svg class="caret" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1 L5 5 L9 1"/></svg></a>
       <div class="nav-drop-menu">
         <a href="/korvus.html" style="--c:#FF3B47"><span class="pd"></span>Korvus Industries</a>
         <a href="/lodestone.html" style="--c:#49D7FF"><span class="pd"></span>LodeStone Indicator</a>

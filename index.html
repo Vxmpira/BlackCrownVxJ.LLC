@@ -62,11 +62,12 @@
   .brand{display:flex;align-items:center;gap:.6rem}
   .brand .crownmark{filter:drop-shadow(0 0 6px rgba(255,45,149,.7))}
   .brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.02em;font-size:1.18rem;color:var(--white);text-shadow:var(--logo-glow)}
-  .nav-links{display:flex;gap:2.1rem}
+  .nav-links{display:flex;gap:2.1rem;align-items:center}
   .nav-links a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);transition:color .25s,text-shadow .25s}
   .nav-links a:hover{color:var(--pink);text-shadow:var(--glow-pink)}
-  .nav-drop{position:relative}
-  .nav-drop-btn .caret{display:inline-block;margin-left:.35rem;font-size:.6rem;transition:transform .25s ease}
+  .nav-drop{position:relative;display:inline-flex;align-items:center}
+  .nav-drop-btn{display:inline-flex;align-items:center;gap:.45rem;line-height:1}
+  .nav-drop-btn .caret{width:9px;height:6px;opacity:.7;transition:transform .25s ease}
   .nav-drop:hover .nav-drop-btn .caret,.nav-drop:focus-within .nav-drop-btn .caret{transform:rotate(180deg)}
   .nav-drop-menu{position:absolute;top:100%;left:50%;min-width:252px;padding:.55rem;margin-top:.85rem;transform:translate(-50%,10px);
     background:rgba(5,5,8,.96);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:12px;
@@ -302,6 +303,54 @@
   .foot-links a{transition:color .25s}
   .foot-links a:hover{color:var(--pink)}
 
+  /* ---------- stack (how it fits) ---------- */
+  .stack{overflow:hidden}
+  .stack::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,45,149,.08) 1px,transparent 1.4px);background-size:28px 28px;
+    -webkit-mask-image:radial-gradient(62% 82% at 72% 50%,#000,transparent);mask-image:radial-gradient(62% 82% at 72% 50%,#000,transparent)}
+  .stack-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center}
+  .flow{list-style:none;display:flex;flex-direction:column;gap:1.1rem}
+  .flow li{position:relative;padding:1.1rem 1.2rem 1.1rem 1.3rem;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:14px;
+    color:var(--bone);font-size:.96rem;line-height:1.6;transition:border-color .3s ease,transform .3s ease}
+  .flow li:hover{border-color:color-mix(in srgb,var(--c,#FF2D95) 45%,transparent);transform:translateX(6px)}
+  .flow li::before{content:"";position:absolute;left:0;top:1.1rem;bottom:1.1rem;width:3px;border-radius:2px;
+    background:var(--c,#FF2D95);box-shadow:0 0 8px color-mix(in srgb,var(--c,#FF2D95) 60%,transparent)}
+  .flow .fk{display:block;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--c,#FF2D95);text-shadow:0 0 6px color-mix(in srgb,var(--c,#FF2D95) 55%,transparent);margin-bottom:.35rem}
+  .orbit-wrap{display:flex;justify-content:center}
+  .orbit{width:min(100%,440px);height:auto}
+  .o-ring{fill:none;stroke:rgba(255,255,255,.10);stroke-dasharray:3 7;transform-origin:230px 230px;animation:oSpin 70s linear infinite}
+  .o-ring.o2{stroke:rgba(255,45,149,.14);animation-duration:110s;animation-direction:reverse}
+  @keyframes oSpin{to{transform:rotate(360deg)}}
+  .o-spoke{stroke:rgba(255,255,255,.07);stroke-width:1}
+  .o-crown path,.o-crown line{stroke:var(--pink);stroke-width:1.7;fill:none;stroke-linejoin:round;stroke-linecap:round;
+    filter:drop-shadow(0 0 8px rgba(255,45,149,.6))}
+  .o-crown{animation:crownPulse 4s ease-in-out infinite;transform-origin:230px 230px}
+  @keyframes crownPulse{0%,100%{opacity:.85}50%{opacity:1}}
+  .o-node .dot{fill:var(--c);filter:drop-shadow(0 0 6px var(--c))}
+  .o-node .pulse{fill:none;stroke:var(--c);stroke-width:1.3;transform-origin:center;transform-box:fill-box;animation:ringPulse 3.2s ease-out infinite}
+  .o-node text{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;fill:var(--mute)}
+
+  /* ---------- readout strip ---------- */
+  .readout{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink-2)}
+  .readout-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;padding-top:2.2rem;padding-bottom:2.2rem}
+  .ro{text-align:center}
+  .ro b{display:block;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--white);text-shadow:var(--glow-white);line-height:1}
+  .ro span{display:block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:.55rem}
+  .ro b .neon{font-size:inherit}
+
+  /* ---------- faq ---------- */
+  .faq{max-width:820px}
+  .qa{border-bottom:1px solid var(--line-soft)}
+  .qa summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    padding:1.15rem .2rem;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.05rem;color:var(--bone);transition:color .25s}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary:hover{color:var(--pink)}
+  .qa .qi{font-family:'JetBrains Mono',monospace;color:var(--pink);text-shadow:var(--glow-pink);transition:transform .25s ease;flex:none}
+  .qa[open] .qi{transform:rotate(45deg)}
+  .qa p{color:var(--mute);font-size:.95rem;padding:0 .2rem 1.2rem;max-width:72ch}
+  .qa p a{color:var(--pink);text-shadow:var(--glow-pink)}
+
   /* ---------- reveal ---------- */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
   .reveal.in{opacity:1;transform:none}
@@ -327,6 +376,8 @@
     .tiles{grid-template-columns:1fr}
     .personas{grid-template-columns:1fr}
     .vgrid{grid-template-columns:1fr}
+    .stack-grid{grid-template-columns:1fr;gap:2.2rem}
+    .readout-grid{grid-template-columns:repeat(2,1fr);gap:1.6rem 1rem}
     .foot-grid{gap:2rem}
   }
   @media(max-width:640px){
@@ -382,7 +433,7 @@
   <div class="nav-links" id="navLinks">
     <a href="#mission">Mission</a>
     <div class="nav-drop">
-      <a href="#products" class="nav-drop-btn" aria-haspopup="true">Products<span class="caret" aria-hidden="true">▾</span></a>
+      <a href="#products" class="nav-drop-btn" aria-haspopup="true">Products<svg class="caret" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1 L5 5 L9 1"/></svg></a>
       <div class="nav-drop-menu">
         <a href="/korvus.html" style="--c:#FF3B47"><span class="pd"></span>Korvus Industries</a>
         <a href="/lodestone.html" style="--c:#49D7FF"><span class="pd"></span>LodeStone Indicator</a>
@@ -502,7 +553,7 @@
         <div class="ptile-body">
           <div class="ptile-name">Korvus Industries</div>
           <div class="ptile-sub">korvus.industries</div>
-          <p class="ptile-desc">A real-time news and market terminal that scores every headline for impact, so you read the move before the crowd reacts.</p>
+          <p class="ptile-desc">A 24/7 terminal that scores every headline for impact, direction and confidence across a 59-instrument universe, with SMT divergence and full session context. Free as Observer, $9.99 a month as Operator.</p>
           <div class="ptile-need"><b>For you if</b> the news always seems to hit after the move already happened.</div>
           <span class="ptile-link">Explore Korvus <span aria-hidden="true">&#8594;</span></span>
         </div>
@@ -530,7 +581,7 @@
         <div class="ptile-body">
           <div class="ptile-name">LodeStone</div>
           <div class="ptile-sub">indicator · tradovate + tradingview</div>
-          <p class="ptile-desc">The chart side of the Korvus stack. Session levels, prior highs and lows, value, structure and SMT divergence, drawn on your futures chart automatically.</p>
+          <p class="ptile-desc">The chart side of the Korvus stack. Session levels, prior highs and lows, value, structure and SMT divergence, drawn on your futures chart automatically. Standalone, or included with Korvus Operator.</p>
           <div class="ptile-need"><b>For you if</b> you redraw the same levels every single night before the open.</div>
           <span class="ptile-link">Explore LodeStone <span aria-hidden="true">&#8594;</span></span>
         </div>
@@ -558,7 +609,7 @@
         <div class="ptile-body">
           <div class="ptile-name">BlackCrown Intelligence</div>
           <div class="ptile-sub">blackcrown-intelligence.com</div>
-          <p class="ptile-desc">A private AI workspace that holds your context across projects, keeps your data yours, and runs flat-out unlimited on Pro.</p>
+          <p class="ptile-desc">A private AI workspace with projects, live web access with cited sources, file uploads and image generation. Free to start, unlimited on Crowned for $19.99 a month.</p>
           <div class="ptile-need"><b>For you if</b> every AI tool forgets you and you do not trust it with your work.</div>
           <span class="ptile-link">Explore Crown <span aria-hidden="true">&#8594;</span></span>
         </div>
@@ -582,8 +633,8 @@
         </div>
         <div class="ptile-body">
           <div class="ptile-name">The Collective</div>
-          <div class="ptile-sub">members only</div>
-          <p class="ptile-desc">A curated room where operators in trading, AI, and ecommerce trade real signal, pressure-test ideas, and move faster together.</p>
+          <div class="ptile-sub">the blackcrown discord</div>
+          <p class="ptile-desc">The house Discord, grown into a full hub: product rooms for the stack, live market talk, and the curated Collective at its center where real operators trade signal.</p>
           <div class="ptile-need"><b>For you if</b> building alone has started to feel slow and a little lonely.</div>
           <span class="ptile-link">Explore the Collective <span aria-hidden="true">&#8594;</span></span>
         </div>
@@ -592,6 +643,67 @@
     </div>
   </div>
 </section>
+
+<section class="sec stack" id="stack">
+  <div class="wrap stack-grid">
+    <div>
+      <div class="sec-head reveal" style="margin-bottom:2rem">
+        <span class="eyebrow" data-scramble>How it fits together</span>
+        <h2>One system, four moving parts.</h2>
+        <p class="kicker">Each product stands on its own. Run together, they cover the whole loop an independent operator actually lives in.</p>
+      </div>
+      <ol class="flow reveal">
+        <li style="--c:#FF3B47"><span class="fk">01 · Korvus reads</span>The terminal watches the wires around the clock and scores every headline for impact, direction and confidence, so you start each session already briefed.</li>
+        <li style="--c:#49D7FF"><span class="fk">02 · LodeStone maps</span>The indicator puts the levels on your chart before you sit down: sessions, prior highs and lows, value, structure and SMT.</li>
+        <li style="--c:#E8C77F"><span class="fk">03 · Crown remembers</span>Your notes, plans and reviews live in private projects, so the thinking compounds instead of evaporating between sessions.</li>
+        <li style="--c:#FF2D95"><span class="fk">04 · The Collective checks</span>Before you commit, the room pressure-tests the idea with operators who trade and build the same way you do.</li>
+      </ol>
+    </div>
+    <div class="orbit-wrap reveal" aria-hidden="true">
+      <svg class="orbit" viewBox="0 0 460 460">
+        <line class="o-spoke" x1="230" y1="230" x2="230" y2="88"/>
+        <line class="o-spoke" x1="230" y1="230" x2="372" y2="230"/>
+        <line class="o-spoke" x1="230" y1="230" x2="230" y2="372"/>
+        <line class="o-spoke" x1="230" y1="230" x2="88" y2="230"/>
+        <circle class="o-ring" cx="230" cy="230" r="142"/>
+        <circle class="o-ring o2" cx="230" cy="230" r="196"/>
+        <g class="o-crown">
+          <path d="M206 246 L206 225 L218 236 L230 216 L242 236 L254 225 L254 246 Z"/>
+          <line x1="211" y1="251" x2="249" y2="251"/>
+        </g>
+        <g class="o-node" style="--c:#FF3B47">
+          <circle class="pulse" cx="230" cy="88" r="7"/>
+          <circle class="dot" cx="230" cy="88" r="5"/>
+          <text x="230" y="66" text-anchor="middle">KORVUS</text>
+        </g>
+        <g class="o-node" style="--c:#49D7FF">
+          <circle class="pulse" cx="372" cy="230" r="7" style="animation-delay:.8s"/>
+          <circle class="dot" cx="372" cy="230" r="5"/>
+          <text x="372" y="258" text-anchor="middle">LODESTONE</text>
+        </g>
+        <g class="o-node" style="--c:#FF2D95">
+          <circle class="pulse" cx="230" cy="372" r="7" style="animation-delay:1.6s"/>
+          <circle class="dot" cx="230" cy="372" r="5"/>
+          <text x="230" y="400" text-anchor="middle">COLLECTIVE</text>
+        </g>
+        <g class="o-node" style="--c:#E8C77F">
+          <circle class="pulse" cx="88" cy="230" r="7" style="animation-delay:2.4s"/>
+          <circle class="dot" cx="88" cy="230" r="5"/>
+          <text x="88" y="258" text-anchor="middle">CROWN</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="readout">
+  <div class="wrap readout-grid">
+    <div class="ro reveal"><b>24/7</b><span>Newswire coverage</span></div>
+    <div class="ro reveal"><b>59</b><span>Instruments tracked by Korvus</span></div>
+    <div class="ro reveal"><b>4</b><span>Products under one crown</span></div>
+    <div class="ro reveal"><b>2</b><span>Charting platforms for LodeStone</span></div>
+  </div>
+</div>
 
 <section class="sec" id="why">
   <div class="wrap">
@@ -623,6 +735,33 @@
       <a class="soc" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.371-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.245.198.372.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.42 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.086-2.157-2.42 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.419-2.157 2.419z"/></svg></a>
       <a class="soc" href="https://www.tiktok.com/@blackcrown_vxj" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
       <a class="soc" href="https://www.instagram.com/blackcrownvxj.llc/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-scramble>Questions</span>
+      <h2>Straight answers.</h2>
+    </div>
+    <div class="faq">
+      <details class="qa reveal">
+        <summary>Do the products work on their own?<span class="qi" aria-hidden="true">+</span></summary>
+        <p>Yes. Korvus, LodeStone, Crown and the Collective are each built to stand alone, and none of them requires another. They are designed so that running more than one compounds the edge, not so that one is useless without the rest.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>Where should I start?<span class="qi" aria-hidden="true">+</span></summary>
+        <p>If you trade, open a free Observer account on <a href="https://korvus.industries" target="_blank" rel="noopener">korvus.industries</a> and see the scored feed for yourself. If you want the chart side, <a href="/lodestone.html">LodeStone</a> is a one-time purchase on Tradovate or comes included with Korvus Operator. If you want a private AI, Crown is free to start with no card. The Discord is open to everyone.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>What happens to my data?<span class="qi" aria-hidden="true">+</span></summary>
+        <p>Nothing you write, track or upload in a BlackCrown product is sold or used to train a model. Privacy is the default across the house, not a setting you go hunting for.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>How do I get support?<span class="qi" aria-hidden="true">+</span></summary>
+        <p>The <a href="/support.html">support desk</a> routes billing, bugs and product questions to the right place. The product rooms in the Discord usually answer fastest, and email reaches the desk directly at BlackCrownVxJ.LLC@outlook.com.</p>
+      </details>
     </div>
   </div>
 </section>

@@ -244,6 +244,7 @@
     .fit .wrap{padding:clamp(3rem,9vw,4.5rem) var(--pad)}
     .fit-card{padding:1.6rem 1.4rem}
     .feat{padding:1.6rem 1.4rem}
+    .tiers{grid-template-columns:1fr}
     .foot-grid{flex-direction:column;gap:1.8rem}
     .foot-bottom{flex-direction:column;align-items:flex-start;gap:.7rem}
   }
@@ -256,6 +257,22 @@
     #preloader{display:none}
     #preloader .pl-crown path,#preloader .pl-crown line{stroke-dashoffset:0}
   }
+  /* tiers */
+  .tiers{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;max-width:940px}
+  .tier{position:relative;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:18px;padding:2.1rem 2rem;display:flex;flex-direction:column;
+    opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
+  .tier.in{opacity:1;transform:none}
+  .tier:hover{border-color:var(--accent);box-shadow:0 0 20px rgba(255,59,71,.16),0 22px 48px rgba(0,0,0,.6);transform:translateY(-6px)}
+  .tier .tname{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.1rem}
+  .tier .tname .d{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:var(--accent-glow)}
+  .tier .tprice{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2.4rem;color:var(--white);letter-spacing:-0.02em;line-height:1}
+  .tier .tper{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:.4rem;margin-bottom:1.3rem}
+  .tier ul{list-style:none;flex:1;margin-bottom:1.6rem}
+  .tier li{position:relative;padding-left:1.4rem;color:var(--bone);opacity:.85;font-size:.94rem;margin-bottom:.55rem}
+  .tier li::before{content:"◆";position:absolute;left:0;top:.1em;font-size:.6em;color:var(--accent);text-shadow:var(--accent-glow)}
+  .tier .btn{text-align:center}
+  .tiers-note{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;color:var(--mute);margin-top:1.6rem;line-height:1.7;max-width:70ch}
+
   /* premium product-shot presentation (screenshots stay pixel-accurate) */
   .shot::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 22%);mix-blend-mode:screen}
   .shot:hover{border-color:var(--accent);box-shadow:0 56px 112px -26px rgba(0,0,0,.9),0 16px 42px rgba(0,0,0,.55),0 0 66px rgba(255,59,71,.30),inset 0 0 0 1px rgba(255,59,71,.12)}
@@ -304,7 +321,8 @@
         <span class="chip"><span class="d"></span>24/7 newswire</span>
         <span class="chip"><span class="d"></span>Impact scoring</span>
         <span class="chip"><span class="d"></span>SMT divergence</span>
-        <span class="chip"><span class="d"></span>$3.99/mo</span>
+        <span class="chip"><span class="d"></span>Observer free</span>
+        <span class="chip"><span class="d"></span>Operator $9.99/mo</span>
       </div>
       <div class="cta-row intro-el">
         <a href="https://korvus.industries" target="_blank" rel="noopener" class="btn accent">Visit Korvus<span class="sheen"></span></a>
@@ -349,12 +367,12 @@
       <div class="feat">
         <span class="fnum">24/7</span>
         <h3>Scored newswire</h3>
-        <p>Headlines stream in from the wires around the clock and land already read, so the catalyst that matters is never buried under the noise.</p>
+        <p>Headlines stream in around the clock across a 59-instrument universe, from index futures and megacaps to currencies, rates, energy, metals and ags, and land already read.</p>
       </div>
       <div class="feat">
         <span class="fnum">Impact</span>
         <h3>Direction at a glance</h3>
-        <p>Every item is tagged bullish, bearish or neutral with a confidence read and the tickers it touches, so you see the direction and the why at once.</p>
+        <p>Every item is scored high, medium or low impact and tagged bullish, bearish or neutral with a confidence read, so you see the direction and the why at once.</p>
       </div>
       <div class="feat">
         <span class="fnum">SMT</span>
@@ -376,22 +394,53 @@
       <span class="eyebrow" data-scramble>A look inside</span>
       <h2>Built for the open.</h2>
     </div>
-    <div class="shot-row">
+    <div class="shot-row" style="grid-template-columns:1fr;max-width:920px;margin:0 auto">
       <div>
         <div class="shot reveal">
           <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">korvus.industries / forex</span></div>
-          <img src="/assets/korvus-forex.webp" loading="lazy" decoding="async" alt="Korvus Forex and Gov News: an economic calendar filtered by impact and currency, showing actual, forecast and previous values" loading="lazy" width="1500" height="1278">
+          <img src="/assets/korvus-forex.webp" loading="lazy" decoding="async" alt="Korvus Forex and Gov News: an economic calendar filtered by impact and currency, showing actual, forecast and previous values" width="1500" height="1278">
         </div>
         <p class="shot-cap">Economic calendar · forex and government news scored by impact</p>
       </div>
-      <div>
-        <div class="shot reveal">
-          <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">korvus.industries / tv</span></div>
-          <img src="/assets/korvus-tv.webp" loading="lazy" decoding="async" alt="Korvus CrowsNest live market TV with real-time NQ, ES, YM and RTY charts and a session clock" loading="lazy" width="1500" height="1150">
-        </div>
-        <p class="shot-cap">Live market TV · CrowsNest, around the clock</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="tiers">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-scramble>Two ways in</span>
+      <h2>Observer or Operator.</h2>
+      <p class="kicker">Start free and read the same scored feed. Go Operator when you want the terminal working at full depth.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier">
+        <span class="tname"><span class="d"></span>Observer</span>
+        <div class="tprice">Free</div>
+        <div class="tper">No card required</div>
+        <ul>
+          <li>Full 24/7 scored news and impact feed</li>
+          <li>SMT divergence during market hours</li>
+          <li>Session map with completed session highs and lows</li>
+          <li>Macro confluence: dollar, bonds, gold, oil, credit, volatility</li>
+        </ul>
+        <a href="https://korvus.industries" target="_blank" rel="noopener" class="btn ghost">Start as Observer<span class="sheen"></span></a>
+      </div>
+      <div class="tier">
+        <span class="tname"><span class="d"></span>Operator</span>
+        <div class="tprice">$9.99</div>
+        <div class="tper">Per month · or $79.99 per year</div>
+        <ul>
+          <li>Everything in Observer</li>
+          <li>Real-time quotes during market hours</li>
+          <li>Personal watchlist imports</li>
+          <li>High-impact email alerts</li>
+          <li>LodeStone TradingView indicator included</li>
+        </ul>
+        <a href="https://korvus.industries" target="_blank" rel="noopener" class="btn accent">Go Operator<span class="sheen"></span></a>
       </div>
     </div>
+    <p class="tiers-note reveal">Billing and account management live on korvus.industries. Operator auto-renews and cancels anytime.</p>
   </div>
 </section>
 
@@ -400,7 +449,7 @@
     <div class="sec-head reveal">
       <span class="eyebrow" data-scramble>On the chart</span>
       <h2>Meet LodeStone.</h2>
-      <p class="kicker">The terminal reads the news. LodeStone is the chart side of the stack: session levels, value, structure and SMT divergence, drawn automatically on index futures. One-time on Tradovate, subscription on TradingView.</p>
+      <p class="kicker">The terminal reads the news. LodeStone is the chart side of the stack: session levels, value, structure and SMT divergence, drawn automatically on index futures. One-time on Tradovate, subscription on TradingView, and included with a Korvus Operator subscription.</p>
     </div>
     <div class="cta-row reveal">
       <a href="/lodestone.html" class="btn accent">Explore LodeStone<span class="sheen"></span></a>
@@ -412,7 +461,7 @@
   <div class="aura"></div>
   <div class="wrap">
     <h2>Read the move before the crowd.</h2>
-    <p>Claim your free edge and log into the terminal traders use while the world sleeps. Pro is just $3.99 a month.</p>
+    <p>Start free as an Observer and see the scored feed for yourself. Operator is $9.99 a month or $79.99 a year, and includes the LodeStone TradingView indicator.</p>
     <div class="cta-row">
       <a href="https://korvus.industries" target="_blank" rel="noopener" class="btn accent">Visit Korvus<span class="sheen"></span></a>
       <a href="/lodestone.html" class="btn ghost">Meet LodeStone<span class="sheen"></span></a>
@@ -503,6 +552,7 @@
     so.observe(container);
   }
   stagger(document.querySelector('.features'), '.feat', 110);
+  stagger(document.querySelector('.tiers'), '.tier', 140);
 
   if(matchMedia('(pointer:fine)').matches && !reduce){
     document.querySelectorAll('.feat').forEach(function(t){
