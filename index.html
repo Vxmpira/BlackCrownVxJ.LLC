@@ -17,16 +17,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-<!-- Three.js loaded as ES modules from a pinned CDN. This is the only external runtime dependency. -->
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
-
 <style>
   :root{
     --vanta:#000000;--ink-2:#060608;--ink-3:#0A0A0D;--panel:#0D0D11;
@@ -75,6 +65,18 @@
   .nav-links{display:flex;gap:2.1rem}
   .nav-links a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);transition:color .25s,text-shadow .25s}
   .nav-links a:hover{color:var(--pink);text-shadow:var(--glow-pink)}
+  .nav-drop{position:relative}
+  .nav-drop-btn .caret{display:inline-block;margin-left:.35rem;font-size:.6rem;transition:transform .25s ease}
+  .nav-drop:hover .nav-drop-btn .caret,.nav-drop:focus-within .nav-drop-btn .caret{transform:rotate(180deg)}
+  .nav-drop-menu{position:absolute;top:100%;left:50%;min-width:252px;padding:.55rem;margin-top:.85rem;transform:translate(-50%,10px);
+    background:rgba(5,5,8,.96);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:12px;
+    box-shadow:0 18px 44px rgba(0,0,0,.6),0 0 20px rgba(255,45,149,.08);
+    opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,transform .22s ease,visibility .22s}
+  .nav-drop-menu::before{content:"";position:absolute;left:0;right:0;top:-.95rem;height:.95rem}
+  .nav-drop:hover .nav-drop-menu,.nav-drop:focus-within .nav-drop-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0)}
+  .nav-drop-menu a{display:flex;align-items:center;gap:.6rem;padding:.62rem .8rem;border-radius:8px;white-space:nowrap}
+  .nav-drop-menu a:hover{background:rgba(255,255,255,.05);color:var(--c,var(--pink));text-shadow:0 0 6px color-mix(in srgb,var(--c,var(--pink)) 55%,transparent)}
+  .nav-drop-menu .pd{width:7px;height:7px;border-radius:50%;background:var(--c,var(--pink));box-shadow:0 0 6px var(--c,var(--pink));flex:none}
   .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:42px;height:42px;padding:0;background:transparent;border:1px solid var(--line);border-radius:9px;cursor:pointer;transition:border-color .25s ease}
   .nav-toggle span{display:block;width:20px;height:2px;background:var(--bone);margin:0 auto;border-radius:2px;transition:transform .3s ease,opacity .25s ease}
   .nav-toggle:hover{border-color:var(--pink)}
@@ -161,7 +163,7 @@
   .mission .body{color:var(--bone);opacity:.86;max-width:60ch;font-size:clamp(1rem,1.5vw,1.18rem)}
 
   /* ---------- products ---------- */
-  .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+  .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
   .ptile{position:relative;display:flex;flex-direction:column;background:var(--ink-2);border:1px solid var(--line);border-radius:16px;overflow:hidden;opacity:0;
     transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,30px)) translateZ(0);
     transition:opacity .7s ease,transform .55s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
@@ -314,6 +316,11 @@
       transition:opacity .28s ease,transform .28s ease,visibility .28s}
     .nav.open .nav-links{opacity:1;visibility:visible;transform:none;pointer-events:auto}
     .nav-links a{padding:1rem .2rem;border-bottom:1px solid var(--line-soft);font-size:.82rem}
+    .nav-drop{position:static}
+    .nav-drop-menu{position:static;transform:none;opacity:1;visibility:visible;pointer-events:auto;min-width:0;margin:0;padding:0 0 .3rem .95rem;background:transparent;border:none;box-shadow:none;backdrop-filter:none}
+    .nav-drop-menu::before{display:none}
+    .nav-drop-menu a{border-bottom:none;padding:.55rem .2rem;font-size:.76rem}
+    .nav-drop-btn .caret{display:none}
     .nav-cta{display:block;margin-top:1rem;text-align:center;background:var(--pink);color:#0A0008;border:1px solid var(--pink);
       border-radius:8px;padding:.95rem 1rem;box-shadow:var(--glow-pink)}
     .nav.open{background:rgba(0,0,0,.9);backdrop-filter:blur(16px);border-bottom-color:var(--line)}
@@ -374,7 +381,15 @@
   </a>
   <div class="nav-links" id="navLinks">
     <a href="#mission">Mission</a>
-    <a href="#products">Products</a>
+    <div class="nav-drop">
+      <a href="#products" class="nav-drop-btn" aria-haspopup="true">Products<span class="caret" aria-hidden="true">▾</span></a>
+      <div class="nav-drop-menu">
+        <a href="/korvus.html" style="--c:#FF3B47"><span class="pd"></span>Korvus Industries</a>
+        <a href="/lodestone.html" style="--c:#49D7FF"><span class="pd"></span>LodeStone Indicator</a>
+        <a href="/intelligence.html" style="--c:#E8C77F"><span class="pd"></span>BlackCrown Intelligence</a>
+        <a href="/collective.html" style="--c:#FF2D95"><span class="pd"></span>The Collective</a>
+      </div>
+    </div>
     <a href="#connect">Connect</a>
     <a href="/support.html">Contact</a>
     <a href="#contact" class="nav-cta">Get in touch</a>
@@ -406,9 +421,11 @@
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
     <span>Korvus Industries · real-time market intelligence</span><span class="star">✦</span>
+    <span>LodeStone · every level, already drawn</span><span class="star">✦</span>
     <span>BlackCrown Intelligence · a private AI tuned to you</span><span class="star">✦</span>
     <span>The Collective · a private network for builders</span><span class="star">✦</span>
     <span>Korvus Industries · real-time market intelligence</span><span class="star">✦</span>
+    <span>LodeStone · every level, already drawn</span><span class="star">✦</span>
     <span>BlackCrown Intelligence · a private AI tuned to you</span><span class="star">✦</span>
     <span>The Collective · a private network for builders</span><span class="star">✦</span>
   </div>
@@ -462,7 +479,7 @@
     <div class="sec-head reveal">
       <span class="eyebrow" data-scramble>The three points</span>
       <h2>Three edges, one crown.</h2>
-      <p class="kicker">Every BlackCrown product is a point of the same crown. Take the edge you need, or claim all three.</p>
+      <p class="kicker">Every BlackCrown product is a point of the same crown, and LodeStone rides with Korvus on the chart. Take the edge you need, or claim them all.</p>
     </div>
 
     <div class="tiles">
@@ -488,6 +505,34 @@
           <p class="ptile-desc">A real-time news and market terminal that scores every headline for impact, so you read the move before the crowd reacts.</p>
           <div class="ptile-need"><b>For you if</b> the news always seems to hit after the move already happened.</div>
           <span class="ptile-link">Explore Korvus <span aria-hidden="true">&#8594;</span></span>
+        </div>
+      </a>
+
+      <a class="ptile" href="/lodestone.html" style="--tile:#49D7FF" aria-label="Explore LodeStone">
+        <div class="ptile-screen">
+          <div class="scan"></div>
+          <span class="ptile-tag"><span class="d"></span>Chart · Korvus stack</span>
+          <svg viewBox="0 0 320 172" preserveAspectRatio="none" aria-hidden="true">
+            <line class="mv-grid" x1="0" y1="58" x2="320" y2="58"/>
+            <line class="mv-grid" x1="0" y1="100" x2="320" y2="100"/>
+            <line class="mv-grid" x1="0" y1="142" x2="320" y2="142"/>
+            <line class="mv-net" x1="24" y1="44" x2="296" y2="44" style="stroke-dasharray:7 5"/>
+            <line class="mv-net" x1="24" y1="86" x2="296" y2="86" style="stroke-dasharray:2 4;opacity:.4"/>
+            <line class="mv-net" x1="24" y1="126" x2="296" y2="126" style="stroke-dasharray:7 5"/>
+            <path class="mv-line" d="M16 118 L52 104 L84 124 L120 88 L156 100 L192 60 L228 76 L262 50 L304 64"/>
+            <circle class="mv-ring r1" cx="262" cy="50" r="6"/>
+            <circle class="mv-ring r2" cx="262" cy="50" r="6"/>
+            <circle class="mv-node" cx="262" cy="50" r="4"/>
+            <circle class="mv-node" cx="24" cy="44" r="2.5"/>
+            <circle class="mv-node" cx="24" cy="126" r="2.5"/>
+          </svg>
+        </div>
+        <div class="ptile-body">
+          <div class="ptile-name">LodeStone</div>
+          <div class="ptile-sub">indicator · tradovate + tradingview</div>
+          <p class="ptile-desc">The chart side of the Korvus stack. Session levels, prior highs and lows, value, structure and SMT divergence, drawn on your futures chart automatically.</p>
+          <div class="ptile-need"><b>For you if</b> you redraw the same levels every single night before the open.</div>
+          <span class="ptile-link">Explore LodeStone <span aria-hidden="true">&#8594;</span></span>
         </div>
       </a>
 
@@ -655,12 +700,15 @@
   /* nav + scroll progress */
   var nav = document.getElementById('nav');
   var prog = document.getElementById('progress');
-  function onScroll(){
+  var scrollTick = false;
+  function applyScroll(){
+    scrollTick = false;
     nav.classList.toggle('scrolled', window.scrollY > 24);
     var h = document.documentElement.scrollHeight - window.innerHeight;
     prog.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
   }
-  onScroll();
+  function onScroll(){ if(!scrollTick){ scrollTick = true; requestAnimationFrame(applyScroll); } }
+  applyScroll();
   window.addEventListener('scroll', onScroll, {passive:true});
 
   /* mobile nav toggle */
@@ -810,13 +858,15 @@
   var pre = document.getElementById('preloader');
   var bar = document.getElementById('plBar');
   var pct = document.getElementById('plPct');
-  if(reduce || !pre){
-    if(pre) pre.classList.add('done');
+  var seen = false; try { seen = sessionStorage.getItem('bcSeen') === '1'; } catch(err){}
+  if(reduce || !pre || seen){
+    if(pre){ pre.style.transition = 'none'; pre.classList.add('done'); }
     startIntro();
   } else {
+    try { sessionStorage.setItem('bcSeen', '1'); } catch(err){}
     var v = 0;
     var pl = setInterval(function(){
-      v += Math.random()*9 + 4;
+      v += Math.random()*16 + 14;
       if(v >= 100){ v = 100; clearInterval(pl); }
       bar.style.width = v + '%';
       pct.textContent = Math.floor(v);
@@ -824,22 +874,22 @@
         setTimeout(function(){
           pre.classList.add('done');
           startIntro();
-        }, 260);
+        }, 160);
       }
-    }, 90);
+    }, 55);
   }
 })();
 </script>
 
 <!-- ====================== 3D crown hero (Three.js) ====================== -->
-<script type="module">
-import * as THREE from 'three';
-import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-
+<script src="/assets/bc3d.js"></script>
+<script>
+(function(){
 const canvas = document.getElementById('bc3d');
+if(!canvas || !window.THREE || !window.BC3D){ if(canvas) canvas.style.display='none'; return; }
+const THREE = window.THREE;
+const SVGLoader = window.BC3D.SVGLoader, EffectComposer = window.BC3D.EffectComposer,
+      RenderPass = window.BC3D.RenderPass, UnrealBloomPass = window.BC3D.UnrealBloomPass;
 const hero = document.getElementById('top');
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobile = window.matchMedia('(max-width: 760px)').matches;
@@ -856,7 +906,7 @@ try {
 if (renderer) {
   const PINK = 0xff2d95;
   let w = hero.clientWidth, h = hero.clientHeight;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(w, h, false);
   renderer.setClearColor(0x000000, 0);
 
@@ -1007,15 +1057,35 @@ if (renderer) {
     if (reduce){ cancelAnimationFrame(raf); }  // single static frame for reduced motion
   }
 
-  document.addEventListener('visibilitychange', function(){
-    visible = !document.hidden;
-    if (visible && !reduce){ clock.getDelta(); frame(); }
-    else { cancelAnimationFrame(raf); }
-  });
+  let heroVisible = true;
+  function sync(){
+    cancelAnimationFrame(raf);
+    if (heroVisible && !document.hidden && !reduce){ clock.getDelta(); frame(); }
+  }
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ heroVisible = es[0].isIntersecting; sync(); }, {threshold:0}).observe(hero);
+  }
+  document.addEventListener('visibilitychange', sync);
 
   resize();
   frame();
 }
+})();
+</script>
+
+<script>
+(function(){
+  var done = {};
+  document.addEventListener('mouseover', function(e){
+    var a = e.target.closest && e.target.closest('a[href]');
+    if(!a || a.host !== location.host) return;
+    var href = a.getAttribute('href');
+    if(!href || href.charAt(0) === '#' || done[a.pathname]) return;
+    done[a.pathname] = 1;
+    var l = document.createElement('link'); l.rel = 'prefetch'; l.href = a.pathname;
+    document.head.appendChild(l);
+  }, {passive:true});
+})();
 </script>
 
 </body>

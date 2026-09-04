@@ -777,5 +777,20 @@ footer{border-top:1px solid var(--line);padding:3.6rem 0 2.4rem;background:var(-
 })();
 
 </script>
+<script>
+(function(){
+  var done = {};
+  document.addEventListener('mouseover', function(e){
+    var a = e.target.closest && e.target.closest('a[href]');
+    if(!a || a.host !== location.host) return;
+    var href = a.getAttribute('href');
+    if(!href || href.charAt(0) === '#' || done[a.pathname]) return;
+    done[a.pathname] = 1;
+    var l = document.createElement('link'); l.rel = 'prefetch'; l.href = a.pathname;
+    document.head.appendChild(l);
+  }, {passive:true});
+})();
+</script>
+
 </body>
 </html>

@@ -42,6 +42,18 @@
   .nav-links{display:flex;gap:2.1rem}
   .nav-links a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);transition:color .25s,text-shadow .25s}
   .nav-links a:hover,.nav-links a.active{color:var(--pink);text-shadow:var(--glow-pink)}
+  .nav-drop{position:relative}
+  .nav-drop-btn .caret{display:inline-block;margin-left:.35rem;font-size:.6rem;transition:transform .25s ease}
+  .nav-drop:hover .nav-drop-btn .caret,.nav-drop:focus-within .nav-drop-btn .caret{transform:rotate(180deg)}
+  .nav-drop-menu{position:absolute;top:100%;left:50%;min-width:252px;padding:.55rem;margin-top:.85rem;transform:translate(-50%,10px);
+    background:rgba(5,5,8,.96);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:12px;
+    box-shadow:0 18px 44px rgba(0,0,0,.6),0 0 20px rgba(255,45,149,.08);
+    opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,transform .22s ease,visibility .22s}
+  .nav-drop-menu::before{content:"";position:absolute;left:0;right:0;top:-.95rem;height:.95rem}
+  .nav-drop:hover .nav-drop-menu,.nav-drop:focus-within .nav-drop-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0)}
+  .nav-drop-menu a{display:flex;align-items:center;gap:.6rem;padding:.62rem .8rem;border-radius:8px;white-space:nowrap}
+  .nav-drop-menu a:hover{background:rgba(255,255,255,.05);color:var(--c,var(--pink));text-shadow:0 0 6px color-mix(in srgb,var(--c,var(--pink)) 55%,transparent)}
+  .nav-drop-menu .pd{width:7px;height:7px;border-radius:50%;background:var(--c,var(--pink));box-shadow:0 0 6px var(--c,var(--pink));flex:none}
   .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:42px;height:42px;padding:0;background:transparent;border:1px solid var(--line);border-radius:9px;cursor:pointer;transition:border-color .25s ease}
   .nav-toggle span{display:block;width:20px;height:2px;background:var(--bone);margin:0 auto;border-radius:2px;transition:transform .3s ease,opacity .25s ease}
   .nav-toggle:hover{border-color:var(--pink)}
@@ -122,6 +134,11 @@
       transition:opacity .28s ease,transform .28s ease,visibility .28s}
     .nav.open .nav-links{opacity:1;visibility:visible;transform:none;pointer-events:auto}
     .nav-links a{padding:1rem .2rem;border-bottom:1px solid var(--line-soft);font-size:.82rem}
+    .nav-drop{position:static}
+    .nav-drop-menu{position:static;transform:none;opacity:1;visibility:visible;pointer-events:auto;min-width:0;margin:0;padding:0 0 .3rem .95rem;background:transparent;border:none;box-shadow:none;backdrop-filter:none}
+    .nav-drop-menu::before{display:none}
+    .nav-drop-menu a{border-bottom:none;padding:.55rem .2rem;font-size:.76rem}
+    .nav-drop-btn .caret{display:none}
     .nav-cta{display:block;margin-top:1rem;text-align:center;background:var(--pink);color:#0A0008;border:1px solid var(--pink);border-radius:8px;padding:.95rem 1rem;box-shadow:var(--glow-pink)}
     .nav.open{background:rgba(0,0,0,.9);backdrop-filter:blur(16px);border-bottom-color:var(--line)}
     .stats,.quotes{grid-template-columns:1fr}
@@ -150,7 +167,15 @@
   </a>
   <div class="nav-links" id="navLinks">
     <a href="/#ethos">Mission</a>
-    <a href="/#products">Products</a>
+    <div class="nav-drop">
+      <a href="/#products" class="nav-drop-btn" aria-haspopup="true">Products<span class="caret" aria-hidden="true">▾</span></a>
+      <div class="nav-drop-menu">
+        <a href="/korvus.html" style="--c:#FF3B47"><span class="pd"></span>Korvus Industries</a>
+        <a href="/lodestone.html" style="--c:#49D7FF"><span class="pd"></span>LodeStone Indicator</a>
+        <a href="/intelligence.html" style="--c:#E8C77F"><span class="pd"></span>BlackCrown Intelligence</a>
+        <a href="/collective.html" style="--c:#FF2D95"><span class="pd"></span>The Collective</a>
+      </div>
+    </div>
     <a href="/proof.html" class="active">Proof</a>
     <a href="/#contact">Contact</a>
     <a href="/#contact" class="nav-cta">Get in touch</a>
@@ -308,5 +333,20 @@
   const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:0.15});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+<script>
+(function(){
+  var done = {};
+  document.addEventListener('mouseover', function(e){
+    var a = e.target.closest && e.target.closest('a[href]');
+    if(!a || a.host !== location.host) return;
+    var href = a.getAttribute('href');
+    if(!href || href.charAt(0) === '#' || done[a.pathname]) return;
+    done[a.pathname] = 1;
+    var l = document.createElement('link'); l.rel = 'prefetch'; l.href = a.pathname;
+    document.head.appendChild(l);
+  }, {passive:true});
+})();
+</script>
+
 </body>
 </html>
