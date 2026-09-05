@@ -244,7 +244,6 @@
     .fit .wrap{padding:clamp(3rem,9vw,4.5rem) var(--pad)}
     .fit-card{padding:1.6rem 1.4rem}
     .feat{padding:1.6rem 1.4rem}
-    .tiers{grid-template-columns:1fr}
     .foot-grid{flex-direction:column;gap:1.8rem}
     .foot-bottom{flex-direction:column;align-items:flex-start;gap:.7rem}
   }
@@ -257,6 +256,37 @@
     #preloader{display:none}
     #preloader .pl-crown path,#preloader .pl-crown line{stroke-dashoffset:0}
   }
+  /* pipeline flow */
+  .flow{list-style:none;display:flex;flex-direction:column;gap:1.1rem;max-width:820px}
+  .flow li{position:relative;padding:1.1rem 1.2rem 1.1rem 1.3rem;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:14px;
+    color:var(--bone);font-size:.96rem;line-height:1.6;opacity:0;transform:translateY(20px);
+    transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .3s ease}
+  .flow li.in{opacity:1;transform:none}
+  .flow li:hover{border-color:rgba(255,59,71,.45)}
+  .flow li::before{content:"";position:absolute;left:0;top:1.1rem;bottom:1.1rem;width:3px;border-radius:2px;
+    background:var(--accent);box-shadow:0 0 8px rgba(255,59,71,.6)}
+  .flow .fk{display:block;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);text-shadow:var(--accent-glow);margin-bottom:.35rem}
+
+  /* glossary */
+  .gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9rem}
+  .g{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:12px;padding:1rem 1.1rem;transition:border-color .3s ease}
+  .g:hover{border-color:var(--line)}
+  .gt{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);display:block;margin-bottom:.35rem}
+  .g p{color:var(--mute);font-size:.85rem;line-height:1.5}
+
+  /* faq */
+  .faq{max-width:820px}
+  .qa{border-bottom:1px solid var(--line-soft)}
+  .qa summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    padding:1.15rem .2rem;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.05rem;color:var(--bone);transition:color .25s}
+  .qa summary::-webkit-details-marker{display:none}
+  .qa summary:hover{color:var(--accent)}
+  .qa .qi{font-family:'JetBrains Mono',monospace;color:var(--accent);text-shadow:var(--accent-glow);transition:transform .25s ease;flex:none}
+  .qa[open] .qi{transform:rotate(45deg)}
+  .qa p{color:var(--mute);font-size:.95rem;padding:0 .2rem 1.2rem;max-width:70ch}
+  .qa p a{color:var(--accent);text-shadow:var(--accent-glow)}
+
   /* tiers */
   .tiers{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;max-width:940px}
   .tier{position:relative;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:18px;padding:2.1rem 2rem;display:flex;flex-direction:column;
@@ -277,6 +307,7 @@
   .shot::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 22%);mix-blend-mode:screen}
   .shot:hover{border-color:var(--accent);box-shadow:0 56px 112px -26px rgba(0,0,0,.9),0 16px 42px rgba(0,0,0,.55),0 0 66px rgba(255,59,71,.30),inset 0 0 0 1px rgba(255,59,71,.12)}
   @media(prefers-reduced-motion:no-preference){.shot:hover{transform:translateY(-7px)}}
+@media(max-width:920px){.tiers{grid-template-columns:1fr}}
 </style>
 </head>
 <body data-bc-page="korvus">
@@ -321,6 +352,7 @@
         <span class="chip"><span class="d"></span>24/7 newswire</span>
         <span class="chip"><span class="d"></span>Impact scoring</span>
         <span class="chip"><span class="d"></span>SMT divergence</span>
+        <span class="chip"><span class="d"></span>59 instruments</span>
         <span class="chip"><span class="d"></span>Observer free</span>
         <span class="chip"><span class="d"></span>Operator $9.99/mo</span>
       </div>
@@ -356,6 +388,22 @@
   </div>
 </section>
 
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-scramble>How it works</span>
+      <h2>From wire to screen, in plain English.</h2>
+      <p class="kicker">Every headline runs the same gauntlet before it reaches you, so nothing lands raw.</p>
+    </div>
+    <ol class="flow">
+      <li><span class="fk">01 · The wire breaks</span>News hits the feed at any hour. Korvus is already awake, reading it the second it lands.</li>
+      <li><span class="fk">02 · Scored, not dumped</span>Each item is graded high, medium or low impact, tagged bullish, bearish or neutral, and given a confidence read.</li>
+      <li><span class="fk">03 · Tied to your instruments</span>The headline lands with the tickers it touches across the 59-instrument universe, so you know exactly what it moves.</li>
+      <li><span class="fk">04 · On your screen first</span>The scored item is waiting in the terminal while the crowd is still reading the headline.</li>
+    </ol>
+  </div>
+</section>
+
 <section class="sec" id="features">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -380,9 +428,19 @@
         <p>Live confirmation across NQ, ES and YM. Korvus flags when the indices stop agreeing, the moment that often shows up before a turn.</p>
       </div>
       <div class="feat">
-        <span class="fnum">Session</span>
-        <h3>Full context, one frame</h3>
-        <p>A futures board, session map and macro confluence panel keep Asia, London and New York, plus the dollar, bonds and volatility, in one frame.</p>
+        <span class="fnum">Sessions</span>
+        <h3>The session engine</h3>
+        <p>A global session clock and map track Asia, London and New York, with completed session highs and lows and the prior day and week kept on the board.</p>
+      </div>
+      <div class="feat">
+        <span class="fnum">Macro</span>
+        <h3>Macro confluence</h3>
+        <p>The dollar, the 10 year, gold, oil, credit and volatility sit in one panel, so you see whether the big picture agrees with your trade before you take it.</p>
+      </div>
+      <div class="feat">
+        <span class="fnum">Board</span>
+        <h3>Quotes and watchlists</h3>
+        <p>A funds board comes ready out of the box, with personal watchlist imports and real-time quotes through market hours on Operator.</p>
       </div>
     </div>
   </div>
@@ -402,6 +460,30 @@
         </div>
         <p class="shot-cap">Economic calendar · forex and government news scored by impact</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="readouts">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-scramble>Every readout, defined</span>
+      <h2>Speak terminal.</h2>
+      <p class="kicker">What each score, tag and panel means, so the first session in the terminal reads like your hundredth.</p>
+    </div>
+    <div class="gloss">
+      <div class="g"><span class="gt">Impact score</span><p>High, medium or low: how hard the item can hit the tape</p></div>
+      <div class="g"><span class="gt">Direction tag</span><p>Bullish, bearish or neutral, called in plain English</p></div>
+      <div class="g"><span class="gt">Confidence</span><p>How firmly the read is held, shown with every score</p></div>
+      <div class="g"><span class="gt">The 59 universe</span><p>Index futures, megacaps, currencies, rates, energy, metals and ags</p></div>
+      <div class="g"><span class="gt">SMT divergence</span><p>NQ, ES and YM checked at session extremes for agreement or a split</p></div>
+      <div class="g"><span class="gt">Session map</span><p>Asia, London and New York windows on a global clock</p></div>
+      <div class="g"><span class="gt">Session H / L</span><p>Completed highs and lows for Asia, London, NY AM and NY PM</p></div>
+      <div class="g"><span class="gt">Prior levels</span><p>PDH, PDL, PWH and PWL kept on the board</p></div>
+      <div class="g"><span class="gt">Macro confluence</span><p>Dollar, 10 year, gold, oil, credit and volatility in one panel</p></div>
+      <div class="g"><span class="gt">Funds board</span><p>A default watchlist board, ready before you build your own</p></div>
+      <div class="g"><span class="gt">Real-time quotes</span><p>Live pricing through market hours, on Operator</p></div>
+      <div class="g"><span class="gt">High-impact alerts</span><p>Operator email pings the moment a big one drops</p></div>
     </div>
   </div>
 </section>
@@ -441,6 +523,37 @@
       </div>
     </div>
     <p class="tiers-note reveal">Billing and account management live on korvus.industries. Operator auto-renews and cancels anytime.</p>
+  </div>
+</section>
+
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow" data-scramble>Questions</span>
+      <h2>Before you log in.</h2>
+    </div>
+    <div class="faq">
+      <details class="qa reveal">
+        <summary>What exactly is Korvus?<span class="qi" aria-hidden="true">+</span></summary>
+        <p>A web terminal at korvus.industries that reads and scores the news 24/7 so you trade with context. It is not a broker and it does not place trades: it is the information layer under your decisions.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>What does Observer get me for free?<span class="qi" aria-hidden="true">+</span></summary>
+        <p>The full 24/7 scored news and impact feed, SMT divergence during market hours, the session map with completed session highs and lows, and the macro confluence panel. No card required.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>What does Operator add?<span class="qi" aria-hidden="true">+</span></summary>
+        <p>For $9.99 a month or $79.99 a year: real-time quotes during market hours, personal watchlist imports, high-impact email alerts, and the <a href="/lodestone.html">LodeStone TradingView indicator</a> included. Auto-renews, cancel anytime.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>What does it cover?<span class="qi" aria-hidden="true">+</span></summary>
+        <p>A 59-instrument universe: index futures, megacap equities, currencies, rates, energy, metals and agriculture, with every headline tagged to the instruments it touches.</p>
+      </details>
+      <details class="qa reveal">
+        <summary>Is this financial advice?<span class="qi" aria-hidden="true">+</span></summary>
+        <p>No. Korvus is an information tool. It tells you what happened and how hard it can hit, and the decision stays yours. Trading futures carries substantial risk of loss.</p>
+      </details>
+    </div>
   </div>
 </section>
 
@@ -553,6 +666,7 @@
   }
   stagger(document.querySelector('.features'), '.feat', 110);
   stagger(document.querySelector('.tiers'), '.tier', 140);
+  stagger(document.querySelector('.flow'), 'li', 130);
 
   if(matchMedia('(pointer:fine)').matches && !reduce){
     document.querySelectorAll('.feat').forEach(function(t){
