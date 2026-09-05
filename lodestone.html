@@ -257,6 +257,34 @@
     background-repeat:no-repeat}
   .pglyph{width:19px;height:19px;color:var(--accent);filter:drop-shadow(0 0 5px rgba(73,215,255,.5))}
 
+  /* page watermark + section flare */
+  .pagemark{position:fixed;top:50%;left:-.4rem;transform:translateY(-50%);writing-mode:vertical-rl;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(4rem,9vw,7.5rem);letter-spacing:.32em;
+    color:transparent;-webkit-text-stroke:1px rgba(73,215,255,.08);pointer-events:none;z-index:0;user-select:none}
+  #features::after{content:"";position:absolute;top:-8%;right:-240px;width:600px;height:600px;border-radius:50%;
+    border:1px solid rgba(73,215,255,.15);box-shadow:0 0 70px rgba(73,215,255,.09),inset 0 0 70px rgba(73,215,255,.06);pointer-events:none}
+  #levels::after{content:"";position:absolute;bottom:-22%;left:-210px;width:540px;height:540px;border-radius:50%;
+    border:1px dashed rgba(73,215,255,.14);animation:ringSpin 85s linear infinite;pointer-events:none}
+  @keyframes ringSpin{to{transform:rotate(360deg)}}
+  #inside{overflow:hidden}
+  #inside::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(115deg,transparent 40%,rgba(73,215,255,.05) 50%,transparent 60%)}
+  #inside .wrap{position:relative}
+  #faq{overflow:hidden}
+  #faq::before{content:"";position:absolute;top:-14%;right:-180px;width:440px;height:440px;border-radius:50%;
+    border:1px solid rgba(73,215,255,.10);pointer-events:none}
+  #faq .wrap{position:relative}
+
+  /* card flare */
+  .feat{background:linear-gradient(165deg,rgba(73,215,255,.06),var(--ink-2) 42%)}
+  .feat::before{content:"";position:absolute;top:0;left:1.6rem;width:34%;height:2px;
+    background:linear-gradient(90deg,var(--accent),transparent);opacity:.75}
+  .feat::after{content:"◆";position:absolute;right:.7rem;bottom:-1.4rem;font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:6rem;line-height:1;color:rgba(73,215,255,.06);pointer-events:none}
+  .plan{background:linear-gradient(165deg,rgba(73,215,255,.05),var(--ink-2) 40%)}
+  .g{background:linear-gradient(160deg,rgba(73,215,255,.045),var(--ink-2) 55%)}
+  .fit-card{background:linear-gradient(165deg,rgba(73,215,255,.04),var(--ink-2) 45%)}
+
   /* auto-draw map */
   .mapframe{max-width:920px;margin:0 auto}
   .mapviz{display:block;width:100%;height:auto;background:linear-gradient(180deg,#0b0b0f,#050507)}
@@ -377,6 +405,7 @@
     #preloader{display:none}
     #preloader .pl-crown path,#preloader .pl-crown line{stroke-dashoffset:0}
   }
+@media(max-width:920px){.pagemark{display:none}}
 </style>
 </head>
 <body data-bc-page="lodestone">
@@ -391,6 +420,7 @@
 </div>
 
 <div class="grain"></div>
+<div class="pagemark" aria-hidden="true">LODESTONE</div>
 <div class="progress" id="progress"></div>
 
 <nav class="backbar" id="backbar">
