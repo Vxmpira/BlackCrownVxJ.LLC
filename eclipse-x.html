@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eclipse-X: the BlackCrown community on Discord | BlackCrown</title>
+<meta name="description" content="Eclipse-X is the BlackCrown community on Discord. Live market talk through every session, product rooms for Korvus and LodeStone run by the desk, and an open invite. Free to join.">
+<link rel="canonical" href="https://blackcrownvxj.com/eclipse-x.html">
+<meta property="og:title" content="Eclipse-X: the floor never goes dark">
+<meta property="og:description" content="The BlackCrown community on Discord. Market talk through every session, product rooms run by the desk, and an open invite.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://blackcrownvxj.com/eclipse-x.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --vanta:#000000;--ink-2:#060608;--ink-3:#0A0A0D;--panel:#0D0D11;
+    --white:#FFFFFF;--bone:#E8E8EF;--mute:#85838F;
+    --pink:#FF2D95;--pink-soft:#FF6FB6;--pink-deep:#C81E73;
+    --accent:#FF2D95;--accent-soft:#FF6FB6;
+    --line:rgba(255,45,149,.20);--line-soft:rgba(255,255,255,.07);
+    --accent-glow:0 0 6px rgba(255,45,149,.40),0 0 18px rgba(255,45,149,.18);
+    --glow-white:0 0 8px rgba(255,255,255,.24);--logo-glow:0 0 11px rgba(255,255,255,.38);
+    --max:1200px;--pad:clamp(1.25rem,5vw,4.5rem);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--vanta);color:var(--bone);font-family:'Manrope',system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#0A0008}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  .wrap{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow)}
+  .neon{color:var(--accent);text-shadow:var(--accent-glow)}
+
+  .grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:screen;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:95;background:var(--accent);box-shadow:var(--accent-glow);transition:width .1s linear}
+
+  /* preloader */
+  #preloader{position:fixed;inset:0;z-index:120;background:var(--vanta);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;transition:opacity .7s ease,visibility .7s ease}
+  #preloader.done{opacity:0;visibility:hidden}
+  #preloader .pl-crown{width:74px;height:62px;filter:drop-shadow(0 0 14px rgba(255,45,149,.55))}
+  #preloader .pl-crown path,#preloader .pl-crown line{stroke:var(--pink);stroke-width:1.6;fill:none;stroke-linejoin:round;stroke-linecap:round;
+    stroke-dasharray:120;stroke-dashoffset:120;animation:plDraw 1.15s cubic-bezier(.6,.05,.2,1) forwards}
+  #preloader .pl-crown line{animation-delay:.5s}
+  @keyframes plDraw{to{stroke-dashoffset:0}}
+  .pl-meter{width:140px;height:2px;background:rgba(255,255,255,.10);border-radius:2px;overflow:hidden}
+  .pl-meter i{display:block;height:100%;width:0;background:var(--accent);box-shadow:var(--accent-glow)}
+  .pl-label{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mute)}
+  .pl-label b{color:var(--accent);font-weight:500}
+
+  /* backbar */
+  .backbar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+    padding:1rem var(--pad);transition:background .35s ease,border-color .35s ease,backdrop-filter .35s ease;border-bottom:1px solid transparent}
+  .backbar.scrolled{background:rgba(0,0,0,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+  .brand{display:flex;align-items:center;gap:.6rem}
+  .brand .crownmark{filter:drop-shadow(0 0 6px rgba(255,45,149,.7))}
+  .brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.02em;font-size:1.08rem;color:var(--white);text-shadow:var(--logo-glow)}
+  .back-link{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);display:inline-flex;align-items:center;gap:.5rem;transition:color .25s,text-shadow .25s}
+  .back-link:hover{color:var(--accent);text-shadow:var(--accent-glow)}
+  .back-link .arr{transition:transform .25s ease}
+  .back-link:hover .arr{transform:translateX(-4px)}
+
+  .btn{position:relative;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+    padding:.72rem 1.3rem;border-radius:8px;cursor:pointer;display:inline-block;transition:transform .2s ease,background .25s ease,box-shadow .25s ease,color .25s ease,border-color .25s ease}
+  .btn.accent{background:var(--accent);color:#0A0008;border:1px solid var(--accent);box-shadow:var(--accent-glow)}
+  .btn.accent:hover{background:var(--accent-soft);box-shadow:0 0 12px rgba(255,45,149,.5),0 0 30px rgba(255,45,149,.28);transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:var(--bone);border:1px solid rgba(255,255,255,.22)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--accent-glow);text-shadow:var(--accent-glow);transform:translateY(-2px)}
+  .btn .sheen{position:absolute;top:0;left:-120%;width:60%;height:100%;pointer-events:none;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-18deg)}
+  .btn:hover .sheen{animation:sheen .7s ease}
+  @keyframes sheen{from{left:-120%}to{left:160%}}
+
+  /* hero */
+  .phero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;isolation:isolate;padding:8rem 0 4rem}
+  .phero .aura{position:absolute;border-radius:50%;filter:blur(70px);z-index:0;pointer-events:none}
+  .phero .a1{top:-12%;right:2%;width:54vw;max-width:660px;height:54vw;max-height:660px;
+    background:radial-gradient(circle,rgba(255,45,149,.15),transparent 64%);animation:auraPulse 9s ease-in-out infinite}
+  .phero .a2{bottom:-16%;left:-8%;width:44vw;max-width:540px;height:44vw;max-height:540px;
+    background:radial-gradient(circle,rgba(200,30,115,.12),transparent 66%);animation:auraPulse 12s ease-in-out infinite reverse}
+  @keyframes auraPulse{0%,100%{opacity:.65}50%{opacity:1}}
+  .phero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(120% 78% at 50% 46%,transparent 38%,rgba(0,0,0,.62) 100%)}
+  .hud{position:absolute;top:6.2rem;left:var(--pad);z-index:4;display:flex;align-items:center;gap:.55rem;
+    font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+  .hud .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:var(--accent-glow);animation:blink 2.4s ease-in-out infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+  .phero-grid{position:relative;z-index:4;display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;width:100%}
+  .phero .eyebrow{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.5rem}
+  .phero .eyebrow .sig{width:26px;height:1px;background:var(--accent);box-shadow:var(--accent-glow);display:inline-block}
+  .phero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.6rem,6vw,4.6rem);line-height:.96;letter-spacing:-0.03em;color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.4rem}
+  .phero h1 .w{display:inline-block;opacity:0;transform:translateY(34px) rotateX(38deg);transform-origin:bottom;transition:opacity .8s ease,transform .9s cubic-bezier(.2,.85,.25,1)}
+  .phero h1.show .w{opacity:1;transform:none}
+  .phero h1.show .w:nth-child(1){transition-delay:.05s}
+  .phero h1.show .w:nth-child(2){transition-delay:.13s}
+  .phero h1.show .w:nth-child(3){transition-delay:.21s}
+  .phero h1.show .w:nth-child(4){transition-delay:.29s}
+  .statement{color:var(--bone);opacity:.88;font-size:clamp(1rem,1.5vw,1.16rem);max-width:54ch}
+  .pmeta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+  .chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);
+    border:1px solid var(--line);border-radius:999px;padding:.42rem .85rem;background:rgba(255,45,149,.04)}
+  .chip .d{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:var(--accent-glow)}
+  .cta-row{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:2rem}
+  .intro-el{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+  .intro-el.show{opacity:1;transform:none}
+  .statement.intro-el.show{opacity:.88}
+
+  /* eclipse visual */
+  .eclipse-vis{position:relative;width:min(100%,440px);aspect-ratio:1;margin:0 auto;display:flex;align-items:center;justify-content:center}
+  .eclipse-vis::before{content:"";position:absolute;inset:0;border-radius:50%;
+    background-image:radial-gradient(rgba(255,255,255,.55) 1px,transparent 1.3px);background-size:54px 54px;opacity:.14;
+    -webkit-mask-image:radial-gradient(circle,#000 30%,transparent 72%);mask-image:radial-gradient(circle,#000 30%,transparent 72%)}
+  .ex-orbit{position:absolute;width:88%;height:88%;border-radius:50%;border:1px dashed rgba(255,255,255,.09);animation:oSpin 46s linear infinite}
+  .ex-orbit i{position:absolute;top:-4px;left:50%;width:7px;height:7px;border-radius:50%;background:var(--pink);box-shadow:0 0 9px var(--pink)}
+  @keyframes oSpin{to{transform:rotate(360deg)}}
+  .ex-corona{position:absolute;width:64%;height:64%;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,45,149,.55),rgba(255,45,149,.14) 55%,transparent 72%);filter:blur(26px);animation:exCorona 5.5s ease-in-out infinite}
+  .ex-ring{position:absolute;width:57%;height:57%;border-radius:50%;
+    box-shadow:0 0 22px rgba(255,45,149,.6),0 0 70px rgba(255,45,149,.3),inset 0 0 20px rgba(255,45,149,.55)}
+  .ex-disc{position:absolute;width:56%;height:56%;border-radius:50%;background:#020203;box-shadow:inset 0 0 26px rgba(0,0,0,.95)}
+  .ex-flare{position:absolute;top:20%;right:27%;width:9px;height:9px;border-radius:50%;background:#fff;
+    box-shadow:0 0 12px #fff,0 0 26px var(--pink),0 0 52px var(--pink);animation:exFlare 4s ease-in-out infinite}
+  .ex-label{position:absolute;bottom:-.4rem;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;
+    font-size:.64rem;letter-spacing:.34em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
+  .ex-label b{color:var(--pink);text-shadow:var(--accent-glow);font-weight:500}
+  @keyframes exCorona{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+  @keyframes exFlare{0%,100%{opacity:.65;transform:scale(.8)}50%{opacity:1;transform:scale(1.3)}}
+
+  /* sections */
+  .sec{position:relative;padding:clamp(4.5rem,9vw,7rem) 0;border-top:1px solid var(--line-soft)}
+  .sec-head{margin-bottom:3.2rem;max-width:760px}
+  .sec-head .eyebrow{display:block;margin-bottom:1rem}
+  .sec-head h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,5vw,3.2rem);line-height:1;letter-spacing:-0.02em;color:var(--white)}
+  .sec-head .kicker{color:var(--mute);margin-top:1rem;max-width:60ch}
+
+  /* fit */
+  .fit-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:1.6rem;align-items:stretch}
+  .fit-card{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:16px;padding:2rem 1.8rem;
+    opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease}
+  .fit-card.in{opacity:1;transform:none}
+  .fit-card .lab{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:.8rem}
+  .fit-card h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.35rem;color:var(--white);margin-bottom:.6rem;letter-spacing:-0.01em}
+  .fit-card p{color:var(--bone);opacity:.82;font-size:.97rem}
+  .fit-card.answer{border-color:var(--line)}
+  .fit-card.answer .lab{color:var(--accent);text-shadow:var(--accent-glow)}
+  .fit-card.answer:hover{border-color:var(--accent);box-shadow:0 0 18px rgba(255,45,149,.16)}
+  .fit-arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.6rem;text-shadow:var(--accent-glow);
+    opacity:0;transition:opacity .7s ease .3s}
+  .fit-arrow.in{opacity:1}
+
+  /* features */
+  .features{display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem}
+  .feat{position:relative;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:16px;padding:1.9rem 1.8rem;overflow:hidden;
+    opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
+  .feat.in{opacity:1;transform:none}
+  .feat:hover{border-color:var(--accent);box-shadow:0 0 16px rgba(255,45,149,.14),0 18px 40px rgba(0,0,0,.55);transform:translateY(-5px)}
+  .feat .fnum{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);display:block;margin-bottom:.9rem}
+  .feat h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;color:var(--white);margin-bottom:.55rem;letter-spacing:-0.01em}
+  .feat p{color:var(--bone);opacity:.82;font-size:.95rem}
+
+  /* how to move */
+  .steps{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;counter-reset:step}
+  .steps li{position:relative;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:16px;padding:1.9rem 1.7rem;
+    opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease}
+  .steps li.in{opacity:1;transform:none}
+  .steps li:hover{border-color:var(--accent)}
+  .steps .snum{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);display:block;margin-bottom:.9rem}
+  .steps h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.22rem;color:var(--white);margin-bottom:.5rem}
+  .steps p{color:var(--bone);opacity:.82;font-size:.95rem}
+
+  /* cta band */
+  .cta-band{position:relative;overflow:hidden;border-top:1px solid var(--line);background:var(--ink-2);padding:clamp(4.5rem,9vw,6.5rem) 0;text-align:center}
+  .cta-band .aura{position:absolute;top:50%;left:50%;width:60vw;max-width:640px;height:60vw;max-height:640px;transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle,rgba(255,45,149,.12),transparent 64%);filter:blur(64px);z-index:0}
+  .cta-band .wrap{position:relative;z-index:1}
+  .cta-band h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,5vw,3.2rem);color:var(--white);text-shadow:var(--glow-white);letter-spacing:-0.02em;margin-bottom:1rem}
+  .cta-band p{color:var(--mute);max-width:54ch;margin:0 auto 2rem}
+  .cta-band .cta-row{justify-content:center;margin-top:0}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--ink-2)}
+  .foot-grid{display:flex;justify-content:space-between;gap:3rem;flex-wrap:wrap;margin-bottom:3.5rem}
+  .foot-brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.35rem;color:var(--white);text-shadow:var(--logo-glow);display:flex;align-items:center;gap:.6rem}
+  .foot-brand p{color:var(--mute);font-size:.95rem;margin-top:.9rem;max-width:30ch}
+  .foot-col h4{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);margin-bottom:1.2rem}
+  .foot-col a{display:block;color:var(--mute);font-size:.95rem;margin-bottom:.6rem;transition:color .25s}
+  .foot-col a:hover{color:var(--accent)}
+  .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:2rem;border-top:1px solid var(--line-soft);
+    font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+  .foot-links{display:flex;gap:1.3rem}
+  .foot-links a:hover{color:var(--accent)}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:920px){
+    .phero{min-height:auto;padding:7rem 0 3rem}
+    .phero-grid{grid-template-columns:1fr;gap:2.4rem}
+    .eclipse-vis{max-width:300px}
+    .fit-grid{grid-template-columns:1fr}
+    .fit-arrow{transform:rotate(90deg);padding:.2rem 0}
+    .features{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}
+    .foot-grid{gap:2rem}
+  }
+  @media(max-width:640px){
+    :root{--pad:1.15rem}
+    .phero h1{font-size:clamp(2.2rem,10vw,3.2rem)}
+    .cta-row .btn{flex:1 1 100%;justify-content:center;text-align:center}
+    .sec{padding:clamp(3.4rem,11vw,5rem) 0}
+    .fit-card{padding:1.6rem 1.4rem}
+    .feat{padding:1.6rem 1.4rem}
+    .foot-grid{flex-direction:column;gap:1.8rem}
+    .foot-bottom{flex-direction:column;align-items:flex-start;gap:.7rem}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+    .reveal,.intro-el,.fit-card,.fit-arrow,.feat,.steps li{opacity:1;transform:none}
+    .phero h1 .w{opacity:1;transform:none}
+    #preloader{display:none}
+    #preloader .pl-crown path,#preloader .pl-crown line{stroke-dashoffset:0}
+  }
+</style>
+</head>
+<body data-bc-page="eclipse-x">
+
+<div id="preloader" aria-hidden="true">
+  <svg class="pl-crown" viewBox="0 0 36 30" fill="none">
+    <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
+    <line x1="7" y1="27.4" x2="29" y2="27.4"/>
+  </svg>
+  <div class="pl-meter"><i id="plBar"></i></div>
+  <div class="pl-label">Entering Eclipse-X <b id="plPct">0</b><b>%</b></div>
+</div>
+
+<div class="grain"></div>
+<div class="progress" id="progress"></div>
+
+<nav class="backbar" id="backbar">
+  <a class="brand" href="/" aria-label="BlackCrown home">
+    <svg class="crownmark" width="24" height="20" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+      <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
+      <line x1="7" y1="28" x2="29" y2="28"/>
+    </svg>
+    <span class="wordmark">BlackCrown</span>
+  </a>
+  <a class="back-link" href="/#products"><span class="arr" aria-hidden="true">←</span> Back to all products</a>
+</nav>
+
+<header class="phero">
+  <div class="aura a1"></div>
+  <div class="aura a2"></div>
+  <div class="hud"><span class="dot"></span><span id="clock">ECLIPSE-X // OPEN</span></div>
+
+  <div class="wrap phero-grid">
+    <div>
+      <span class="eyebrow intro-el"><span class="sig"></span>Community · The BlackCrown Discord</span>
+      <h1>
+        <span class="w">The floor</span> <span class="w">never</span> <span class="w">goes</span> <span class="w"><span class="neon">dark</span>.</span>
+      </h1>
+      <p class="statement intro-el">Eclipse-X is the BlackCrown community on Discord. One server where the house and its operators talk through every session: market chatter while the tape moves, product rooms run by the desk, and questions answered in the open. No application, no fee, no velvet rope.</p>
+      <div class="pmeta intro-el">
+        <span class="chip"><span class="d"></span>Open invite</span>
+        <span class="chip"><span class="d"></span>Free to join</span>
+        <span class="chip"><span class="d"></span>24/7 floor</span>
+        <span class="chip"><span class="d"></span>Run by the desk</span>
+      </div>
+      <div class="cta-row intro-el">
+        <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" class="btn accent">Join Eclipse-X<span class="sheen"></span></a>
+        <a href="/#products" class="btn ghost">Meet the products<span class="sheen"></span></a>
+      </div>
+    </div>
+    <div class="eclipse-vis intro-el" aria-hidden="true">
+      <div class="ex-orbit"><i></i></div>
+      <div class="ex-corona"></div>
+      <div class="ex-ring"></div>
+      <div class="ex-disc"></div>
+      <div class="ex-flare"></div>
+      <span class="ex-label">ECLIPSE <b>//</b> X</span>
+    </div>
+  </div>
+</header>
+
+<section class="sec" id="fit">
+  <div class="wrap">
+    <span class="eyebrow reveal" style="display:block;margin-bottom:2rem">Is this you</span>
+    <div class="fit-grid">
+      <div class="fit-card reveal">
+        <span class="lab">Where you are</span>
+        <h3>Trading alone gets loud.</h3>
+        <p>You watch the open by yourself, second-guess by yourself, and review by yourself. The feeds are all noise and nobody around you speaks the language.</p>
+      </div>
+      <div class="fit-arrow reveal" aria-hidden="true"><span>→</span></div>
+      <div class="fit-card answer reveal">
+        <span class="lab">Where Eclipse-X puts you</span>
+        <h3>On a floor that talks back.</h3>
+        <p>A room that runs while the markets do, with people watching the same tape, the same levels and the same headlines, and a desk that answers out loud.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="inside">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">What's inside</span>
+      <h2>One server, the whole house.</h2>
+      <p class="kicker">Everything BlackCrown builds has a room here, and the conversation stays scoped to the work.</p>
+    </div>
+    <div class="features">
+      <div class="feat">
+        <span class="fnum">Floor</span>
+        <h3>Live market talk</h3>
+        <p>The floor runs with the sessions, from the Asia open through the New York close. Catalysts, levels and the tape, discussed as they happen.</p>
+      </div>
+      <div class="feat">
+        <span class="fnum">Rooms</span>
+        <h3>Product rooms</h3>
+        <p>Korvus and LodeStone live here. The #korvus-indicator channel handles LodeStone delivery, setup and questions directly with the desk.</p>
+      </div>
+      <div class="feat">
+        <span class="fnum">Desk</span>
+        <h3>The desk, in the open</h3>
+        <p>The operator who builds and trades these tools answers in public, so the fix, the walkthrough or the straight answer lands where everyone can use it.</p>
+      </div>
+      <div class="feat">
+        <span class="fnum">Signal</span>
+        <h3>Signal culture</h3>
+        <p>No engagement bait and no clout chasing. What gets shared is the part you can act on, and the noise stays outside the eclipse.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">How to move</span>
+      <h2>Three steps in.</h2>
+    </div>
+    <ol class="steps">
+      <li>
+        <span class="snum">01 · Walk in</span>
+        <h3>Take the invite</h3>
+        <p>One link, no forms and no waiting room. You are on the floor in under a minute.</p>
+      </li>
+      <li>
+        <span class="snum">02 · Read the room</span>
+        <h3>Catch the rhythm</h3>
+        <p>Lurk as long as you like. Watch how the floor reads a session and where each conversation lives.</p>
+      </li>
+      <li>
+        <span class="snum">03 · Speak when ready</span>
+        <h3>Bring something real</h3>
+        <p>Ask a question, share a read, pressure-test an idea. The room gives back what you put in.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="aura"></div>
+  <div class="wrap">
+    <h2>The invite is open.</h2>
+    <p>Step into the eclipse and see the floor for yourself. Leaving is one click, but most people don't.</p>
+    <div class="cta-row">
+      <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" class="btn accent">Join Eclipse-X<span class="sheen"></span></a>
+      <a href="/" class="btn ghost">Back to the house<span class="sheen"></span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand reveal">
+        <span class="wordmark">
+          <svg width="24" height="20" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 5px rgba(255,45,149,.7))" aria-hidden="true">
+            <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
+            <line x1="7" y1="28" x2="29" y2="28"/>
+          </svg>
+          BlackCrown
+        </span>
+        <p>Market intelligence, AI, and a private network for independent operators.</p>
+      </div>
+      <div class="foot-col reveal">
+        <h4>Products</h4>
+        <a href="/korvus.html">Korvus Industries</a>
+        <a href="/lodestone.html">LodeStone Indicator</a>
+        <a href="/intelligence.html">BlackCrown Intelligence</a>
+        <a href="/eclipse-x.html">Eclipse-X</a>
+      </div>
+      <div class="foot-col reveal">
+        <h4>Company</h4>
+        <a href="/support.html">Support</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="foot-col reveal">
+        <h4>Contact</h4>
+        <a href="mailto:BlackCrownVxJ.LLC@outlook.com">Email us</a>
+        <a href="tel:+17032989426">(703) 298-9426</a>
+        <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+    <div class="foot-bottom reveal">
+      <span>&copy; 2026 BlackCrownVxJ LLC. All rights reserved.</span>
+      <span class="foot-links">
+        <a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function introIn(){
+    document.querySelectorAll('.intro-el').forEach(function(el,i){
+      setTimeout(function(){ el.classList.add('show'); }, 120 + i*140);
+    });
+    var h1 = document.querySelector('.phero h1');
+    if(h1) setTimeout(function(){ h1.classList.add('show'); }, 100);
+  }
+
+  var pre = document.getElementById('preloader');
+  var bar = document.getElementById('plBar');
+  var pct = document.getElementById('plPct');
+  var seen = false; try { seen = sessionStorage.getItem('bcSeen') === '1'; } catch(err){}
+  if(pre && !reduce && !seen){
+    try { sessionStorage.setItem('bcSeen', '1'); } catch(err){}
+    var p = 0;
+    var iv = setInterval(function(){
+      p = Math.min(100, p + Math.random() * 30 + 12);
+      if(bar) bar.style.width = p + '%';
+      if(pct) pct.textContent = Math.round(p);
+      if(p >= 100){
+        clearInterval(iv);
+        setTimeout(function(){ pre.classList.add('done'); introIn(); }, 160);
+      }
+    }, 60);
+  } else {
+    if(pre){ pre.style.transition = 'none'; pre.classList.add('done'); }
+    setTimeout(introIn, 40);
+  }
+
+  var backbar = document.getElementById('backbar');
+  var prog = document.getElementById('progress');
+  var scrollTick = false;
+  function applyScroll(){
+    scrollTick = false;
+    backbar.classList.toggle('scrolled', window.scrollY > 24);
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+  }
+  function onScroll(){ if(!scrollTick){ scrollTick = true; requestAnimationFrame(applyScroll); } }
+  applyScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.14});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  function stagger(container, childSel, step){
+    if(!container) return;
+    var kids = container.querySelectorAll(childSel);
+    var so = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        kids.forEach(function(k, i){
+          if(reduce){ k.classList.add('in'); }
+          else { setTimeout(function(){ k.classList.add('in'); }, i*step); }
+        });
+        so.unobserve(e.target);
+      });
+    }, {threshold:0.18});
+    so.observe(container);
+  }
+  stagger(document.querySelector('.fit-grid'), '.fit-card, .fit-arrow', 160);
+  stagger(document.querySelector('.features'), '.feat', 110);
+  stagger(document.querySelector('.steps'), 'li', 130);
+})();
+</script>
+
+<script>
+(function(){
+  var done = {};
+  document.addEventListener('mouseover', function(e){
+    var a = e.target.closest && e.target.closest('a[href]');
+    if(!a || a.host !== location.host) return;
+    var href = a.getAttribute('href');
+    if(!href || href.charAt(0) === '#' || done[a.pathname]) return;
+    done[a.pathname] = 1;
+    var l = document.createElement('link'); l.rel = 'prefetch'; l.href = a.pathname;
+    document.head.appendChild(l);
+  }, {passive:true});
+})();
+</script>
+
+</body>
+</html>
