@@ -198,6 +198,54 @@
   .plans-note{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;color:var(--mute);margin-top:1.8rem;line-height:1.7;max-width:70ch}
   .plans-note a{color:var(--accent);text-shadow:var(--accent-glow)}
 
+  /* auto-draw map */
+  .mapframe{max-width:920px;margin:0 auto}
+  .mapviz{display:block;width:100%;height:auto;background:linear-gradient(180deg,#0b0b0f,#050507)}
+  .mgrid{stroke:rgba(255,255,255,.06);stroke-width:1}
+  .mapviz text{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;fill:var(--mute)}
+  .lv{opacity:0;transform:translateX(-14px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+  .mapframe.in .lv{opacity:1;transform:none}
+  .mapframe.in .l1{transition-delay:.15s}
+  .mapframe.in .l2{transition-delay:.35s}
+  .mapframe.in .l3{transition-delay:.55s}
+  .mapframe.in .l4{transition-delay:.75s}
+  .mapframe.in .l5{transition-delay:.95s}
+  .mprice{fill:none;stroke:var(--accent);stroke-width:2;filter:drop-shadow(0 0 5px rgba(73,215,255,.6));stroke-dasharray:1400;stroke-dashoffset:1400}
+  .mapframe.in .mprice{animation:mDraw 2.4s ease .5s forwards}
+  @keyframes mDraw{to{stroke-dashoffset:0}}
+  .mnode{fill:var(--accent);filter:drop-shadow(0 0 6px var(--accent));opacity:0;transition:opacity .4s ease 2.6s}
+  .mapframe.in .mnode{opacity:1}
+  .mnode-ring{fill:none;stroke:var(--accent);stroke-width:1.3;transform-origin:center;transform-box:fill-box;opacity:0}
+  .mapframe.in .mnode-ring{animation:lsPulse 3s ease-out 2.8s infinite}
+  .mapframe.in .mnode-ring.r2{animation-delay:4.3s}
+  @keyframes lsPulse{0%{opacity:.8;transform:scale(.4)}100%{opacity:0;transform:scale(1.8)}}
+
+  /* compass */
+  .faq-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}
+  .compass-wrap{display:flex;flex-direction:column;align-items:center;gap:1.2rem}
+  .compass{width:min(100%,300px);height:auto}
+  .compass .card{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em;fill:var(--mute)}
+  .compass .card.n{fill:var(--accent);filter:drop-shadow(0 0 5px rgba(73,215,255,.7))}
+  .needle{transform-origin:110px 110px;transform-box:view-box;animation:nWobble 7s ease-in-out infinite}
+  @keyframes nWobble{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(5deg)}}
+  .compass-label{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mute)}
+  .compass-label b{color:var(--accent);text-shadow:var(--accent-glow);font-weight:500}
+
+  /* section backdrops */
+  #features{overflow:hidden}
+  #features::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(73,215,255,.08) 1px,transparent 1.4px);background-size:28px 28px;
+    -webkit-mask-image:radial-gradient(66% 80% at 74% 40%,#000,transparent);mask-image:radial-gradient(66% 80% at 74% 40%,#000,transparent)}
+  #features .wrap{position:relative}
+  #controls{overflow:hidden}
+  #controls::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(73,215,255,.07) 1px,transparent 1.4px);background-size:30px 30px;
+    -webkit-mask-image:radial-gradient(60% 80% at 24% 55%,#000,transparent);mask-image:radial-gradient(60% 80% at 24% 55%,#000,transparent)}
+  #controls .wrap{position:relative}
+  .cta-band::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1.2px);background-size:64px 64px;opacity:.12;
+    -webkit-mask-image:radial-gradient(70% 90% at 50% 50%,#000,transparent);mask-image:radial-gradient(70% 90% at 50% 50%,#000,transparent)}
+
   /* faq */
   .faq{max-width:820px}
   .qa{border-bottom:1px solid var(--line-soft)}
@@ -245,6 +293,8 @@
     .features{grid-template-columns:1fr}
     .shot-row{grid-template-columns:1fr}
     .controls-grid{grid-template-columns:1fr;gap:2.2rem}
+    .faq-grid{grid-template-columns:1fr;gap:2.2rem}
+    .compass{max-width:240px}
     .plans{grid-template-columns:1fr}
     .foot-grid{gap:2rem}
   }
@@ -341,6 +391,35 @@
         <h3>The map is up before you are.</h3>
         <p>LodeStone drops the full session map automatically and keeps it current as the day builds. You open the chart to levels you trust and spend the open deciding, not drawing.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="draws">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-bottom:2.2rem">
+      <span class="eyebrow">Watch it work</span>
+      <h2>The map draws itself.</h2>
+      <p class="kicker">Load the chart and the framework appears: prior levels pinned, sessions boxed, value and equilibrium marked, price threading through it all.</p>
+    </div>
+    <div class="shot mapframe reveal">
+      <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">LodeStone / auto-draw</span></div>
+      <svg class="mapviz" viewBox="0 0 720 340" aria-hidden="true">
+        <rect x="0" y="0" width="720" height="150" fill="rgba(255,255,255,.025)"/>
+        <rect x="0" y="190" width="720" height="150" fill="rgba(73,215,255,.05)"/>
+        <line class="mgrid" x1="0" y1="85" x2="720" y2="85"/>
+        <line class="mgrid" x1="0" y1="170" x2="720" y2="170"/>
+        <line class="mgrid" x1="0" y1="255" x2="720" y2="255"/>
+        <g class="lv l1"><line x1="24" y1="48" x2="640" y2="48" stroke="rgba(255,255,255,.55)" stroke-width="1.4"/><text x="650" y="52">PDH</text></g>
+        <g class="lv l2"><line x1="24" y1="110" x2="640" y2="110" stroke="rgba(73,215,255,.8)" stroke-width="1.2" stroke-dasharray="7 5"/><text x="650" y="114">ASIA H</text></g>
+        <g class="lv l3"><line x1="24" y1="170" x2="640" y2="170" stroke="rgba(255,255,255,.35)" stroke-width="1" stroke-dasharray="2 4"/><text x="650" y="174">EQ</text></g>
+        <g class="lv l4"><line x1="24" y1="228" x2="640" y2="228" stroke="rgba(73,215,255,.8)" stroke-width="1.2" stroke-dasharray="7 5"/><text x="650" y="232">VAL</text></g>
+        <g class="lv l5"><line x1="24" y1="296" x2="640" y2="296" stroke="rgba(255,255,255,.55)" stroke-width="1.4"/><text x="650" y="300">PDL</text></g>
+        <path class="mprice" d="M24 268 L84 246 L128 278 L188 220 L244 238 L306 176 L352 198 L410 132 L462 156 L520 96 L572 122 L622 74"/>
+        <circle class="mnode-ring r1" cx="622" cy="74" r="7"/>
+        <circle class="mnode-ring r2" cx="622" cy="74" r="7"/>
+        <circle class="mnode" cx="622" cy="74" r="4.5"/>
+      </svg>
     </div>
   </div>
 </section>
@@ -505,6 +584,7 @@
       <span class="eyebrow">Questions</span>
       <h2>Before you buy.</h2>
     </div>
+    <div class="faq-grid">
     <div class="faq">
       <details class="qa reveal">
         <summary>How does delivery work on Tradovate?<span class="qi" aria-hidden="true">+</span></summary>
@@ -526,6 +606,24 @@
         <summary>Where do I get help?<span class="qi" aria-hidden="true">+</span></summary>
         <p>The #korvus-indicator channel on the BlackCrown Discord covers delivery, setup and questions. Email works too: BlackCrownVxJ.LLC@outlook.com.</p>
       </details>
+    </div>
+    <div class="compass-wrap reveal" aria-hidden="true">
+      <svg class="compass" viewBox="0 0 220 220">
+        <circle cx="110" cy="110" r="100" fill="none" stroke="rgba(73,215,255,.28)" stroke-width="1.4" style="filter:drop-shadow(0 0 10px rgba(73,215,255,.35))"/>
+        <circle cx="110" cy="110" r="92" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="6" stroke-dasharray="1.5 22.6"/>
+        <circle cx="110" cy="110" r="70" fill="none" stroke="rgba(255,255,255,.07)"/>
+        <text x="110" y="27" text-anchor="middle" class="card n">N</text>
+        <text x="198" y="115" text-anchor="middle" class="card">E</text>
+        <text x="110" y="205" text-anchor="middle" class="card">S</text>
+        <text x="22" y="115" text-anchor="middle" class="card">W</text>
+        <g class="needle">
+          <polygon points="110,40 118,112 110,124 102,112" fill="#49D7FF" style="filter:drop-shadow(0 0 8px rgba(73,215,255,.7))"/>
+          <polygon points="104,112 116,112 110,180" fill="rgba(255,255,255,.28)"/>
+          <circle cx="110" cy="110" r="6" fill="#0A0A0D" stroke="#49D7FF" stroke-width="1.5"/>
+        </g>
+      </svg>
+      <span class="compass-label">TRUE NORTH <b>//</b> FOUND</span>
+    </div>
     </div>
   </div>
 </section>
