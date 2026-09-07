@@ -92,7 +92,9 @@
   .hud .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:var(--accent-glow);animation:blink 2.4s ease-in-out infinite}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
-  .phero-grid{position:relative;z-index:4;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,5vw,4rem);align-items:center;width:100%}
+  .phero-grid{position:relative;z-index:4;display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(1.6rem,4vw,3rem);align-items:center;width:100%}
+  .phero .shot{width:calc(100% + 3.5vw)}
+  @media(max-width:920px){.phero .shot{width:100%}}
   .phero .eyebrow{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.5rem}
   .phero .eyebrow .sig{width:24px;height:1px;background:var(--accent);box-shadow:var(--accent-glow);display:inline-block}
   .phero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.7rem,6.4vw,5.4rem);line-height:.94;letter-spacing:-0.03em;color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.5rem}
@@ -421,8 +423,8 @@
         </button>
       </div>
       <div class="termwrap">
-        <img class="tw" src="/assets/korvus-calendar-dark.webp" decoding="async" alt="The Korvus economic calendar in dark mode: the week of USD events filtered by impact, with forecasts, previous values and a live index tape" width="1600" height="803">
-        <img class="tw twl" src="/assets/korvus-calendar-light.webp" loading="lazy" decoding="async" alt="The Korvus economic calendar in light mode" width="1600" height="803">
+        <img class="tw" src="/assets/korvus-terminal-dark.webp" decoding="async" alt="The Korvus terminal in dark mode: futures board, macro confluence, session map, scored news feed, SMT divergence and funds watchlist" width="1600" height="803">
+        <img class="tw twl" src="/assets/korvus-terminal-light.webp" loading="lazy" decoding="async" alt="The Korvus terminal in light mode" width="1600" height="803">
       </div>
     </div>
   </div>
@@ -542,17 +544,17 @@
         <div class="shot reveal">
           <div class="shot-bar">
             <span class="dots"><i></i><i></i><i></i></span>
-            <span class="url">korvus.industries / terminal</span>
+            <span class="url">korvus.industries / forex</span>
             <button class="mode-toggle" id="modeToggle" type="button" aria-label="Switch the preview between dark and light mode">
               <span class="mt-opt on" data-m="dark">Dark</span><span class="mt-opt" data-m="light">Light</span>
             </button>
           </div>
           <div class="termwrap" id="termWrap">
-            <img class="tw" src="/assets/korvus-terminal-dark.webp" loading="lazy" decoding="async" alt="The Korvus terminal in dark mode: futures board, macro confluence, session map, scored news feed, SMT divergence and funds watchlist" width="1600" height="803">
-            <img class="tw twl" src="/assets/korvus-terminal-light.webp" loading="lazy" decoding="async" alt="The Korvus terminal in light mode" width="1600" height="803">
+            <img class="tw" src="/assets/korvus-calendar-dark.webp" loading="lazy" decoding="async" alt="Korvus Forex and Gov News in dark mode: the week of USD events scored by impact, with forecasts, previous values and the live index tape" width="1600" height="803">
+            <img class="tw twl" src="/assets/korvus-calendar-light.webp" loading="lazy" decoding="async" alt="Korvus Forex and Gov News in light mode" width="1600" height="803">
           </div>
         </div>
-        <p class="shot-cap">The live terminal · scored news, SMT divergence, macro confluence and the session map · toggle it like the real thing</p>
+        <p class="shot-cap">Forex / Gov News · the week of USD events scored by impact, with live actuals and the index tape · toggle it like the real thing</p>
       </div>
     </div>
   </div>
