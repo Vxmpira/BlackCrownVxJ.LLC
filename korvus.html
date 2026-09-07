@@ -328,6 +328,17 @@
   .qa p{color:var(--mute);font-size:.95rem;padding:0 .2rem 1.2rem;max-width:70ch}
   .qa p a{color:var(--accent);text-shadow:var(--accent-glow)}
 
+  /* terminal light/dark toggle */
+  .mode-toggle{margin-left:auto;display:inline-flex;gap:2px;padding:2px;border:1px solid var(--line);border-radius:999px;background:var(--ink-2);cursor:pointer}
+  .mt-opt{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);
+    padding:.3rem .65rem;border-radius:999px;transition:background .25s ease,color .25s ease,box-shadow .25s ease}
+  .mt-opt.on{background:var(--accent);color:#0A0008;box-shadow:var(--accent-glow)}
+  .mode-toggle:hover .mt-opt:not(.on){color:var(--bone)}
+  .termwrap{position:relative}
+  .termwrap .tw{display:block;width:100%;height:auto}
+  .termwrap .twl{position:absolute;inset:0;opacity:0;transition:opacity .4s ease}
+  .termwrap.lightmode .twl{opacity:1}
+
   /* tiers */
   .tiers{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;max-width:940px}
   .tier{position:relative;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:18px;padding:2.1rem 2rem;display:flex;flex-direction:column;
@@ -404,8 +415,15 @@
       </div>
     </div>
     <div class="shot">
-      <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">korvus.industries</span></div>
-      <img src="/assets/korvus-hero.webp" decoding="async" alt="Korvus terminal: a news and market impact feed scored bullish, bearish or neutral, with the SMT divergence panel and funds watch" loading="eager" width="1500" height="579">
+      <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">korvus.industries</span>
+        <button class="mode-toggle" type="button" aria-label="Switch the preview between dark and light mode">
+          <span class="mt-opt on" data-m="dark">Dark</span><span class="mt-opt" data-m="light">Light</span>
+        </button>
+      </div>
+      <div class="termwrap">
+        <img class="tw" src="/assets/korvus-calendar-dark.webp" decoding="async" alt="The Korvus economic calendar in dark mode: the week of USD events filtered by impact, with forecasts, previous values and a live index tape" width="1600" height="803">
+        <img class="tw twl" src="/assets/korvus-calendar-light.webp" loading="lazy" decoding="async" alt="The Korvus economic calendar in light mode" width="1600" height="803">
+      </div>
     </div>
   </div>
   <div class="scroll-cue"><span class="bar"></span>Scroll</div>
@@ -519,13 +537,22 @@
       <span class="eyebrow" data-scramble>A look inside</span>
       <h2>Built for the open.</h2>
     </div>
-    <div class="shot-row" style="grid-template-columns:1fr;max-width:920px;margin:0 auto">
+    <div class="shot-row" style="grid-template-columns:1fr;max-width:1000px;margin:0 auto">
       <div>
         <div class="shot reveal">
-          <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">korvus.industries / forex</span></div>
-          <img src="/assets/korvus-forex.webp" loading="lazy" decoding="async" alt="Korvus Forex and Gov News: an economic calendar filtered by impact and currency, showing actual, forecast and previous values" width="1500" height="1278">
+          <div class="shot-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="url">korvus.industries / terminal</span>
+            <button class="mode-toggle" id="modeToggle" type="button" aria-label="Switch the preview between dark and light mode">
+              <span class="mt-opt on" data-m="dark">Dark</span><span class="mt-opt" data-m="light">Light</span>
+            </button>
+          </div>
+          <div class="termwrap" id="termWrap">
+            <img class="tw" src="/assets/korvus-terminal-dark.webp" loading="lazy" decoding="async" alt="The Korvus terminal in dark mode: futures board, macro confluence, session map, scored news feed, SMT divergence and funds watchlist" width="1600" height="803">
+            <img class="tw twl" src="/assets/korvus-terminal-light.webp" loading="lazy" decoding="async" alt="The Korvus terminal in light mode" width="1600" height="803">
+          </div>
         </div>
-        <p class="shot-cap">Economic calendar · forex and government news scored by impact</p>
+        <p class="shot-cap">The live terminal · scored news, SMT divergence, macro confluence and the session map · toggle it like the real thing</p>
       </div>
     </div>
   </div>
@@ -734,6 +761,20 @@
   stagger(document.querySelector('.features'), '.feat', 110);
   stagger(document.querySelector('.tiers'), '.tier', 140);
   stagger(document.querySelector('.flow'), 'li', 130);
+
+  /* preview light/dark toggles */
+  document.querySelectorAll('.mode-toggle').forEach(function(mt){
+    var shot = mt.closest('.shot');
+    var tw = shot && shot.querySelector('.termwrap');
+    if(!tw) return;
+    mt.addEventListener('click', function(e){
+      e.preventDefault();
+      var light = tw.classList.toggle('lightmode');
+      mt.querySelectorAll('.mt-opt').forEach(function(o){
+        o.classList.toggle('on', (o.dataset.m === 'light') === light);
+      });
+    });
+  });
 
   if(matchMedia('(pointer:fine)').matches && !reduce){
     document.querySelectorAll('.feat').forEach(function(t){
