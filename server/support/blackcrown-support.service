@@ -10,7 +10,7 @@ Restart=always
 RestartSec=3
 Environment=PORT=8787
 Environment=AWS_REGION=us-east-2
-Environment=MAIL_FROM=BlackCrown Support <support@blackcrownvxj.com>
+Environment="MAIL_FROM=BlackCrown Support <support@blackcrownvxj.com>"
 Environment=MAIL_TO=BlackCrownVxJ.LLC@outlook.com
 Environment=SEND_ACK=0
 # Hardening
