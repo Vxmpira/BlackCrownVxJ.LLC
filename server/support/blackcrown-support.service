@@ -1,0 +1,25 @@
+[Unit]
+Description=BlackCrown support mail relay (SES)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/blackcrown/server/support
+ExecStart=/usr/bin/node /var/www/blackcrown/server/support/mailer.mjs
+Restart=always
+RestartSec=3
+Environment=PORT=8787
+Environment=AWS_REGION=us-east-1
+Environment=MAIL_FROM=BlackCrown Support <support@blackcrownvxj.com>
+Environment=MAIL_TO=BlackCrownVxJ.LLC@outlook.com
+Environment=SEND_ACK=0
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target

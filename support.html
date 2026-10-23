@@ -267,14 +267,12 @@
   onScroll();window.addEventListener('scroll',onScroll,{passive:true});
 
   // ------------------------------------------------------------------
-  // To have submissions land in your inbox with no backend, paste a free
-  // Web3Forms access key below (get one in ~30s at web3forms.com using
-  // BlackCrownVxJ.LLC@outlook.com). Until then, the form falls back to
-  // opening a pre-filled email in the visitor's mail app, so it still works.
+  // Submissions POST to /api/support, the SES mail relay running on this
+  // server (server/support/mailer.mjs behind Nginx). If the relay cannot
+  // be reached, the form falls back to opening a pre-filled email.
   // ------------------------------------------------------------------
-  var ACCESS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY";
+  var ENDPOINT = "/api/support";
   var SUPPORT_EMAIL = "BlackCrownVxJ.LLC@outlook.com";
-  var hasKey = ACCESS_KEY && ACCESS_KEY.indexOf("YOUR_") !== 0 && ACCESS_KEY.length > 10;
 
   var form=document.getElementById('supportForm');
   var btn=document.getElementById('submitBtn');
@@ -332,21 +330,18 @@
     if(!validate()){ showStatus('err','Please fix the highlighted fields and try again.'); return; }
     var v=values();
 
-    if(!hasKey){ mailtoFallback(v); return; }
-
     btn.disabled=true; btn.textContent='Sending...';
-    fetch('https://api.web3forms.com/submit',{
+    fetch(ENDPOINT,{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
-        access_key:ACCESS_KEY,
-        subject:'[Support: '+v.concern+'] from '+v.name,
-        from_name:'BlackCrown Support',
-        name:v.name, email:v.email, concern:v.concern, message:v.message
+        name:v.name, email:v.email, concern:v.concern, message:v.message,
+        botcheck:document.querySelector('input[name="botcheck"]').checked
       })
     }).then(function(r){return r.json();}).then(function(data){
       btn.disabled=false; btn.textContent='Send message';
       if(data.success){ form.style.display='none'; clearStatus(); sent.classList.add('show'); }
+      else if(data.error==='rate_limited'){ showStatus('err','Too many messages from this connection. Wait a few minutes or email '+SUPPORT_EMAIL+' directly.'); }
       else { showStatus('err','Something went wrong sending your message. Please email '+SUPPORT_EMAIL+' directly.'); }
     }).catch(function(){
       btn.disabled=false; btn.textContent='Send message';

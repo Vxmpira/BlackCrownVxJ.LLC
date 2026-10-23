@@ -1,0 +1,14 @@
+{
+  "name": "blackcrown-support-relay",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "SES mail relay for the blackcrownvxj.com support form",
+  "main": "mailer.mjs",
+  "scripts": {
+    "start": "node mailer.mjs"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.600.0"
+  }
+}
