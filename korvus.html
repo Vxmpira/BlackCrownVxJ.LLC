@@ -1007,5 +1007,23 @@
 })();
 </script>
 
+<!-- BlackCrown analytics beacon -->
+<script>
+(function(){
+  var EP="https://admin.blackcrownvxj.com/api/track";
+  function hit(e,k,x){try{new Image().src=EP+"?e="+e+"&k="+encodeURIComponent(k)+(x||"")+"&_="+Date.now();}catch(_){}}
+  var d=(window.innerWidth<768)?"m":"d";
+  var r=encodeURIComponent((document.referrer||"").slice(0,200));
+  hit("visit","korvus","&d="+d+"&r="+r);
+  document.addEventListener("click",function(ev){
+    var a=ev.target&&ev.target.closest?ev.target.closest("a[href]"):null;
+    if(!a)return;
+    var h=a.getAttribute("href")||"";
+    if(/korvus\.industries/i.test(h))hit("click","korvus");
+    else if(/blackcrown-intelligence\.com/i.test(h))hit("click","intelligence");
+    else if(/discord\.(gg|com)/i.test(h))hit("click","collective");
+  },true);
+})();
+</script>
 </body>
 </html>
