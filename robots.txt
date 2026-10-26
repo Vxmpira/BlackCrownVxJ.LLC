@@ -5,4 +5,7 @@ Allow: /
 # real content, and add it to sitemap.xml so Google can index it.
 Disallow: /proof.html
 
+# Shared layout fragment, not a page
+Disallow: /blackcrown-bar.html
+
 Sitemap: https://blackcrownvxj.com/sitemap.xml
