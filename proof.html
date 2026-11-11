@@ -3,372 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Proof of Work, Real Builds by BlackCrown</title>
-<meta name="description" content="Proof of work from BlackCrown. Real builds, shipped products, and receipts behind Korvus, Crown, and Eclipse-X. No hype, just what got built.">
+<title>Proof | BlackCrown</title>
+<meta name="description" content="What you can verify about BlackCrown today, and where customer results will be published when customers agree to share them.">
+<link rel="canonical" href="https://blackcrownvxj.com/proof.html">
+<meta property="og:title" content="Proof | BlackCrown">
+<meta property="og:description" content="What you can verify about BlackCrown today, and where customer results will be published when customers agree to share them.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://blackcrownvxj.com/proof.html">
+<meta property="og:image" content="https://blackcrownvxj.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blackcrownvxj.com/og-image.png">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --vanta:#000000;--ink-2:#060608;--ink-3:#0A0A0D;--white:#FFFFFF;--bone:#E8E8EF;--mute:#85838F;
-    --pink:#FF2D95;--pink-soft:#FF6FB6;--pink-deep:#C81E73;
-    --line:rgba(255,45,149,.20);--line-soft:rgba(255,255,255,.07);
-    --glow-pink:0 0 6px rgba(255,45,149,.36),0 0 18px rgba(255,45,149,.16);
-    --glow-white:0 0 8px rgba(255,255,255,.24);--logo-glow:0 0 11px rgba(255,255,255,.38);
-    --max:1200px;--pad:clamp(1.25rem,5vw,4.5rem);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--vanta);color:var(--bone);font-family:'Manrope',system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  ::selection{background:var(--pink);color:#0A0008}
-  :focus-visible{outline:2px solid var(--pink);outline-offset:3px;border-radius:3px}
-  .wrap{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink)}
-  .display{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:.98;letter-spacing:-0.02em}
-  .neon{color:var(--pink);text-shadow:var(--glow-pink)}
-
-  .grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:screen;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-
-  .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
-    padding:1rem var(--pad);transition:background .35s ease,border-color .35s ease,backdrop-filter .35s ease;border-bottom:1px solid transparent}
-  .nav.scrolled{background:rgba(0,0,0,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-  .brand{display:flex;align-items:center;gap:.6rem}
-  .brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.02em;font-size:1.18rem;color:var(--white);text-shadow:var(--logo-glow)}
-  .nav-links{display:flex;gap:2.1rem;align-items:center}
-  .nav-links a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);transition:color .25s,text-shadow .25s}
-  .nav-links a:hover,.nav-links a.active{color:var(--pink);text-shadow:var(--glow-pink)}
-  .nav-drop{position:relative;display:inline-flex;align-items:center}
-  .nav-drop-btn{display:inline-flex;align-items:center;gap:.45rem;line-height:1}
-  .nav-drop-btn .caret{width:9px;height:6px;opacity:.7;transition:transform .25s ease}
-  .nav-drop:hover .nav-drop-btn .caret,.nav-drop:focus-within .nav-drop-btn .caret{transform:rotate(180deg)}
-  .nav-drop-menu{position:absolute;top:100%;left:50%;min-width:252px;padding:.55rem;margin-top:.85rem;transform:translate(-50%,10px);
-    background:rgba(5,5,8,.96);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:12px;
-    box-shadow:0 18px 44px rgba(0,0,0,.6),0 0 20px rgba(255,45,149,.08);
-    opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,transform .22s ease,visibility .22s}
-  .nav-drop-menu::before{content:"";position:absolute;left:0;right:0;top:-.95rem;height:.95rem}
-  .nav-drop:hover .nav-drop-menu,.nav-drop:focus-within .nav-drop-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0)}
-  .nav-drop-menu a{display:flex;align-items:center;gap:.6rem;padding:.62rem .8rem;border-radius:8px;white-space:nowrap}
-  .nav-drop-menu a:hover{background:rgba(255,255,255,.05);color:var(--c,var(--pink));text-shadow:0 0 6px color-mix(in srgb,var(--c,var(--pink)) 55%,transparent)}
-  .nav-drop-menu .pd{width:7px;height:7px;border-radius:50%;background:var(--c,var(--pink));box-shadow:0 0 6px var(--c,var(--pink));flex:none}
-  .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:42px;height:42px;padding:0;background:transparent;border:1px solid var(--line);border-radius:9px;cursor:pointer;transition:border-color .25s ease}
-  .nav-toggle span{display:block;width:20px;height:2px;background:var(--bone);margin:0 auto;border-radius:2px;transition:transform .3s ease,opacity .25s ease}
-  .nav-toggle:hover{border-color:var(--pink)}
-  .nav.open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  .nav.open .nav-toggle span:nth-child(2){opacity:0}
-  .nav.open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .nav-cta{display:none}
-  .btn{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
-    padding:.72rem 1.3rem;border-radius:8px;cursor:pointer;display:inline-block;transition:transform .2s ease,background .25s ease,box-shadow .25s ease,color .25s ease,border-color .25s ease}
-  .btn.solid{background:var(--pink);color:#0A0008;border:1px solid var(--pink);box-shadow:var(--glow-pink)}
-  .btn.solid:hover{background:var(--pink-soft);box-shadow:0 0 12px rgba(255,45,149,.5),0 0 30px rgba(255,45,149,.28);transform:translateY(-2px)}
-  .btn.ghost{background:transparent;color:var(--bone);border:1px solid rgba(255,255,255,.22)}
-  .btn.ghost:hover{border-color:var(--pink);color:var(--pink);box-shadow:var(--glow-pink);text-shadow:var(--glow-pink);transform:translateY(-2px)}
-
-  .phero{padding:11rem 0 4rem;position:relative;overflow:hidden}
-  .phero .aura{position:absolute;top:-20%;left:30%;width:50vw;max-width:560px;height:50vw;max-height:560px;border-radius:50%;
-    background:radial-gradient(circle,rgba(255,45,149,.13),transparent 66%);filter:blur(60px);z-index:0}
-  .phero .wrap{position:relative;z-index:1}
-  .phero .eyebrow{display:block;margin-bottom:1.4rem}
-  .phero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.6rem,8vw,5.6rem);line-height:.94;letter-spacing:-0.03em;color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.4rem;max-width:16ch}
-  .phero p{font-size:clamp(1.05rem,2vw,1.3rem);color:var(--mute);max-width:48ch}
-
-  .sec{padding:clamp(4rem,9vw,6.5rem) 0;border-top:1px solid var(--line-soft)}
-  .sec-head{margin-bottom:3rem;max-width:780px}
-  .sec-head .eyebrow{display:block;margin-bottom:1rem}
-  .sec-head h2{font-size:clamp(1.9rem,5vw,3.2rem);color:var(--white)}
-
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
-  .stat{background:var(--ink-2);padding:2.6rem 2rem}
-  .stat .num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.6rem,6vw,4rem);color:var(--white);text-shadow:var(--glow-white);line-height:1;letter-spacing:-0.03em}
-  .stat .num span{color:var(--pink);text-shadow:var(--glow-pink)}
-  .stat .lab{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:1rem;display:block}
-
-  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-  .quote{position:relative;background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:2.2rem 2rem;display:flex;flex-direction:column;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
-  .quote:hover{transform:translateY(-5px);border-color:var(--pink);box-shadow:0 0 16px rgba(255,45,149,.22),0 14px 36px rgba(0,0,0,.6)}
-  .quote .ex{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink-deep);border:1px solid var(--line);border-radius:4px;padding:.2rem .5rem;align-self:flex-start;margin-bottom:1.4rem}
-  .quote blockquote{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1.15rem;line-height:1.4;color:var(--bone);flex:1}
-  .quote .who{margin-top:1.6rem}
-  .quote .who .n{color:var(--white);font-weight:700;font-size:.98rem}
-  .quote .who .r{color:var(--mute);font-size:.85rem}
-
-  .cases{display:grid;gap:1.5rem}
-  .case{background:var(--ink-2);border:1px solid var(--line);border-radius:14px;padding:2.4rem 2.2rem;display:flex;gap:2rem;flex-wrap:wrap;align-items:flex-start}
-  .case .meta{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink);min-width:140px}
-  .case .body{flex:1;min-width:260px}
-  .case h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:var(--white);margin-bottom:.8rem;line-height:1.1}
-  .case p{color:var(--mute);font-size:1rem;max-width:60ch}
-  .case .link{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);margin-top:1.4rem;display:inline-block}
-
-  .logos{display:flex;gap:1rem;flex-wrap:wrap}
-  .logos .chip{flex:1;min-width:150px;height:88px;border:1px dashed var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;
-    font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-
-  .cta{text-align:center;padding:clamp(4rem,9vw,6rem) 0}
-  .cta h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2rem,6vw,3.6rem);color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.2rem}
-  .cta p{color:var(--mute);max-width:46ch;margin:0 auto 2.2rem}
-  .cta .row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
-
-  footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--ink-2)}
-  .foot-grid{display:flex;justify-content:space-between;gap:3rem;flex-wrap:wrap;margin-bottom:3.5rem}
-  .foot-brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.35rem;color:var(--white);text-shadow:var(--logo-glow);display:flex;align-items:center;gap:.6rem}
-  .foot-brand p{color:var(--mute);font-size:.95rem;margin-top:.9rem;max-width:30ch}
-  .foot-col h4{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink);margin-bottom:1.2rem}
-  .foot-col a{display:block;color:var(--mute);font-size:.95rem;margin-bottom:.6rem;transition:color .25s}
-  .foot-col a:hover{color:var(--pink)}
-  .foot-bottom{padding-top:2rem;border-top:1px solid var(--line-soft);font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-  .reveal.in{opacity:1;transform:none}
-
-  @media(max-width:900px){
-    .nav-toggle{display:flex}
-    .nav > .btn.solid{display:none}
-    .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;align-items:stretch;
-      background:rgba(8,8,11,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);
-      padding:.4rem var(--pad) 1.3rem;transform:translateY(-10px);opacity:0;visibility:hidden;pointer-events:none;
-      transition:opacity .28s ease,transform .28s ease,visibility .28s}
-    .nav.open .nav-links{opacity:1;visibility:visible;transform:none;pointer-events:auto}
-    .nav-links a{padding:1rem .2rem;border-bottom:1px solid var(--line-soft);font-size:.82rem}
-    .nav-drop{position:static}
-    .nav-drop-menu{position:static;transform:none;opacity:1;visibility:visible;pointer-events:auto;min-width:0;margin:0;padding:0 0 .3rem .95rem;background:transparent;border:none;box-shadow:none;backdrop-filter:none}
-    .nav-drop-menu::before{display:none}
-    .nav-drop-menu a{border-bottom:none;padding:.55rem .2rem;font-size:.76rem}
-    .nav-drop-btn .caret{display:none}
-    .nav-cta{display:block;margin-top:1rem;text-align:center;background:var(--pink);color:#0A0008;border:1px solid var(--pink);border-radius:8px;padding:.95rem 1rem;box-shadow:var(--glow-pink)}
-    .nav.open{background:rgba(0,0,0,.9);backdrop-filter:blur(16px);border-bottom-color:var(--line)}
-    .stats,.quotes{grid-template-columns:1fr}
-  }
-  @media(max-width:600px){
-    :root{--pad:1.15rem}
-    .phero{padding:8rem 0 3rem}
-    .cta .row .btn{flex:1 1 100%;justify-content:center}
-    .foot-grid{flex-direction:column;gap:1.8rem}
-    .quotes,.cases{gap:1rem}
-  }
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}.reveal{opacity:1;transform:none}}
-</style>
-  <link rel="canonical" href="https://blackcrownvxj.com/proof.html">
-  <meta property="og:title" content="Proof of Work | BlackCrown">
-  <meta property="og:description" content="Receipts, not promises. What BlackCrown has shipped and what it does.">
+<link rel="stylesheet" href="/assets/site.css?v=20261111">
 </head>
-<body>
-
-<div class="grain"></div>
-
-<nav class="nav" id="nav">
-  <a class="brand" href="/" aria-label="BlackCrown home">
-    <svg width="28" height="23" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 6px rgba(255,45,149,.7))" aria-hidden="true">
-      <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-      <line x1="7" y1="28" x2="29" y2="28"/>
-    </svg>
-    <span class="wordmark">BlackCrown</span>
-  </a>
-  <div class="nav-links" id="navLinks">
-    <a href="/#ethos">Mission</a>
-    <div class="nav-drop">
-      <a href="/#products" class="nav-drop-btn" aria-haspopup="true">Products<svg class="caret" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1 L5 5 L9 1"/></svg></a>
-      <div class="nav-drop-menu">
-        <a href="/korvus.html" style="--c:#FF3B47"><span class="pd"></span>Korvus Industries</a>
-        <a href="/lodestone.html" style="--c:#49D7FF"><span class="pd"></span>LodeStone Indicator</a>
-        <a href="/intelligence.html" style="--c:#E8C77F"><span class="pd"></span>BlackCrown Intelligence</a>
-        <a href="/eclipse-x.html" style="--c:#FF2D95"><span class="pd"></span>Eclipse-X</a>
-      </div>
-    </div>
-    <a href="/proof.html" class="active">Proof</a>
-    <a href="/#contact">Contact</a>
-    <a href="/#contact" class="nav-cta">Get in touch</a>
-  </div>
-  <a href="/#contact" class="btn solid">Get in touch</a>
-  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
-</nav>
-
-<header class="phero">
-  <div class="aura"></div>
+<body data-track="proof">
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="site-head">
   <div class="wrap">
-    <span class="eyebrow reveal">Proof</span>
-    <h1 class="reveal">Receipts, not <span class="neon">promises</span>.</h1>
-    <p class="reveal">What operators do once they have the edge. As BlackCrown grows, the real numbers, stories, and names land right here.</p>
+    <a class="brand" href="/" aria-label="BlackCrown home"><svg viewBox="0 0 36 30" aria-hidden="true"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>BlackCrown</a>
+    <nav class="nav" aria-label="Main">
+      <details>
+        <summary>Products</summary>
+        <div class="menu">
+          <a href="/korvus.html" style="--c:#FF2D95"><i></i><b>Korvus</b><span>A market terminal that reads and scores the news and SEC filings for index futures traders.</span></a>
+          <a href="/lodestone.html" style="--c:#49D7FF"><i></i><b>LodeStone</b><span>A chart indicator that draws your session levels, value and structure for you.</span></a>
+          <a href="/intelligence.html" style="--c:#FF2D95"><i></i><b>Crown</b><span>A private AI workspace by BlackCrown Intelligence. Your work is never sold or trained on.</span></a>
+          <a href="/eclipse-x.html" style="--c:#FF6FB6"><i></i><b>Eclipse-X</b><span>The free BlackCrown community on Discord, with live scored news and the desk in the open.</span></a>
+        </div>
+      </details>
+      <a href="/#fit">Find your fit</a>
+      <a href="/#company">Company</a>
+      <a href="/support.html">Support</a>
+    </nav>
+    <a class="btn primary small head-cta" href="/#fit">Find your fit</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
+  </div>
+</header>
+<main id="main">
+
+<header class="page-head">
+  <div class="wrap">
+    <a class="crumb" href="/">BlackCrown</a>
+    <h1>Receipts, not promises.</h1>
+    <p class="lead">We will not print a number or a quote we cannot stand behind. This page lists what you can check for yourself today, and it is where customer results will be published once customers agree to share them.</p>
   </div>
 </header>
 
-<!-- ======================================================================
-     PLACEHOLDER CONTENT BELOW. Swap in real figures, quotes, and case
-     studies before sharing this page. Nothing here is a real claim yet.
-     ====================================================================== -->
-
 <section class="sec">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">By the numbers</span>
-      <h2 class="display">The impact, measured.</h2>
-    </div>
-    <div class="stats reveal">
-      <div class="stat"><div class="num">00<span>+</span></div><span class="lab">Members in Eclipse-X</span></div>
-      <div class="stat"><div class="num">00<span>+</span></div><span class="lab">Markets tracked by Korvus</span></div>
-      <div class="stat"><div class="num">00<span>+</span></div><span class="lab">Operators using the AI</span></div>
+  <div class="wrap rail">
+    <header>
+      <h2>What you can verify today.</h2>
+      <p>None of this asks you to take our word for it.</p>
+    </header>
+    <div class="rows">
+      <div><h3>Try before you pay</h3><p>Korvus, Crown and Eclipse-X are free to start with no card. The fastest proof is using the product on your own work or your own session.</p></div>
+      <div><h3>Every SEC filing card is timestamped</h3><p>Korvus shows when the SEC accepted a filing and when Korvus had it. You can compare both against the public EDGAR record and against when the headlines appeared.</p></div>
+      <div><h3>LodeStone does not repaint</h3><p>Levels and flags print on confirmed bars and stay. Scroll back on your own chart and what you see in review is what was there live.</p></div>
+      <div><h3>The community is open</h3><p>Eclipse-X is a public invite. Walk in, read the floor, and see how the desk answers questions before you spend anything.</p></div>
+      <div><h3>You can reach a real company</h3><p>BlackCrownVxJ LLC, with a working email, a phone number and a support desk. Checkout is handled by Stripe, and paid plans cancel anytime.</p></div>
     </div>
   </div>
 </section>
 
 <section class="sec">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">In their words</span>
-      <h2 class="display">What operators say.</h2>
-    </div>
-    <div class="quotes">
-      <div class="quote reveal">
-        <span class="ex">Example</span>
-        <blockquote>"Drop a real client quote here. Keep it specific, and lead with the outcome they got."</blockquote>
-        <div class="who"><div class="n">Client name</div><div class="r">Role, Company</div></div>
-      </div>
-      <div class="quote reveal">
-        <span class="ex">Example</span>
-        <blockquote>"A second quote. The best ones name a concrete before and after, not vague praise."</blockquote>
-        <div class="who"><div class="n">Client name</div><div class="r">Role, Company</div></div>
-      </div>
-      <div class="quote reveal">
-        <span class="ex">Example</span>
-        <blockquote>"A third quote. Short, real, and signed by someone with a name people can verify."</blockquote>
-        <div class="who"><div class="n">Client name</div><div class="r">Role, Company</div></div>
+  <div class="wrap rail">
+    <header>
+      <h2>Customer results.</h2>
+      <p>Nothing published yet.</p>
+    </header>
+    <div class="panel" style="padding:clamp(1.4rem,3vw,2.2rem)">
+      <h3 style="margin-bottom:.7rem">We are not going to fill this space with placeholders.</h3>
+      <p class="sub">When customers tell us what changed for them and agree to be named, their stories go here, with specifics you can check. Until then this section stays empty on purpose. If you use one of our products and want to share how it went, good or bad, we would like to hear it.</p>
+      <div class="btn-row">
+        <a class="btn primary" href="/support.html">Share your experience</a>
+        <a class="btn" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Ask members in Eclipse-X</a>
       </div>
     </div>
   </div>
 </section>
 
 <section class="sec">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Case studies</span>
-      <h2 class="display">The full story.</h2>
-    </div>
-    <div class="cases">
-      <div class="case reveal">
-        <div class="meta">Case 01<br>Trading</div>
-        <div class="body">
-          <h3>Headline of the result.</h3>
-          <p>Describe the situation, what BlackCrown did, and the measurable outcome. Replace this with a real story when you have one worth telling.</p>
-          <a class="link" href="#">Read the story</a>
-        </div>
+  <div class="wrap rail">
+    <header>
+      <h2>What we will never claim.</h2>
+      <p>It is easier to trust a company that says what it does not do.</p>
+    </header>
+    <div class="fit-grid">
+      <div>
+        <h3>What our tools do</h3>
+        <ul class="ticks">
+          <li>Read and score market news and filings so you have context</li>
+          <li>Draw the levels you would otherwise draw by hand</li>
+          <li>Keep your AI work private and in one place</li>
+          <li>Put you in a room with people doing the same work</li>
+        </ul>
       </div>
-      <div class="case reveal">
-        <div class="meta">Case 02<br>AI / Commerce</div>
-        <div class="body">
-          <h3>Headline of the result.</h3>
-          <p>A second example. Pair a clear problem with a clear, verifiable win, and let the numbers carry it.</p>
-          <a class="link" href="#">Read the story</a>
-        </div>
+      <div>
+        <h3>What they do not do</h3>
+        <ul class="ticks no">
+          <li>Promise profit, win rates or returns</li>
+          <li>Give trade signals or tell you what to buy or sell</li>
+          <li>Place trades or manage money for you</li>
+          <li>Replace your own judgment</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section class="sec">
+<section class="closing">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Trusted by</span>
-      <h2 class="display">Operators and partners.</h2>
+    <div>
+      <h2>See it for yourself.</h2>
+      <p>Tell us what you need and we will show you which product fits, or tell you that none do.</p>
     </div>
-    <div class="logos reveal">
-      <div class="chip">Your logos here</div>
-      <div class="chip">Your logos here</div>
-      <div class="chip">Your logos here</div>
-      <div class="chip">Your logos here</div>
+    <div class="btn-row">
+      <a class="btn primary" href="/#fit">Find your fit</a>
+      <a class="btn" href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=proof" target="_blank" rel="noopener">Open Korvus free</a>
     </div>
   </div>
 </section>
 
-<section class="cta">
-  <div class="wrap reveal">
-    <h2 class="display">Want results like these?</h2>
-    <p>Tell us what you're building, and we'll show you where BlackCrown fits.</p>
-    <div class="row">
-      <a href="/#contact" class="btn solid">Get in touch</a>
-      <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" class="btn ghost">Join Eclipse-X</a>
-    </div>
-  </div>
-</section>
-
-<footer>
+</main>
+<footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <span class="wordmark">
-          <svg width="24" height="20" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 5px rgba(255,45,149,.7))" aria-hidden="true">
-            <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-            <line x1="7" y1="28" x2="29" y2="28"/>
-          </svg>
-          BlackCrown
-        </span>
-        <p>Market intelligence, AI, and a private network for independent operators.</p>
+        <span class="brand"><svg viewBox="0 0 36 30" aria-hidden="true"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>BlackCrown</span>
+        <p>Tools for people who trade and build on their own: market intelligence, a chart indicator, a private AI workspace and a community.</p>
+        <div class="social">
+          <a href="https://www.tiktok.com/@blackcrown_vxj" target="_blank" rel="noopener" aria-label="BlackCrown on TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
+          <a href="https://www.instagram.com/blackcrownvxj.llc/" target="_blank" rel="noopener" aria-label="BlackCrown on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg></a>
+        </div>
       </div>
-      <div class="foot-col">
+      <div>
         <h4>Products</h4>
-        <a href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=proof" target="_blank" rel="noopener">Korvus Industries</a>
-        <a href="https://blackcrown-intelligence.com" target="_blank" rel="noopener">BlackCrown Intelligence</a>
-        <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Eclipse-X</a>
+        <nav aria-label="Products">
+          <a href="/korvus.html">Korvus</a>
+          <a href="/lodestone.html">LodeStone</a>
+          <a href="/intelligence.html">Crown by BlackCrown Intelligence</a>
+          <a href="/eclipse-x.html">Eclipse-X</a>
+        </nav>
       </div>
-      <div class="foot-col">
+      <div>
+        <h4>Company</h4>
+        <nav aria-label="Company">
+          <a href="/#company">About BlackCrown</a>
+          <a href="/support.html">Support</a>
+          <a href="/terms.html">Terms of Service</a>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/disclaimer.html">Disclaimer</a>
+        </nav>
+      </div>
+      <div>
         <h4>Contact</h4>
-        <a href="mailto:BlackCrownVxJ.LLC@outlook.com">Email us</a>
-        <a href="tel:+17032989426">(703) 298-9426</a>
+        <nav aria-label="Contact">
+          <a href="mailto:BlackCrownVxJ.LLC@outlook.com">BlackCrownVxJ.LLC@outlook.com</a>
+          <a href="tel:+17032989426">(703) 298-9426</a>
+          <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Eclipse-X on Discord</a>
+        </nav>
       </div>
     </div>
-    <div class="foot-bottom">© 2026 BlackCrownVxJ LLC</div>
+    <p class="foot-note">BlackCrown provides tools and information for independent operators. Nothing on this site is financial, investment, legal, or tax advice, and nothing here is a recommendation to buy or sell any security or instrument. Trading and investing carry a substantial risk of loss. You are solely responsible for your own decisions.</p>
+    <div class="foot-base">
+      <span>&copy; 2026 BlackCrownVxJ LLC. All rights reserved.</span>
+      <span>Built and operated by BlackCrownVxJ LLC</span>
+    </div>
   </div>
 </footer>
-
-<script>
-  const nav=document.getElementById('nav');
-  const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>24);
-  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
-  const navToggle=document.getElementById('navToggle');
-  if(navToggle){
-    navToggle.addEventListener('click',()=>{const open=nav.classList.toggle('open');navToggle.setAttribute('aria-expanded',open?'true':'false');});
-    document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');navToggle.setAttribute('aria-expanded','false');}));
-    window.addEventListener('resize',()=>{if(window.innerWidth>900&&nav.classList.contains('open')){nav.classList.remove('open');navToggle.setAttribute('aria-expanded','false');}},{passive:true});
-  }
-  const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:0.15});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-</script>
-<script>
-(function(){
-  var done = {};
-  document.addEventListener('mouseover', function(e){
-    var a = e.target.closest && e.target.closest('a[href]');
-    if(!a || a.host !== location.host) return;
-    var href = a.getAttribute('href');
-    if(!href || href.charAt(0) === '#' || done[a.pathname]) return;
-    done[a.pathname] = 1;
-    var l = document.createElement('link'); l.rel = 'prefetch'; l.href = a.pathname;
-    document.head.appendChild(l);
-  }, {passive:true});
-})();
-</script>
-
-<!-- BlackCrown analytics beacon -->
-<script>
-(function(){
-  var EP="https://admin.blackcrownvxj.com/api/track";
-  function hit(e,k,x){try{new Image().src=EP+"?e="+e+"&k="+encodeURIComponent(k)+(x||"")+"&_="+Date.now();}catch(_){}}
-  var d=(window.innerWidth<768)?"m":"d";
-  var r=encodeURIComponent((document.referrer||"").slice(0,200));
-  hit("visit","proof","&d="+d+"&r="+r);
-  document.addEventListener("click",function(ev){
-    var a=ev.target&&ev.target.closest?ev.target.closest("a[href]"):null;
-    if(!a)return;
-    var h=a.getAttribute("href")||"";
-    if(/korvus\.industries/i.test(h))hit("click","korvus");
-    else if(/blackcrown-intelligence\.com/i.test(h))hit("click","intelligence");
-    else if(/discord\.(gg|com)/i.test(h))hit("click","collective");
-  },true);
-})();
-</script>
+<script src="/assets/site.js?v=20261111" defer></script>
 </body>
 </html>

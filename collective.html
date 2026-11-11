@@ -15,75 +15,99 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://blackcrownvxj.com/og-image.png">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{--vanta:#000;--ink-2:#060608;--white:#fff;--bone:#E8E8EF;--mute:#85838F;--pink:#FF2D95;--pink-soft:#FF6FB6;
-    --line:rgba(255,45,149,.2);--line-soft:rgba(255,255,255,.07);
-    --glow-pink:0 0 6px rgba(255,45,149,.36),0 0 18px rgba(255,45,149,.16);--glow-white:0 0 8px rgba(255,255,255,.24)}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--vanta);color:var(--bone);font-family:'Manrope',system-ui,sans-serif;font-size:17px;line-height:1.65;
-    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  a{color:inherit}
-  ::selection{background:var(--pink);color:#0A0008}
-  .aura{position:fixed;top:30%;left:50%;transform:translate(-50%,-50%);width:60vw;max-width:620px;height:60vw;max-height:620px;border-radius:50%;
-    background:radial-gradient(circle,rgba(255,45,149,.12),transparent 66%);filter:blur(60px);pointer-events:none}
-  .card{position:relative;max-width:560px;text-align:center}
-  .crown{filter:drop-shadow(0 0 8px rgba(255,45,149,.7));margin-bottom:1.6rem}
-  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--pink);
-    text-shadow:var(--glow-pink);display:block;margin-bottom:1rem}
-  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2rem,7vw,3.2rem);line-height:1.02;letter-spacing:-0.02em;
-    color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.2rem}
-  h1 em{font-style:normal;color:var(--pink);text-shadow:var(--glow-pink)}
-  p{color:var(--mute);max-width:44ch;margin:0 auto 2rem}
-  .btn{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
-    padding:.85rem 1.6rem;border-radius:8px;display:inline-block;text-decoration:none;transition:transform .2s ease,box-shadow .25s ease,background .25s ease}
-  .btn.solid{background:var(--pink);color:#0A0008;border:1px solid var(--pink);box-shadow:var(--glow-pink)}
-  .btn.solid:hover{background:var(--pink-soft);transform:translateY(-2px)}
-  .btn.ghost{background:transparent;color:var(--bone);border:1px solid rgba(255,255,255,.22);margin-left:.6rem}
-  .btn.ghost:hover{border-color:var(--pink);color:var(--pink);box-shadow:var(--glow-pink);transform:translateY(-2px)}
-  .foot{margin-top:3rem;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
-  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
+<link rel="stylesheet" href="/assets/site.css?v=20261111">
 </head>
-<body>
-<div class="aura"></div>
-<main class="card">
-  <svg class="crown" width="54" height="45" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-    <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-    <line x1="7" y1="28" x2="29" y2="28"/>
-  </svg>
-  <span class="eyebrow">A new name, the same room</span>
-  <h1>The Collective is now <em>Eclipse-X</em>.</h1>
-  <p>BlackCrown's network of independent operators carries on under its new name. Traders, founders and builders, trading real signal through every session. Free to join, no upsell.</p>
-  <div>
-    <a class="btn solid" href="/eclipse-x.html">Meet Eclipse-X</a>
-    <a class="btn ghost" href="/">BlackCrown home</a>
+<body data-product="eclipse" data-track="collective">
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="BlackCrown home"><svg viewBox="0 0 36 30" aria-hidden="true"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>BlackCrown</a>
+    <nav class="nav" aria-label="Main">
+      <details>
+        <summary>Products</summary>
+        <div class="menu">
+          <a href="/korvus.html" style="--c:#FF2D95"><i></i><b>Korvus</b><span>A market terminal that reads and scores the news and SEC filings for index futures traders.</span></a>
+          <a href="/lodestone.html" style="--c:#49D7FF"><i></i><b>LodeStone</b><span>A chart indicator that draws your session levels, value and structure for you.</span></a>
+          <a href="/intelligence.html" style="--c:#FF2D95"><i></i><b>Crown</b><span>A private AI workspace by BlackCrown Intelligence. Your work is never sold or trained on.</span></a>
+          <a href="/eclipse-x.html" style="--c:#FF6FB6"><i></i><b>Eclipse-X</b><span>The free BlackCrown community on Discord, with live scored news and the desk in the open.</span></a>
+        </div>
+      </details>
+      <a href="/#fit">Find your fit</a>
+      <a href="/#company">Company</a>
+      <a href="/support.html">Support</a>
+    </nav>
+    <a class="btn primary small head-cta" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Join Eclipse-X</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
   </div>
-  <div class="foot">© 2026 BlackCrownVxJ LLC</div>
+</header>
+<main id="main">
+<section class="hero" style="min-height:70vh;display:grid;align-items:center">
+  <div class="hero-wash" aria-hidden="true"></div>
+  <div class="wrap" style="max-width:46rem">
+    <span class="tag" data-in style="--i:0">A new name</span>
+    <h1 data-in style="--i:1">The Collective is now Eclipse-X.</h1>
+    <p class="lead" data-in style="--i:2">Same room, same people, new name. Eclipse-X is the free BlackCrown community on Discord for independent operators in trading, AI and e-commerce. No gurus and no courses. The invite is open.</p>
+    <div class="btn-row" data-in style="--i:3">
+      <a class="btn primary" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Join Eclipse-X</a>
+      <a class="btn" href="/eclipse-x.html">See what is inside</a>
+    </div>
+  </div>
+</section>
 </main>
-
-<!-- BlackCrown analytics beacon -->
-<script>
-(function(){
-  var EP="https://admin.blackcrownvxj.com/api/track";
-  function hit(e,k,x){try{new Image().src=EP+"?e="+e+"&k="+encodeURIComponent(k)+(x||"")+"&_="+Date.now();}catch(_){}}
-  var d=(window.innerWidth<768)?"m":"d";
-  var r=encodeURIComponent((document.referrer||"").slice(0,200));
-  hit("visit","collective","&d="+d+"&r="+r);
-  document.addEventListener("click",function(ev){
-    var a=ev.target&&ev.target.closest?ev.target.closest("a[href]"):null;
-    if(!a)return;
-    var h=a.getAttribute("href")||"";
-    if(/korvus\.industries/i.test(h))hit("click","korvus");
-    else if(/blackcrown-intelligence\.com/i.test(h))hit("click","intelligence");
-    else if(/discord\.(gg|com)/i.test(h))hit("click","collective");
-  },true);
-})();
-</script>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="brand"><svg viewBox="0 0 36 30" aria-hidden="true"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>BlackCrown</span>
+        <p>Tools for people who trade and build on their own: market intelligence, a chart indicator, a private AI workspace and a community.</p>
+        <div class="social">
+          <a href="https://www.tiktok.com/@blackcrown_vxj" target="_blank" rel="noopener" aria-label="BlackCrown on TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
+          <a href="https://www.instagram.com/blackcrownvxj.llc/" target="_blank" rel="noopener" aria-label="BlackCrown on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <nav aria-label="Products">
+          <a href="/korvus.html">Korvus</a>
+          <a href="/lodestone.html">LodeStone</a>
+          <a href="/intelligence.html">Crown by BlackCrown Intelligence</a>
+          <a href="/eclipse-x.html">Eclipse-X</a>
+        </nav>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <nav aria-label="Company">
+          <a href="/#company">About BlackCrown</a>
+          <a href="/support.html">Support</a>
+          <a href="/terms.html">Terms of Service</a>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/disclaimer.html">Disclaimer</a>
+        </nav>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <nav aria-label="Contact">
+          <a href="mailto:BlackCrownVxJ.LLC@outlook.com">BlackCrownVxJ.LLC@outlook.com</a>
+          <a href="tel:+17032989426">(703) 298-9426</a>
+          <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Eclipse-X on Discord</a>
+        </nav>
+      </div>
+    </div>
+    <p class="foot-note">BlackCrown provides tools and information for independent operators. Nothing on this site is financial, investment, legal, or tax advice, and nothing here is a recommendation to buy or sell any security or instrument. Trading and investing carry a substantial risk of loss. You are solely responsible for your own decisions.</p>
+    <div class="foot-base">
+      <span>&copy; 2026 BlackCrownVxJ LLC. All rights reserved.</span>
+      <span>Built and operated by BlackCrownVxJ LLC</span>
+    </div>
+  </div>
+</footer>
+<script src="/assets/site.js?v=20261111" defer></script>
 </body>
 </html>

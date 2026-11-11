@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Korvus: the trader's intelligence terminal | BlackCrown</title>
+<title>Korvus | Market news and SEC filings, scored for index futures | BlackCrown</title>
 <meta name="description" content="Korvus reads the Asia, London and New York newswires and SEC filings around the clock, scores every story for index futures, tracks SMT divergence, and adds Compass for long-term investing.">
 <link rel="canonical" href="https://blackcrownvxj.com/korvus.html">
-<meta property="og:title" content="Korvus Industries: your edge while the world sleeps">
+<meta property="og:title" content="Korvus: your edge while the world sleeps">
 <meta property="og:description" content="A market terminal that reads three news desks and SEC filings around the clock, scores every story for impact, and shows you the why in plain English.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://blackcrownvxj.com/korvus.html">
@@ -15,1058 +15,407 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://blackcrownvxj.com/og-image.png">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-<style>
-  :root{
-    --vanta:#000000;--ink-2:#060608;--ink-3:#0A0A0D;--panel:#0D0D11;
-    --white:#FFFFFF;--bone:#E8E8EF;--mute:#85838F;
-    --pink:#FF2D95;--pink-soft:#FF6FB6;--pink-deep:#C81E73;
-    --accent:#FF2D95;--accent-soft:#FF6FB6;
-    --line:rgba(255,45,149,.20);--line-soft:rgba(255,255,255,.07);
-    --accent-glow:0 0 6px rgba(255,45,149,.40),0 0 18px rgba(255,45,149,.18);
-    --glow-white:0 0 8px rgba(255,255,255,.24);--logo-glow:0 0 11px rgba(255,255,255,.38);
-    --glow-pink:0 0 6px rgba(255,45,149,.36),0 0 16px rgba(255,45,149,.16);
-    --max:1200px;--pad:clamp(1.25rem,5vw,4.5rem);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--vanta);color:var(--bone);font-family:'Manrope',system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  ::selection{background:var(--accent);color:#0A0008}
-  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
-  .wrap{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow)}
-  .neon{color:var(--accent);text-shadow:var(--accent-glow)}
-
-  .grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:screen;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-  .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:95;background:var(--accent);box-shadow:var(--accent-glow);transition:width .1s linear}
-
-  /* preloader */
-  #preloader{position:fixed;inset:0;z-index:120;background:var(--vanta);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;transition:opacity .7s ease,visibility .7s ease}
-  #preloader.done{opacity:0;visibility:hidden}
-  #preloader .pl-crown{width:74px;height:62px;filter:drop-shadow(0 0 14px rgba(255,45,149,.55))}
-  #preloader .pl-crown path,#preloader .pl-crown line{stroke:var(--pink);stroke-width:1.6;fill:none;stroke-linejoin:round;stroke-linecap:round;
-    stroke-dasharray:120;stroke-dashoffset:120;animation:plDraw 1.15s cubic-bezier(.6,.05,.2,1) forwards}
-  #preloader .pl-crown line{animation-delay:.5s}
-  @keyframes plDraw{to{stroke-dashoffset:0}}
-  .pl-meter{width:140px;height:2px;background:rgba(255,255,255,.10);border-radius:2px;overflow:hidden}
-  .pl-meter i{display:block;height:100%;width:0;background:var(--accent);box-shadow:var(--accent-glow)}
-  .pl-label{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mute)}
-  .pl-label b{color:var(--accent);font-weight:500}
-
-  /* backbar nav */
-  .backbar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
-    padding:1rem var(--pad);transition:background .35s ease,border-color .35s ease,backdrop-filter .35s ease;border-bottom:1px solid transparent}
-  .backbar.scrolled{background:rgba(0,0,0,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-  .brand{display:flex;align-items:center;gap:.6rem}
-  .brand .crownmark{filter:drop-shadow(0 0 6px rgba(255,45,149,.7))}
-  .brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.02em;font-size:1.12rem;color:var(--white);text-shadow:var(--logo-glow)}
-  .back-link{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);transition:color .25s}
-  .back-link:hover{color:var(--accent);text-shadow:var(--accent-glow)}
-  .back-link .arr{display:inline-block;transition:transform .25s ease}
-  .back-link:hover .arr{transform:translateX(-4px)}
-
-  /* buttons */
-  .btn{position:relative;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
-    padding:.78rem 1.4rem;border-radius:8px;cursor:pointer;display:inline-block;transition:transform .2s ease,background .25s ease,box-shadow .25s ease,color .25s ease,border-color .25s ease}
-  .btn.accent{background:var(--accent);color:#0A0008;border:1px solid var(--accent);box-shadow:var(--accent-glow)}
-  .btn.accent:hover{background:var(--accent-soft);box-shadow:0 0 12px rgba(255,45,149,.55),0 0 30px rgba(255,45,149,.3);transform:translateY(-2px)}
-  .btn.ghost{background:transparent;color:var(--bone);border:1px solid rgba(255,255,255,.22)}
-  .btn.ghost:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--accent-glow);text-shadow:var(--accent-glow);transform:translateY(-2px)}
-  .btn .sheen{position:absolute;top:0;left:-120%;width:60%;height:100%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-18deg)}
-  .btn:hover .sheen{animation:sheen .7s ease}
-  @keyframes sheen{from{left:-120%}to{left:160%}}
-
-  /* hero */
-  .phero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden;isolation:isolate;padding:7rem 0 3rem}
-  #bc3d{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:block}
-  .phero .aura{position:absolute;border-radius:50%;filter:blur(72px);z-index:0;pointer-events:none}
-  .phero .a1{top:2%;right:2%;width:50vw;max-width:620px;height:50vw;max-height:620px;background:radial-gradient(circle,rgba(255,45,149,.16),transparent 64%);animation:auraPulse 9s ease-in-out infinite}
-  .phero .a2{bottom:-16%;left:-8%;width:42vw;max-width:500px;height:42vw;max-height:500px;background:radial-gradient(circle,rgba(255,45,149,.10),transparent 66%);animation:auraPulse 12s ease-in-out infinite reverse}
-  @keyframes auraPulse{0%,100%{opacity:.6}50%{opacity:1}}
-  .phero::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(130% 92% at 42% 47%,transparent 44%,rgba(0,0,0,.52) 100%)}
-
-  .hud{position:absolute;top:5.4rem;left:var(--pad);z-index:4;display:flex;align-items:center;gap:.55rem;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
-  .hud .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:var(--accent-glow);animation:blink 2.4s ease-in-out infinite}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-
-  .phero-grid{position:relative;z-index:4;display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(1.6rem,4vw,3rem);align-items:center;width:100%}
-  .phero .shot{width:calc(100% + 3.5vw)}
-  @media(max-width:920px){.phero .shot{width:100%}}
-  .phero .eyebrow{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.5rem}
-  .phero .eyebrow .sig{width:24px;height:1px;background:var(--accent);box-shadow:var(--accent-glow);display:inline-block}
-  .phero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.7rem,6.4vw,5.4rem);line-height:.94;letter-spacing:-0.03em;color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.5rem}
-  .phero h1 .w{display:inline-block;opacity:0;transform:translateY(36px) rotateX(38deg);transform-origin:bottom;transition:opacity .8s ease,transform .9s cubic-bezier(.2,.85,.25,1)}
-  .phero h1.show .w{opacity:1;transform:none}
-  .phero h1.show .w:nth-child(1){transition-delay:.05s}
-  .phero h1.show .w:nth-child(2){transition-delay:.12s}
-  .phero h1.show .w:nth-child(3){transition-delay:.19s}
-  .phero h1.show .w:nth-child(4){transition-delay:.26s}
-  .statement{max-width:52ch;font-size:clamp(1.02rem,1.5vw,1.2rem);color:var(--bone);opacity:.9}
-  .pmeta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.8rem}
-  .chip{display:inline-flex;align-items:center;gap:.45rem;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);
-    background:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:.45rem .85rem}
-  .chip .d{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:var(--accent-glow)}
-  .cta-row{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:2rem}
-  .intro-el{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-  .intro-el.show{opacity:1;transform:none}
-  .statement.intro-el.show{opacity:.9}
-
-  /* product shot frame */
-  .shot{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#0c0c11,#060608);
-    box-shadow:0 44px 90px -28px rgba(0,0,0,.85),0 12px 34px rgba(0,0,0,.5),0 0 42px rgba(255,45,149,.14),inset 0 0 0 1px rgba(255,255,255,.03);opacity:0;transform:translateY(26px) scale(.985);transition:opacity .9s ease,transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .45s ease,border-color .45s ease}
-  .shot.show{opacity:1;transform:none}
-  .shot-bar{display:flex;align-items:center;gap:.7rem;padding:.7rem .9rem;border-bottom:1px solid var(--line-soft);background:rgba(0,0,0,.4)}
-  .shot-bar .dots{display:flex;gap:.35rem}
-  .shot-bar .dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.16)}
-  .shot-bar .url{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;color:var(--mute)}
-  .shot img{display:block;width:100%;height:auto}
-
-  /* self-contained terminal mockups (no external images) */
-  .mock{position:relative;padding:1rem;font-family:'JetBrains Mono',monospace;background:linear-gradient(180deg,#0a0a0f,#060608);min-height:230px}
-  .mock-row{display:flex;align-items:center;gap:.7rem;padding:.6rem .7rem;border:1px solid var(--line-soft);border-radius:8px;margin-bottom:.55rem;background:rgba(255,255,255,.015)}
-  .mock-row:last-child{margin-bottom:0}
-  .tag{font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;padding:.24rem .5rem;border-radius:5px;white-space:nowrap;font-weight:500}
-  .tag.bear{color:#FF6B73;background:rgba(255,45,149,.12);border:1px solid rgba(255,45,149,.35)}
-  .tag.bull{color:#5BE7A9;background:rgba(91,231,169,.10);border:1px solid rgba(91,231,169,.32)}
-  .tag.neut{color:var(--mute);background:rgba(255,255,255,.05);border:1px solid var(--line-soft)}
-  .mock-row .hl{flex:1;min-width:0;font-family:'Manrope',sans-serif;font-size:.8rem;color:var(--bone);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .mock-row .tk{font-size:.6rem;color:var(--accent);letter-spacing:.06em}
-  .mock-row .cf{font-size:.58rem;color:var(--mute)}
-  .mock-grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
-  .mock-panel{border:1px solid var(--line-soft);border-radius:8px;padding:.75rem}
-  .mock-panel .ph{font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);margin-bottom:.7rem;display:block}
-  .smt{display:flex;align-items:flex-end;gap:.5rem;height:76px}
-  .smt .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:.35rem}
-  .smt .bar{width:100%;border-radius:3px 3px 0 0;background:linear-gradient(180deg,var(--accent),rgba(255,45,149,.25));box-shadow:var(--accent-glow)}
-  .smt .lb{font-size:.54rem;color:var(--mute);letter-spacing:.06em}
-  .kv{display:flex;justify-content:space-between;padding:.34rem 0;border-bottom:1px solid var(--line-soft);font-size:.62rem}
-  .kv:last-child{border-bottom:none}
-  .kv .k{color:var(--mute);letter-spacing:.06em}
-  .kv .v{color:var(--bone)}
-  .kv .v.up{color:#5BE7A9}.kv .v.dn{color:#FF6B73}
-  .cal-row{display:grid;grid-template-columns:52px 1fr auto;gap:.7rem;align-items:center;padding:.5rem .2rem;border-bottom:1px solid var(--line-soft);font-size:.64rem}
-  .cal-row:last-child{border-bottom:none}
-  .cal-row .tm{color:var(--accent);letter-spacing:.04em}
-  .cal-row .ev{font-family:'Manrope',sans-serif;color:var(--bone);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .imp{display:flex;gap:3px}
-  .imp i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.14)}
-  .imp i.on{background:var(--accent);box-shadow:var(--accent-glow)}
-
-  .scroll-cue{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:.5rem;
-    font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);opacity:0;transition:opacity 1s ease .9s}
-  .scroll-cue.show{opacity:1}
-  .scroll-cue .bar{width:1px;height:36px;background:linear-gradient(var(--accent),transparent);position:relative;overflow:hidden}
-  .scroll-cue .bar::after{content:"";position:absolute;top:-40%;left:0;width:100%;height:40%;background:var(--accent);box-shadow:var(--accent-glow);animation:cue 2s ease-in-out infinite}
-  @keyframes cue{0%{top:-40%}100%{top:120%}}
-
-  /* needs -> fit band */
-  .fit{border-top:1px solid var(--line-soft);background:linear-gradient(180deg,rgba(255,45,149,.04),transparent 60%)}
-  .fit .wrap{padding:clamp(4rem,8vw,6rem) var(--pad)}
-  .fit-eyebrow{display:block;margin-bottom:2.4rem}
-  .fit-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(1.5rem,4vw,3rem);align-items:center}
-  .fit-card{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:16px;padding:2.2rem 2rem}
-  .fit-card.answer{border-color:var(--line);box-shadow:0 0 18px rgba(255,45,149,.10)}
-  .fit-card .lab{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:1rem;display:block}
-  .fit-card.answer .lab{color:var(--accent);text-shadow:var(--accent-glow)}
-  .fit-card h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.3rem,2.4vw,1.7rem);line-height:1.1;color:var(--white);margin-bottom:.9rem;letter-spacing:-0.01em}
-  .fit-card p{color:var(--bone);opacity:.84;font-size:1rem}
-  .fit-arrow{display:flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:50%;border:1px solid var(--line);color:var(--accent);
-    font-size:1.4rem;box-shadow:var(--accent-glow);background:var(--ink-2)}
-  .fit-arrow span{animation:nudge 1.8s ease-in-out infinite}
-  @keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
-
-  /* section + features */
-  .sec{position:relative;padding:clamp(4.5rem,9vw,7rem) 0;border-top:1px solid var(--line-soft)}
-  .sec-head{margin-bottom:3.2rem;max-width:760px}
-  .sec-head .eyebrow{display:block;margin-bottom:1rem}
-  .sec-head h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,5vw,3.2rem);line-height:1;letter-spacing:-0.02em;color:var(--white)}
-  .sec-head .kicker{color:var(--mute);margin-top:1rem;max-width:60ch}
-  .features{display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem}
-  .feat{position:relative;background:var(--ink-2);border:1px solid var(--line);border-radius:16px;padding:2rem 1.9rem;overflow:hidden;opacity:0;
-    transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,30px)) translateZ(0);
-    transition:opacity .7s ease,transform .55s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
-  .feat.in{opacity:1;--ty:0px}
-  .feat:hover{--ty:-6px;border-color:var(--accent);box-shadow:0 0 18px rgba(255,45,149,.18),0 20px 44px rgba(0,0,0,.6)}
-  .feat.tilting{transition:transform .09s linear,border-color .4s ease,box-shadow .4s ease}
-  .feat::after{content:"";position:absolute;inset:0;z-index:0;border-radius:16px;pointer-events:none;opacity:0;transition:opacity .35s ease;
-    background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),rgba(255,45,149,.13),transparent 60%)}
-  .feat:hover::after{opacity:1}
-  .feat>*{position:relative;z-index:1}
-  .feat .fnum{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;color:var(--accent);text-shadow:var(--accent-glow)}
-  .feat h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:var(--white);margin:.7rem 0 .8rem;letter-spacing:-0.01em}
-  .feat p{color:var(--bone);opacity:.82;font-size:.97rem}
-
-  /* screenshot row */
-  .shot-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-  .shot-cap{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-top:1rem}
-
-  /* cta band */
-  .cta-band{position:relative;text-align:center;padding:clamp(4.5rem,9vw,6.5rem) 0;border-top:1px solid var(--line-soft);overflow:hidden}
-  .cta-band .aura{position:absolute;top:50%;left:50%;width:60vw;max-width:620px;height:60vw;max-height:620px;transform:translate(-50%,-50%);border-radius:50%;
-    background:radial-gradient(circle,rgba(255,45,149,.12),transparent 64%);filter:blur(60px);z-index:0}
-  .cta-band .wrap{position:relative;z-index:1}
-  .cta-band h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2rem,6vw,3.6rem);color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.2rem;letter-spacing:-0.02em}
-  .cta-band p{color:var(--mute);max-width:48ch;margin:0 auto 2.2rem}
-  .cta-band .cta-row{justify-content:center}
-
-  /* footer */
-  footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--ink-2)}
-  .foot-grid{display:flex;justify-content:space-between;gap:3rem;flex-wrap:wrap;margin-bottom:3.5rem}
-  .foot-brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.35rem;color:var(--white);text-shadow:var(--logo-glow);display:flex;align-items:center;gap:.6rem}
-  .foot-brand p{color:var(--mute);font-size:.95rem;margin-top:.9rem;max-width:30ch}
-  .foot-col h4{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);margin-bottom:1.2rem}
-  .foot-col a{display:block;color:var(--mute);font-size:.95rem;margin-bottom:.6rem;transition:color .25s}
-  .foot-col a:hover{color:var(--accent)}
-  .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:2rem;border-top:1px solid var(--line-soft);font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-  .foot-disclaimer{color:var(--mute);opacity:.7;font-size:.78rem;line-height:1.6;max-width:92ch;margin-bottom:2rem;padding-top:1.6rem;border-top:1px solid var(--line-soft)}
-  .foot-links{display:flex;gap:1.4rem}
-  .foot-links a{transition:color .25s}
-  .foot-links a:hover{color:var(--accent)}
-
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-  .reveal.in{opacity:1;transform:none}
-
-  @media(max-width:920px){
-    .phero-grid{grid-template-columns:1fr;gap:2.4rem}
-    .fit-grid{grid-template-columns:1fr}
-    .fit-arrow{transform:rotate(90deg);margin:0 auto}
-    .features{grid-template-columns:1fr}
-    .shot-row{grid-template-columns:1fr}
-  }
-  @media(max-width:640px){
-    :root{--pad:1.15rem}
-    .hud{display:none}
-    .phero{min-height:auto;padding:7rem 0 3rem}
-    .phero h1{font-size:clamp(2.4rem,11vw,3.7rem)}
-    .cta-row .btn{flex:1 1 100%;justify-content:center}
-    .sec{padding:clamp(3.4rem,11vw,5rem) 0}
-    .fit .wrap{padding:clamp(3rem,9vw,4.5rem) var(--pad)}
-    .fit-card{padding:1.6rem 1.4rem}
-    .feat{padding:1.6rem 1.4rem}
-    .foot-grid{flex-direction:column;gap:1.8rem}
-    .foot-bottom{flex-direction:column;align-items:flex-start;gap:.7rem}
-  }
-  @media(prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important}
-    html{scroll-behavior:auto}
-    .reveal,.intro-el,.scroll-cue,.shot{opacity:1;transform:none}
-    .phero h1 .w{opacity:1;transform:none}
-    .feat{opacity:1;--ty:0px;--rx:0deg;--ry:0deg}
-    #preloader{display:none}
-    #preloader .pl-crown path,#preloader .pl-crown line{stroke-dashoffset:0}
-  }
-  /* pipeline flow */
-  .flow{list-style:none;display:flex;flex-direction:column;gap:1.1rem;max-width:820px}
-  .flow li{position:relative;padding:1.1rem 1.2rem 1.1rem 1.3rem;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:14px;
-    color:var(--bone);font-size:.96rem;line-height:1.6;opacity:0;transform:translateY(20px);
-    transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .3s ease}
-  .flow li.in{opacity:1;transform:none}
-  .flow li:hover{border-color:rgba(255,45,149,.45)}
-  .flow li::before{content:"";position:absolute;left:0;top:1.1rem;bottom:1.1rem;width:3px;border-radius:2px;
-    background:var(--accent);box-shadow:0 0 8px rgba(255,45,149,.6)}
-  .flow .fk{display:block;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--accent);text-shadow:var(--accent-glow);margin-bottom:.35rem}
-
-  /* how grid + radar */
-  .how-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center}
-  .radar-wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:1.2rem}
-  .radar{position:relative;width:min(100%,360px);aspect-ratio:1;border-radius:50%;border:1px solid var(--line);
-    background:radial-gradient(circle,rgba(255,45,149,.07),transparent 72%);overflow:hidden}
-  .r-ring{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.09)}
-  .r-ring.r1{inset:16%}
-  .r-ring.r2{inset:32%}
-  .r-ring.r3{inset:44%}
-  .r-cross::before,.r-cross::after{content:"";position:absolute;background:rgba(255,255,255,.07)}
-  .r-cross::before{left:50%;top:0;bottom:0;width:1px}
-  .r-cross::after{top:50%;left:0;right:0;height:1px}
-  .r-sweep{position:absolute;inset:0;border-radius:50%;
-    background:conic-gradient(from 0deg,rgba(255,45,149,.34),rgba(255,45,149,.05) 55deg,transparent 70deg);
-    animation:rSweep 6s linear infinite}
-  @keyframes rSweep{to{transform:rotate(360deg)}}
-  .blip{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 9px var(--accent)}
-  .blip::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:blipPulse 3.2s ease-out infinite}
-  .blip.b1{top:26%;left:62%}
-  .blip.b2{top:58%;left:30%}
-  .blip.b2::after{animation-delay:1.1s}
-  .blip.b3{top:70%;left:66%}
-  .blip.b3::after{animation-delay:2.2s}
-  @keyframes blipPulse{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(1.8)}}
-  .radar-label{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mute)}
-  .radar-label b{color:var(--accent);text-shadow:var(--accent-glow);font-weight:500}
-
-  /* session band */
-  .sessband{margin-top:2.6rem}
-  .sb-track{position:relative;display:flex;height:44px;border:1px solid var(--line-soft);border-radius:10px;overflow:hidden;background:var(--ink-3)}
-  .sb-seg{display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.14em;color:var(--mute);white-space:nowrap;overflow:hidden}
-  .sb-seg.on{background:rgba(255,45,149,.14);color:var(--accent);text-shadow:var(--accent-glow);border-left:1px solid rgba(255,45,149,.25);border-right:1px solid rgba(255,45,149,.25)}
-  .sb-scan{position:absolute;top:0;bottom:0;width:2px;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:sbScan 14s linear infinite}
-  @keyframes sbScan{from{left:-1%}to{left:101%}}
-  .sb-cap{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;color:var(--mute);margin-top:.8rem;text-align:center}
-
-  /* glossary */
-  #readouts{overflow:hidden}
-  #readouts::before{content:"";position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(rgba(255,45,149,.08) 1px,transparent 1.4px);background-size:28px 28px;
-    -webkit-mask-image:radial-gradient(70% 80% at 30% 40%,#000,transparent);mask-image:radial-gradient(70% 80% at 30% 40%,#000,transparent)}
-  #readouts .wrap{position:relative}
-  .gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9rem}
-  .g{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:12px;padding:1rem 1.1rem;transition:border-color .3s ease}
-  .g:hover{border-color:var(--line)}
-  .gt{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);display:block;margin-bottom:.35rem}
-  .g p{color:var(--mute);font-size:.85rem;line-height:1.5}
-
-  /* faq */
-  .faq{max-width:820px}
-  .qa{border-bottom:1px solid var(--line-soft)}
-  .qa summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;
-    padding:1.15rem .2rem;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.05rem;color:var(--bone);transition:color .25s}
-  .qa summary::-webkit-details-marker{display:none}
-  .qa summary:hover{color:var(--accent)}
-  .qa .qi{font-family:'JetBrains Mono',monospace;color:var(--accent);text-shadow:var(--accent-glow);transition:transform .25s ease;flex:none}
-  .qa[open] .qi{transform:rotate(45deg)}
-  .qa p{color:var(--mute);font-size:.95rem;padding:0 .2rem 1.2rem;max-width:70ch}
-  .qa p a{color:var(--accent);text-shadow:var(--accent-glow)}
-
-  /* terminal light/dark toggle */
-  .mode-toggle{margin-left:auto;display:inline-flex;gap:2px;padding:2px;border:1px solid var(--line);border-radius:999px;background:var(--ink-2);cursor:pointer}
-  .mt-opt{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);
-    padding:.3rem .65rem;border-radius:999px;transition:background .25s ease,color .25s ease,box-shadow .25s ease}
-  .mt-opt.on{background:var(--accent);color:#0A0008;box-shadow:var(--accent-glow)}
-  .mode-toggle:hover .mt-opt:not(.on){color:var(--bone)}
-  .termwrap{position:relative}
-  .termwrap .tw{display:block;width:100%;height:auto}
-  .termwrap .twl{position:absolute;inset:0;opacity:0;transition:opacity .4s ease}
-  .termwrap.lightmode .twl{opacity:1}
-
-  /* tiers */
-  .tiers{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;max-width:940px}
-  .tier{position:relative;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:18px;padding:2.1rem 2rem;display:flex;flex-direction:column;
-    opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
-  .tier.in{opacity:1;transform:none}
-  .tier:hover{border-color:var(--accent);box-shadow:0 0 20px rgba(255,45,149,.16),0 22px 48px rgba(0,0,0,.6);transform:translateY(-6px)}
-  .tier .tname{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.1rem}
-  .tier .tname .d{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:var(--accent-glow)}
-  .tier .tprice{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2.4rem;color:var(--white);letter-spacing:-0.02em;line-height:1}
-  .tier .tper{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:.4rem;margin-bottom:1.3rem}
-  .tier ul{list-style:none;flex:1;margin-bottom:1.6rem}
-  .tier li{position:relative;padding-left:1.4rem;color:var(--bone);opacity:.85;font-size:.94rem;margin-bottom:.55rem}
-  .tier li::before{content:"◆";position:absolute;left:0;top:.1em;font-size:.6em;color:var(--accent);text-shadow:var(--accent-glow)}
-  .tier .btn{text-align:center}
-  .tiers-note{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;color:var(--mute);margin-top:1.6rem;line-height:1.7;max-width:70ch}
-
-  /* premium product-shot presentation (screenshots stay pixel-accurate) */
-  .shot::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 22%);mix-blend-mode:screen}
-  .shot:hover{border-color:var(--accent);box-shadow:0 56px 112px -26px rgba(0,0,0,.9),0 16px 42px rgba(0,0,0,.55),0 0 66px rgba(255,45,149,.30),inset 0 0 0 1px rgba(255,45,149,.12)}
-  @media(prefers-reduced-motion:no-preference){.shot:hover{transform:translateY(-7px)}}
-@media(max-width:920px){.tiers{grid-template-columns:1fr}}
-@media(max-width:920px){.how-grid{grid-template-columns:1fr;gap:2.2rem}.radar{max-width:280px}}
-</style>
+<link rel="stylesheet" href="/assets/site.css?v=20261111">
 </head>
-<body data-bc-page="korvus">
-
-<div id="preloader" aria-hidden="true">
-  <svg class="pl-crown" viewBox="0 0 36 30" fill="none">
-    <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-    <line x1="7" y1="27.4" x2="29" y2="27.4"/>
-  </svg>
-  <div class="pl-meter"><i id="plBar"></i></div>
-  <div class="pl-label">Loading Korvus <b id="plPct">0</b><b>%</b></div>
-</div>
-
-<div class="grain"></div>
-<div class="progress" id="progress"></div>
-
-<nav class="backbar" id="backbar">
-  <a class="brand" href="/" aria-label="BlackCrown home">
-    <svg class="crownmark" width="24" height="20" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-      <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-      <line x1="7" y1="28" x2="29" y2="28"/>
-    </svg>
-    <span class="wordmark">BlackCrown</span>
-  </a>
-  <a class="back-link" href="/#products"><span class="arr" aria-hidden="true">←</span> Back to all products</a>
-</nav>
-
-<header class="phero">
-  <div class="aura a1"></div>
-  <div class="aura a2"></div>
-  <canvas id="bc3d" aria-hidden="true"></canvas>
-  <div class="hud"><span class="dot"></span><span id="clock">KORVUS // ONLINE</span></div>
-
-  <div class="wrap phero-grid">
-    <div>
-      <span class="eyebrow intro-el" data-scramble><span class="sig"></span>Information · korvus.industries</span>
-      <h1>
-        <span class="w">Your edge</span> <span class="w">while the</span> <span class="w">world</span> <span class="w"><span class="neon">sleeps</span>.</span>
-      </h1>
-      <p class="statement intro-el">The headline that moves tomorrow's open is breaking right now, while you sleep. By the time it reaches your feed, the move is already gone. Korvus reads the newswires in Asia, London and New York around the clock, and SEC filings the moment they are accepted, then scores the why, so the catalyst is in front of you before the crowd reacts.</p>
-      <div class="pmeta intro-el">
-        <span class="chip"><span class="d"></span>Three news desks</span>
-        <span class="chip"><span class="d"></span>SEC filings at the source</span>
-        <span class="chip"><span class="d"></span>Impact scoring</span>
-        <span class="chip"><span class="d"></span>SMT divergence</span>
-        <span class="chip"><span class="d"></span>Compass</span>
-        <span class="chip"><span class="d"></span>Observer free</span>
-        <span class="chip"><span class="d"></span>Operator $9.99/mo</span>
-      </div>
-      <div class="cta-row intro-el">
-        <a href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener" class="btn accent">Visit Korvus<span class="sheen"></span></a>
-        <a href="#fit" class="btn ghost">Is this you<span class="sheen"></span></a>
-      </div>
-    </div>
-    <div class="shot">
-      <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">korvus.industries</span>
-        <button class="mode-toggle" type="button" aria-label="Switch the preview between dark and light mode">
-          <span class="mt-opt on" data-m="dark">Dark</span><span class="mt-opt" data-m="light">Light</span>
-        </button>
-      </div>
-      <div class="termwrap">
-        <img class="tw" src="/assets/korvus-terminal-dark.webp" decoding="async" alt="The Korvus terminal in dark mode: futures board, macro confluence, session map, scored news feed, SMT divergence and funds watchlist" width="1600" height="803">
-        <img class="tw twl" src="/assets/korvus-terminal-light.webp" loading="lazy" decoding="async" alt="The Korvus terminal in light mode" width="1600" height="803">
-      </div>
-    </div>
+<body data-product="korvus" data-track="korvus">
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="BlackCrown home"><svg viewBox="0 0 36 30" aria-hidden="true"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>BlackCrown</a>
+    <nav class="nav" aria-label="Main">
+      <details>
+        <summary>Products</summary>
+        <div class="menu">
+          <a href="/korvus.html" style="--c:#FF2D95"><i></i><b>Korvus</b><span>A market terminal that reads and scores the news and SEC filings for index futures traders.</span></a>
+          <a href="/lodestone.html" style="--c:#49D7FF"><i></i><b>LodeStone</b><span>A chart indicator that draws your session levels, value and structure for you.</span></a>
+          <a href="/intelligence.html" style="--c:#FF2D95"><i></i><b>Crown</b><span>A private AI workspace by BlackCrown Intelligence. Your work is never sold or trained on.</span></a>
+          <a href="/eclipse-x.html" style="--c:#FF6FB6"><i></i><b>Eclipse-X</b><span>The free BlackCrown community on Discord, with live scored news and the desk in the open.</span></a>
+        </div>
+      </details>
+      <a href="/#fit">Find your fit</a>
+      <a href="/#company">Company</a>
+      <a href="/support.html">Support</a>
+    </nav>
+    <a class="btn primary small head-cta" href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener">Open Korvus free</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
   </div>
-  <div class="scroll-cue"><span class="bar"></span>Scroll</div>
 </header>
+<main id="main">
 
-<section class="fit" id="fit">
+<section class="hero">
+  <div class="hero-wash" aria-hidden="true"></div>
   <div class="wrap">
-    <span class="eyebrow fit-eyebrow reveal" data-scramble>Is this you</span>
+    <a class="crumb" href="/#products" data-in style="--i:0">All products</a>
+    <div class="hero-wide">
+      <h1 data-in style="--i:1">Your edge while the world sleeps.</h1>
+      <div data-in style="--i:2">
+        <p class="lead">Korvus is a market terminal for index futures traders. It reads the newswires in Asia, London and New York around the clock, and SEC filings the moment they are accepted, then scores each one and tells you in plain English why it matters.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener">Open a free account</a>
+          <a class="btn" href="#demo">Try the feed</a>
+        </div>
+      </div>
+    </div>
+    <div class="window hero-shot" data-in style="--i:3">
+      <div class="window-bar">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="grow">korvus.industries / terminal</span>
+        <span class="sample">Shown with sample data</span>
+      </div>
+      <img src="/assets/korvus-terminal-dark.webp" width="1600" height="870" decoding="async" alt="The Korvus terminal during a US session: futures board, macro confluence, session map with live levels, scored news with desk badges and key numbers, SMT divergence and the funds watchlist">
+    </div>
+    <dl class="facts across" data-in style="--i:4">
+      <div><dt>Price</dt><dd>Free, or $9.99 a month</dd></div>
+      <div><dt>Coverage</dt><dd>Asia, London and New York, 24 hours</dd></div>
+      <div><dt>SEC filings</dt><dd>Checked every 20 seconds</dd></div>
+      <div><dt>Trade signals</dt><dd>None. Information only.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="sec" id="problem">
+  <div class="wrap rail">
+    <header>
+      <h2>The problem it solves.</h2>
+      <p>You cannot watch every wire through three sessions. Korvus can.</p>
+    </header>
+    <div class="shift">
+      <div>
+        <span class="when">Without Korvus</span>
+        <h3>You find out after the move.</h3>
+        <p>The headline that set up this morning's open broke while you were asleep. By the time it reaches your feed, price has already reacted, and you spend the open catching up instead of preparing.</p>
+      </div>
+      <span class="arrow" aria-hidden="true"></span>
+      <div>
+        <span class="when">With Korvus</span>
+        <h3>You sit down already briefed.</h3>
+        <p>Every story from the overnight sessions is waiting, already read and scored for impact and direction, with the numbers that matter pulled out. You know what moved, why, and what to watch next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="demo">
+  <div class="wrap rail">
+    <header>
+      <h2>Try the feed.</h2>
+      <p>These are sample cards, drawn the way the live terminal draws them. Filter by impact, by desk or by source, as you would inside Korvus.</p>
+    </header>
+    <div>
+      <div class="window" data-feed>
+        <div class="window-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="grow">Scored news</span>
+          <span class="sample">Sample data</span>
+        </div>
+        <div class="chips" role="group" aria-label="Filter the feed">
+          <button type="button" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" data-filter="high" aria-pressed="false">High impact</button>
+          <button type="button" data-filter="sec" aria-pressed="false">SEC filings</button>
+          <button type="button" data-filter="asia" aria-pressed="false">Asia</button>
+          <button type="button" data-filter="london" aria-pressed="false">London</button>
+          <button type="button" data-filter="ny" aria-pressed="false">New York</button>
+        </div>
+        <div class="feed">
+          <article class="card" data-tags="high sec ny">
+            <div class="card-top"><span class="pill high">High</span><span class="pill sec">SEC 8-K</span><span>Filed 4:16 PM</span><span class="dir up">Bullish</span></div>
+            <h4>A large chipmaker's quarterly profit jumps as AI demand holds</h4>
+            <p>Revenue and margins rose from a year ago and the company raised its spending plan. How it compares with Wall Street estimates is not yet known.</p>
+            <div class="nums"><span>Revenue<b>+34% y/y</b></span><span>Gross margin<b>58%</b></span><span>Tagged<b>NQ</b></span></div>
+          </article>
+          <article class="card" data-tags="med london">
+            <div class="card-top"><span class="pill med">Med</span><span class="pill">London</span><span>3:02 AM</span><span class="dir up">Bullish</span></div>
+            <h4>UK inflation cools more than forecast</h4>
+            <p>A softer print eases rate pressure in Europe and lifts risk appetite into the US open.</p>
+            <div class="nums"><span>CPI<b>2.4% y/y</b></span><span>Forecast<b>2.6%</b></span><span>Tagged<b>ES</b></span></div>
+          </article>
+          <article class="card" data-tags="med asia">
+            <div class="card-top"><span class="pill med">Med</span><span class="pill">Asia</span><span>10:40 PM</span><span class="dir flat">Neutral</span></div>
+            <h4>Bank of Japan holds its policy rate</h4>
+            <p>No change and no new guidance. The yen reaction is the thing to watch for index futures overnight.</p>
+            <div class="nums"><span>Policy rate<b>unchanged</b></span></div>
+          </article>
+          <article class="card" data-tags="high ny">
+            <div class="card-top"><span class="pill high">High</span><span class="pill">New York</span><span>9:12 AM</span><span class="dir down">Bearish</span></div>
+            <h4>Oil jumps on a supply disruption</h4>
+            <p>Higher energy costs weigh on equities and push inflation expectations up.</p>
+            <div class="nums"><span>Crude<b>+4.1%</b></span><span>Tagged<b>CL, ES</b></span></div>
+          </article>
+          <div class="feed-empty" hidden>No sample cards match that filter.</div>
+        </div>
+      </div>
+      <div class="receipt">
+        <div><b>4:16:02 PM</b><span>The SEC accepts the filing</span></div>
+        <div><b>Within about a minute</b><span>Read, scored and on your screen</span></div>
+        <div><b>Later</b><span>The first headlines appear</span></div>
+      </div>
+      <p class="caption">Every filing card shows when the SEC accepted it and when Korvus had it. Korvus never calls a result a beat or a miss, because it does not know the Street's estimate.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="get">
+  <div class="wrap rail">
+    <header>
+      <h2>What you get.</h2>
+      <p>Four tools share one terminal. Everything marked Operator is part of the paid plan; the rest is free.</p>
+    </header>
+    <div class="rows">
+      <div><h3>Scored news from three desks</h3><p>Asia, London and New York are read around the clock across a 59-instrument universe. Each card carries a clean title, the key numbers, why it matters and a badge for the desk it came from.</p></div>
+      <div><h3>SEC filings at the source</h3><p>Korvus checks EDGAR every 20 seconds for 8-K and 6-K filings from the Nasdaq and S&amp;P heavyweights and reads the release itself, often ahead of the headlines. Operators see it at once, Observers about 15 minutes later.</p></div>
+      <div><h3>Impact, direction and confidence</h3><p>Every item is rated high, medium or low impact and tagged bullish, bearish or neutral with a confidence read, so you see what it means before you read a word of the story.</p></div>
+      <div><h3>SMT divergence</h3><p>NQ, ES and YM are checked against each other at session extremes. Korvus flags when the indexes stop agreeing, which often shows up before a turn.</p></div>
+      <div><h3>Session map and prior levels</h3><p>A global clock tracks Asia, London and New York, with completed session highs and lows and the prior day and week kept on the board.</p></div>
+      <div><h3>Macro and the economic calendar</h3><p>The dollar, the 10 year, gold, oil, credit and volatility sit in one panel, next to a calendar that fills in each actual as it prints.</p></div>
+      <div><h3>Compass <span class="only">Operator</span></h3><p>A separate board for buy-and-hold investing. About 650 companies scored from 0 to 100 on trend, growth, profit, value and balance sheet, each with a plain-English brief. Research, not advice.</p></div>
+      <div><h3>Real-time quotes and alerts <span class="only">Operator</span></h3><p>Live pricing through US market hours, personal watchlist imports, and an email the moment a high-impact story lands. Observers get the default board with quotes on a 15-minute delay.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="calendar">
+  <div class="wrap rail">
+    <header>
+      <h2>The week's releases, with the numbers as they print.</h2>
+      <p>The Forex and Gov News view lists each USD event by impact with forecast and previous, then fills in the actual live.</p>
+    </header>
+    <div>
+      <div class="window shot">
+        <div class="window-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="grow">korvus.industries / forex</span>
+          <span class="sample">Sample data</span>
+          <span class="seg" role="group" aria-label="Preview theme"><button type="button" data-set-mode="dark" aria-pressed="true">Dark</button><button type="button" data-set-mode="light" aria-pressed="false">Light</button></span>
+        </div>
+        <img data-mode="dark" src="/assets/korvus-calendar-dark.webp" width="1600" height="870" loading="lazy" decoding="async" alt="Korvus Forex and Gov News: the week of economic releases by impact, with each actual filled in beside its forecast and previous value, and the live index tape">
+        <img data-mode="light" src="/assets/korvus-calendar-light.webp" width="1600" height="870" loading="lazy" decoding="async" alt="Korvus Forex and Gov News in light mode">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="compass">
+  <div class="wrap rail">
+    <header>
+      <h2>Compass, for the long game.</h2>
+      <p>A separate board inside Korvus for buy-and-hold investing, included with Operator. About 650 companies are scored from 0 to 100, and each score is broken into the five things that drive it, with a plain-English brief.</p>
+      <p style="margin-top:.9rem">Compass scores are research summaries of public data, not recommendations.</p>
+    </header>
+    <div>
+      <div class="window">
+        <div class="window-bar"><span class="dots"><i></i><i></i><i></i></span><span class="grow">Korvus Compass</span><span class="sample">Sample companies</span></div>
+        <img src="/assets/korvus-compass.webp" width="1396" height="722" loading="lazy" decoding="async" alt="Korvus Compass: a ranked list of companies scored out of 100, with one company's score broken into price trend, growth, profitability, valuation and balance sheet">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="fit">
+  <div class="wrap rail">
+    <header>
+      <h2>Is Korvus right for you?</h2>
+      <p>We would rather you know before you sign up.</p>
+    </header>
     <div class="fit-grid">
-      <div class="fit-card reveal">
-        <span class="lab">Where you are</span>
-        <h3>The move already happened.</h3>
-        <p>You cannot watch every wire through the Asia and London sessions. You find out what moved the market after it moved, so you spend the open reacting instead of positioning.</p>
-      </div>
-      <div class="fit-arrow reveal" aria-hidden="true"><span>→</span></div>
-      <div class="fit-card answer reveal">
-        <span class="lab">Where Korvus puts you</span>
-        <h3>In front of the catalyst.</h3>
-        <p>Korvus does the overnight reading for you. Every headline lands already scored for impact and direction, with the tickers it touches, so the thing that matters is waiting the moment you sit down.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="how">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow" data-scramble>How it works</span>
-      <h2>From wire to screen, in plain English.</h2>
-      <p class="kicker">Every headline runs the same gauntlet before it reaches you, so nothing lands raw.</p>
-    </div>
-    <div class="how-grid">
-      <ol class="flow">
-        <li><span class="fk">01 · The wire breaks</span>A headline crosses in Asia, London or New York, or a company files with the SEC. Korvus is already awake, reading it as it lands.</li>
-        <li><span class="fk">02 · Scored, not dumped</span>Each item is graded high, medium or low impact, tagged bullish, bearish or neutral, and given a confidence read, with the key numbers pulled out and a line on why it matters.</li>
-        <li><span class="fk">03 · Tied to your instruments</span>The headline lands with the tickers it touches across the 59-instrument universe, so you know exactly what it moves.</li>
-        <li><span class="fk">04 · On your screen first</span>The scored item is waiting in the terminal while the crowd is still reading the headline.</li>
-      </ol>
-      <div class="radar-wrap reveal" aria-hidden="true">
-        <div class="radar">
-          <div class="r-ring r1"></div><div class="r-ring r2"></div><div class="r-ring r3"></div>
-          <div class="r-cross"></div>
-          <div class="r-sweep"></div>
-          <span class="blip b1"></span><span class="blip b2"></span><span class="blip b3"></span>
-        </div>
-        <span class="radar-label">KORVUS <b>//</b> WATCHING</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="features">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow" data-scramble>What's inside</span>
-      <h2>The terminal you log into.</h2>
-      <p class="kicker">Scored news, divergence and full session context, all one glance away. Korvus does the reading so you can do the deciding.</p>
-    </div>
-    <div class="features">
-      <div class="feat">
-        <span class="fnum">24/7</span>
-        <h3>Scored news from three desks</h3>
-        <p>Asia, London and New York are read around the clock across a 59-instrument universe. Each card carries a clean title, the key numbers, why it matters and a badge for the desk it came from, and you can filter the feed by session.</p>
-      </div>
-      <div class="feat">
-        <span class="fnum">SEC</span>
-        <h3>Filings at the source</h3>
-        <p>Korvus checks EDGAR every 20 seconds for 8-K and 6-K filings from the Nasdaq and S&amp;P heavyweights and reads the release itself, often ahead of the headlines. Each card shows when the SEC accepted it and when Korvus had it. Operators see it at once, Observers about 15 minutes later.</p>
-      </div>
-      <div class="feat">
-        <span class="fnum">Impact</span>
-        <h3>Direction at a glance</h3>
-        <p>Every item is scored high, medium or low impact and tagged bullish, bearish or neutral with a confidence read, so you see the direction and the why at once.</p>
-      </div>
-      <div class="feat">
-        <span class="fnum">Compass</span>
-        <h3>The long game</h3>
-        <p>A separate board for buy-and-hold investing, on Operator. About 650 companies scored from 0 to 100 on trend, growth, profit, value and balance sheet, each with a plain-English brief. Research, not advice.</p>
-      </div>
-      <div class="feat">
-        <span class="fnum">SMT</span>
-        <h3>Divergence alerts</h3>
-        <p>Live confirmation across NQ, ES and YM. Korvus flags when the indices stop agreeing, the moment that often shows up before a turn.</p>
-      </div>
-      <div class="feat">
-        <span class="fnum">Sessions</span>
-        <h3>The session engine</h3>
-        <p>A global session clock and map track Asia, London and New York, with completed session highs and lows and the prior day and week kept on the board.</p>
-      </div>
-      <div class="feat">
-        <span class="fnum">Macro</span>
-        <h3>Macro and the calendar</h3>
-        <p>The dollar, the 10 year, gold, oil, credit and volatility sit in one panel, next to an economic calendar that fills in each actual as it prints, so you see whether the big picture agrees with your trade before you take it.</p>
-      </div>
-      <div class="feat">
-        <span class="fnum">Board</span>
-        <h3>Quotes and watchlists</h3>
-        <p>A funds board comes ready out of the box, with quotes on a 15-minute delay for Observers, and personal watchlist imports and real-time quotes through market hours on Operator.</p>
-      </div>
-    </div>
-    <div class="sessband reveal" aria-hidden="true">
-      <div class="sb-track">
-        <span class="sb-seg on" style="flex:6 0 0">ASIA</span>
-        <span class="sb-seg" style="flex:2 0 0"></span>
-        <span class="sb-seg on" style="flex:3 0 0">LONDON</span>
-        <span class="sb-seg" style="flex:4.5 0 0"></span>
-        <span class="sb-seg on" style="flex:2.5 0 0">NY AM</span>
-        <span class="sb-seg" style="flex:1.5 0 0"></span>
-        <span class="sb-seg on" style="flex:2.5 0 0">NY PM</span>
-        <span class="sb-seg" style="flex:2 0 0"></span>
-        <span class="sb-scan"></span>
-      </div>
-      <p class="sb-cap">One tape, three desks. Korvus keeps the clock while you keep the chart.</p>
-    </div>
-  </div>
-</section>
-
-<section class="sec" style="border-top:none;padding-top:0">
-  <div class="wrap">
-    <div class="sec-head reveal" style="margin-bottom:2.2rem">
-      <span class="eyebrow" data-scramble>A look inside</span>
-      <h2>Built for the open.</h2>
-    </div>
-    <div class="shot-row" style="grid-template-columns:1fr;max-width:1000px;margin:0 auto;gap:2.8rem">
       <div>
-        <div class="shot reveal">
-          <div class="shot-bar">
-            <span class="dots"><i></i><i></i><i></i></span>
-            <span class="url">korvus.industries / terminal</span>
-            <button class="mode-toggle" type="button" aria-label="Switch the preview between dark and light mode">
-              <span class="mt-opt on" data-m="dark">Dark</span><span class="mt-opt" data-m="light">Light</span>
-            </button>
-          </div>
-          <div class="termwrap">
-            <img class="tw" src="/assets/korvus-terminal-dark.webp" loading="lazy" decoding="async" alt="The Korvus terminal in dark mode: futures board, macro confluence, session map, scored news feed, SMT divergence and funds watchlist" width="1600" height="803">
-            <img class="tw twl" src="/assets/korvus-terminal-light.webp" loading="lazy" decoding="async" alt="The Korvus terminal in light mode" width="1600" height="803">
-          </div>
-        </div>
-        <p class="shot-cap">The live terminal · scored news, SMT divergence, macro confluence, session map and funds board · toggle it like the real thing</p>
+        <h3>A good fit if</h3>
+        <ul class="ticks">
+          <li>You trade index futures such as NQ, ES or YM, or the micros</li>
+          <li>News regularly moves price before you have seen it</li>
+          <li>You want context and reasons, and you make your own decisions</li>
+          <li>You want one screen for news, sessions, macro and the calendar</li>
+        </ul>
       </div>
       <div>
-        <div class="shot reveal">
-          <div class="shot-bar">
-            <span class="dots"><i></i><i></i><i></i></span>
-            <span class="url">korvus.industries / forex</span>
-            <button class="mode-toggle" id="modeToggle" type="button" aria-label="Switch the preview between dark and light mode">
-              <span class="mt-opt on" data-m="dark">Dark</span><span class="mt-opt" data-m="light">Light</span>
-            </button>
-          </div>
-          <div class="termwrap" id="termWrap">
-            <img class="tw" src="/assets/korvus-calendar-dark.webp" loading="lazy" decoding="async" alt="Korvus Forex and Gov News in dark mode: the week of USD events scored by impact, with forecasts, previous values and the live index tape" width="1600" height="803">
-            <img class="tw twl" src="/assets/korvus-calendar-light.webp" loading="lazy" decoding="async" alt="Korvus Forex and Gov News in light mode" width="1600" height="803">
-          </div>
-        </div>
-        <p class="shot-cap">Forex / Gov News · the week of USD events scored by impact, with live actuals and the index tape · toggle it like the real thing</p>
+        <h3>Probably not for you if</h3>
+        <ul class="ticks no">
+          <li>You want entry signals, alerts to buy or sell, or a bot that trades for you</li>
+          <li>You need a broker or order execution. Korvus does not place trades</li>
+          <li>You want a promise of profit. Nobody honest can give you one</li>
+        </ul>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="pricing">
+  <div class="wrap rail">
+    <header>
+      <h2>Two plans.</h2>
+      <p>Both run on the same analysis. Operator adds real-time data, live SEC filings, Compass and LodeStone.</p>
+    </header>
+    <div>
+      <div class="plans">
+        <div class="plan">
+          <div class="name">Observer</div>
+          <div class="price">Free</div>
+          <div class="terms">No card required</div>
+          <ul class="ticks">
+            <li>Full scored news feed from the Asia, London and New York desks</li>
+            <li>SEC filing reads about 15 minutes after Operators</li>
+            <li>SMT divergence during market hours</li>
+            <li>Session map with completed session highs and lows</li>
+            <li>Macro confluence and the economic calendar with actuals</li>
+            <li>Default funds board, quotes on a 15-minute delay</li>
+            <li>Eclipse-X community access</li>
+          </ul>
+          <a class="btn" href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener">Start as an Observer</a>
+        </div>
+        <div class="plan best">
+          <div class="name">Operator <small>Most complete</small></div>
+          <div class="price">$9.99<small> a month</small></div>
+          <div class="terms">Or $79.99 a year. Cancel anytime.</div>
+          <ul class="ticks">
+            <li>Everything in Observer</li>
+            <li>SEC filings the moment they are accepted</li>
+            <li>Korvus Compass, the long-term investing board</li>
+            <li>Real-time quotes during market hours</li>
+            <li>Personal watchlist imports</li>
+            <li>High-impact email alerts</li>
+            <li>The LodeStone TradingView indicator, included</li>
+          </ul>
+          <a class="btn primary" href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener">Go Operator</a>
+        </div>
+      </div>
+      <p class="fine">Billing and account management live on korvus.industries, with checkout by Stripe. Operator renews until you cancel, and you can delete your account yourself from the account page.</p>
     </div>
   </div>
 </section>
 
 <section class="sec" id="readouts">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow" data-scramble>Every readout, defined</span>
-      <h2>Speak terminal.</h2>
-      <p class="kicker">What each score, tag and panel means, so the first session in the terminal reads like your hundredth.</p>
-    </div>
-    <div class="gloss">
-      <div class="g"><span class="gt">Impact score</span><p>High, medium or low: how hard the item can hit the tape</p></div>
-      <div class="g"><span class="gt">Direction tag</span><p>Bullish, bearish or neutral, called in plain English</p></div>
-      <div class="g"><span class="gt">Confidence</span><p>How firmly the read is held, shown with every score</p></div>
-      <div class="g"><span class="gt">The 59 universe</span><p>Index futures, megacaps, currencies, rates, energy, metals and ags</p></div>
-      <div class="g"><span class="gt">Desk badge</span><p>Asia, London or New York: the desk a card came from, and a filter for the feed</p></div>
-      <div class="g"><span class="gt">Key numbers</span><p>The figures a trader wants first, pulled out of the story onto the card</p></div>
-      <div class="g"><span class="gt">SEC filing card</span><p>An 8-K or 6-K read from the release itself, with the SEC acceptance time and the time Korvus had it</p></div>
-      <div class="g"><span class="gt">Compass score</span><p>0 to 100 across trend, growth, profit, value and balance sheet, for long-term research</p></div>
-      <div class="g"><span class="gt">Calendar actuals</span><p>Each economic release filled in beside its forecast and previous as it prints</p></div>
-      <div class="g"><span class="gt">SMT divergence</span><p>NQ, ES and YM checked at session extremes for agreement or a split</p></div>
-      <div class="g"><span class="gt">Session map</span><p>Asia, London and New York windows on a global clock</p></div>
-      <div class="g"><span class="gt">Session H / L</span><p>Completed highs and lows for Asia, London, NY AM and NY PM</p></div>
-      <div class="g"><span class="gt">Prior levels</span><p>PDH, PDL, PWH and PWL kept on the board</p></div>
-      <div class="g"><span class="gt">Macro confluence</span><p>Dollar, 10 year, gold, oil, credit and volatility in one panel</p></div>
-      <div class="g"><span class="gt">Funds board</span><p>A default watchlist board, ready before you build your own</p></div>
-      <div class="g"><span class="gt">Real-time quotes</span><p>Live pricing through market hours, on Operator</p></div>
-      <div class="g"><span class="gt">High-impact alerts</span><p>Operator email pings the moment a big one drops</p></div>
-    </div>
+  <div class="wrap rail">
+    <header>
+      <h2>Every readout, defined.</h2>
+      <p>What each score, tag and panel means, so your first session reads like your hundredth.</p>
+    </header>
+    <dl class="gloss">
+      <div><dt>Impact score</dt><dd>High, medium or low: how hard the item can hit the tape</dd></div>
+      <div><dt>Direction tag</dt><dd>Bullish, bearish or neutral, in plain English</dd></div>
+      <div><dt>Confidence</dt><dd>How firmly the read is held, shown with every score</dd></div>
+      <div><dt>The 59 universe</dt><dd>Index futures, megacaps, currencies, rates, energy, metals and ags</dd></div>
+      <div><dt>Desk badge</dt><dd>Asia, London or New York: where a card came from, and a filter for the feed</dd></div>
+      <div><dt>Key numbers</dt><dd>The figures a trader wants first, pulled out of the story onto the card</dd></div>
+      <div><dt>SEC filing card</dt><dd>An 8-K or 6-K read from the release itself, with the SEC acceptance time</dd></div>
+      <div><dt>Compass score</dt><dd>0 to 100 across trend, growth, profit, value and balance sheet</dd></div>
+      <div><dt>SMT divergence</dt><dd>NQ, ES and YM checked at session extremes for agreement or a split</dd></div>
+      <div><dt>Session H / L</dt><dd>Completed highs and lows for Asia, London, NY AM and NY PM</dd></div>
+      <div><dt>Prior levels</dt><dd>PDH, PDL, PWH and PWL kept on the board</dd></div>
+      <div><dt>Macro confluence</dt><dd>Dollar, 10 year, gold, oil, credit and volatility in one panel</dd></div>
+    </dl>
   </div>
 </section>
 
-<section class="sec" id="tiers">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow" data-scramble>Two ways in</span>
-      <h2>Observer or Operator.</h2>
-      <p class="kicker">Start free and read the same scored feed. Go Operator when you want the terminal working at full depth.</p>
-    </div>
-    <div class="tiers">
-      <div class="tier">
-        <span class="tname"><span class="d"></span>Observer</span>
-        <div class="tprice">Free</div>
-        <div class="tper">No card required</div>
-        <ul>
-          <li>Full scored news feed from the Asia, London and New York desks</li>
-          <li>SEC filing reads about 15 minutes after Operators</li>
-          <li>SMT divergence during market hours</li>
-          <li>Session map with completed session highs and lows</li>
-          <li>Macro confluence: dollar, bonds, gold, oil, credit, volatility</li>
-          <li>Economic calendar with actuals</li>
-          <li>Default funds board, quotes on a 15-minute delay</li>
-          <li>Eclipse-X community access</li>
-        </ul>
-        <a href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener" class="btn ghost">Start as Observer<span class="sheen"></span></a>
-      </div>
-      <div class="tier">
-        <span class="tname"><span class="d"></span>Operator</span>
-        <div class="tprice">$9.99</div>
-        <div class="tper">Per month · or $79.99 per year</div>
-        <ul>
-          <li>Everything in Observer</li>
-          <li>SEC filings the moment they are accepted</li>
-          <li>Korvus Compass, the long-term investing board</li>
-          <li>Real-time quotes during market hours</li>
-          <li>Personal watchlist imports</li>
-          <li>High-impact email alerts</li>
-          <li>LodeStone TradingView indicator included</li>
-        </ul>
-        <a href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener" class="btn accent">Go Operator<span class="sheen"></span></a>
-      </div>
-    </div>
-    <p class="tiers-note reveal">Billing and account management live on korvus.industries. Operator auto-renews and cancels anytime, and you can delete your account yourself from the account page.</p>
-  </div>
-</section>
-
-<section class="sec" id="faq">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow" data-scramble>Questions</span>
-      <h2>Before you log in.</h2>
-    </div>
+<section class="sec" id="questions">
+  <div class="wrap rail">
+    <header>
+      <h2>Questions.</h2>
+      <p>Not answered here? <a class="link" href="/support.html">Ask the desk.</a></p>
+    </header>
     <div class="faq">
-      <details class="qa reveal">
-        <summary>What exactly is Korvus?<span class="qi" aria-hidden="true">+</span></summary>
-        <p>A web terminal at korvus.industries that reads and scores the news and SEC filings 24/7 so you trade with context. It is not a broker and it does not place trades: it is the information layer under your decisions.</p>
+      <details>
+        <summary>What exactly is Korvus?</summary>
+        <p>A web terminal at korvus.industries that reads and scores the news and SEC filings 24/7 so you trade with context. It is not a broker and it does not place trades. It is the information layer under your decisions.</p>
       </details>
-      <details class="qa reveal">
-        <summary>What does Observer get me for free?<span class="qi" aria-hidden="true">+</span></summary>
-        <p>The full scored news feed from all three desks, SEC filing reads on a short delay, SMT divergence during market hours, the session map with completed session highs and lows, the macro confluence panel, the economic calendar with actuals, and the default funds board with quotes on a 15-minute delay. No card required.</p>
-      </details>
-      <details class="qa reveal">
-        <summary>What does Operator add?<span class="qi" aria-hidden="true">+</span></summary>
-        <p>For $9.99 a month or $79.99 a year: SEC filings the moment they are accepted, the Compass long-term investing board, real-time quotes during market hours, personal watchlist imports, high-impact email alerts, and the <a href="/lodestone.html">LodeStone TradingView indicator</a> included. Auto-renews, cancel anytime.</p>
-      </details>
-      <details class="qa reveal">
-        <summary>What does it cover?<span class="qi" aria-hidden="true">+</span></summary>
-        <p>A 59-instrument universe: index futures, megacap equities, currencies, rates, energy, metals and agriculture, with every headline tagged to the instruments it touches.</p>
-      </details>
-      <details class="qa reveal">
-        <summary>Where does the news come from?<span class="qi" aria-hidden="true">+</span></summary>
+      <details>
+        <summary>Where does the news come from?</summary>
         <p>Three desks that follow the sun: Asia, London and New York newswires and central banks, plus 8-K and 6-K filings read straight from SEC EDGAR, checked every 20 seconds on business days. Every card is tagged with the desk it came from, and the source list changes as feeds come and go.</p>
       </details>
-      <details class="qa reveal">
-        <summary>What is Compass?<span class="qi" aria-hidden="true">+</span></summary>
+      <details>
+        <summary>What does Observer get me for free?</summary>
+        <p>The full scored news feed from all three desks, SEC filing reads on a short delay, SMT divergence during market hours, the session map, the macro panel, the economic calendar with actuals, and the default funds board with quotes on a 15-minute delay. No card required.</p>
+      </details>
+      <details>
+        <summary>What does Operator add?</summary>
+        <p>For $9.99 a month or $79.99 a year: SEC filings the moment they are accepted, the Compass long-term investing board, real-time quotes during market hours, personal watchlist imports, high-impact email alerts, and the <a class="link" href="/lodestone.html">LodeStone TradingView indicator</a>. It renews until you cancel.</p>
+      </details>
+      <details>
+        <summary>What is Compass?</summary>
         <p>A separate board inside Korvus for buy-and-hold investing, included with Operator. About 650 companies are scored from 0 to 100 on trend, growth, profit, value and balance sheet, each with a plain-English brief. The scores are research summaries of public data, not recommendations.</p>
       </details>
-      <details class="qa reveal">
-        <summary>I am new to futures. Where do I start?<span class="qi" aria-hidden="true">+</span></summary>
-        <p>Korvus publishes free plain-English guides on sessions, margin, tick value, rollover, SMT divergence and more. Start with the <a href="https://korvus.industries/p/beginner-futures-trading?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener">beginner guide to futures trading</a>.</p>
+      <details>
+        <summary>I am new to futures. Where do I start?</summary>
+        <p>Korvus publishes free plain-English guides on sessions, margin, tick value, rollover, SMT divergence and more. Start with the <a class="link" href="https://korvus.industries/p/beginner-futures-trading?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener">beginner guide to futures trading</a>.</p>
       </details>
-      <details class="qa reveal">
-        <summary>Can I delete my account?<span class="qi" aria-hidden="true">+</span></summary>
+      <details>
+        <summary>Can I delete my account?</summary>
         <p>Yes. You can delete it yourself from your account page on korvus.industries once any paid subscription has been cancelled.</p>
       </details>
-      <details class="qa reveal">
-        <summary>Is this financial advice?<span class="qi" aria-hidden="true">+</span></summary>
+      <details>
+        <summary>Is this financial advice?</summary>
         <p>No. Korvus is an information tool. It tells you what happened and how hard it can hit, it never gives trade signals, and the decision stays yours. Trading futures carries substantial risk of loss.</p>
       </details>
     </div>
   </div>
 </section>
 
-<section class="sec" id="lodestone">
+<section class="closing">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow" data-scramble>On the chart</span>
-      <h2>Meet LodeStone.</h2>
-      <p class="kicker">The terminal reads the news. LodeStone is the chart side of the stack: session levels, value, structure and SMT divergence, drawn automatically on index futures. One-time on Tradovate, subscription on TradingView, and included with a Korvus Operator subscription.</p>
+    <div>
+      <h2>Read the session before you trade it.</h2>
+      <p>Open a free Observer account and see the scored feed for yourself. If you also want the levels on your chart, LodeStone is the other half of the stack.</p>
     </div>
-    <div class="cta-row reveal">
-      <a href="/lodestone.html" class="btn accent">Explore LodeStone<span class="sheen"></span></a>
+    <div class="btn-row">
+      <a class="btn primary" href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener">Open a free account</a>
+      <a class="btn" href="/lodestone.html">Meet LodeStone</a>
     </div>
   </div>
 </section>
 
-<section class="cta-band">
-  <div class="aura"></div>
-  <div class="wrap">
-    <h2>Read the move before the crowd.</h2>
-    <p>Start free as an Observer and see the scored feed for yourself. Operator is $9.99 a month or $79.99 a year, and adds live SEC filings, Compass and the LodeStone TradingView indicator.</p>
-    <div class="cta-row">
-      <a href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener" class="btn accent">Visit Korvus<span class="sheen"></span></a>
-      <a href="/lodestone.html" class="btn ghost">Meet LodeStone<span class="sheen"></span></a>
-      <a href="/#products" class="btn ghost">Back to all products<span class="sheen"></span></a>
-    </div>
-  </div>
-</section>
-
-<footer>
+</main>
+<footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
-      <div class="foot-brand reveal">
-        <span class="wordmark">
-          <svg width="24" height="20" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 5px rgba(255,45,149,.7))" aria-hidden="true">
-            <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-            <line x1="7" y1="28" x2="29" y2="28"/>
-          </svg>
-          BlackCrown
-        </span>
-        <p>Market intelligence, AI, and a private network for independent operators.</p>
+      <div class="foot-brand">
+        <span class="brand"><svg viewBox="0 0 36 30" aria-hidden="true"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>BlackCrown</span>
+        <p>Tools for people who trade and build on their own: market intelligence, a chart indicator, a private AI workspace and a community.</p>
+        <div class="social">
+          <a href="https://www.tiktok.com/@blackcrown_vxj" target="_blank" rel="noopener" aria-label="BlackCrown on TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
+          <a href="https://www.instagram.com/blackcrownvxj.llc/" target="_blank" rel="noopener" aria-label="BlackCrown on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg></a>
+        </div>
       </div>
-      <div class="foot-col reveal">
+      <div>
         <h4>Products</h4>
-        <a href="/korvus.html">Korvus Industries</a>
-        <a href="/lodestone.html">LodeStone Indicator</a>
-        <a href="/intelligence.html">BlackCrown Intelligence</a>
-        <a href="/eclipse-x.html">Eclipse-X</a>
+        <nav aria-label="Products">
+          <a href="/korvus.html">Korvus</a>
+          <a href="/lodestone.html">LodeStone</a>
+          <a href="/intelligence.html">Crown by BlackCrown Intelligence</a>
+          <a href="/eclipse-x.html">Eclipse-X</a>
+        </nav>
       </div>
-      <div class="foot-col reveal">
-        <h4>Legal</h4>
-        <a href="/terms.html">Terms of Service</a>
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/disclaimer.html">Disclaimer</a>
+      <div>
+        <h4>Company</h4>
+        <nav aria-label="Company">
+          <a href="/#company">About BlackCrown</a>
+          <a href="/support.html">Support</a>
+          <a href="/terms.html">Terms of Service</a>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/disclaimer.html">Disclaimer</a>
+        </nav>
       </div>
-      <div class="foot-col reveal">
+      <div>
         <h4>Contact</h4>
-        <a href="mailto:BlackCrownVxJ.LLC@outlook.com">Email us</a>
-        <a href="tel:+17032989426">(703) 298-9426</a>
+        <nav aria-label="Contact">
+          <a href="mailto:BlackCrownVxJ.LLC@outlook.com">BlackCrownVxJ.LLC@outlook.com</a>
+          <a href="tel:+17032989426">(703) 298-9426</a>
+          <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Eclipse-X on Discord</a>
+        </nav>
       </div>
     </div>
-    <p class="foot-disclaimer reveal">Korvus Industries provides market information and analysis tools for educational and informational purposes only. Nothing on this site is financial, investment, legal, or tax advice, and nothing here is a recommendation to buy or sell any security or instrument. Trading futures and other leveraged products carries a substantial risk of loss and is not suitable for every investor. You are solely responsible for your own decisions.</p>
-    <div class="foot-bottom reveal">
-      <span>© 2026 BlackCrownVxJ LLC. All rights reserved.</span>
-      <span class="foot-links">
-        <a href="/terms.html">Terms</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="/disclaimer.html">Disclaimer</a>
-      </span>
+    <p class="foot-note">Korvus Industries provides market information and analysis tools for educational and informational purposes only. Nothing on this site is financial, investment, legal, or tax advice, and nothing here is a recommendation to buy or sell any security or instrument. Trading futures and other leveraged products carries a substantial risk of loss and is not suitable for every investor. You are solely responsible for your own decisions.</p>
+    <div class="foot-base">
+      <span>&copy; 2026 BlackCrownVxJ LLC. All rights reserved.</span>
+      <span>Built and operated by BlackCrownVxJ LLC</span>
     </div>
   </div>
 </footer>
-
-<!-- ================= UX layer ================= -->
-<script>
-(function(){
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  var nav = document.getElementById('backbar');
-  var prog = document.getElementById('progress');
-  var scrollTick = false;
-  function applyScroll(){
-    scrollTick = false;
-    nav.classList.toggle('scrolled', window.scrollY > 24);
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    prog.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
-  }
-  function onScroll(){ if(!scrollTick){ scrollTick = true; requestAnimationFrame(applyScroll); } }
-  applyScroll();
-  window.addEventListener('scroll', onScroll, {passive:true});
-
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.14});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-
-  function stagger(container, childSel, step){
-    if(!container) return;
-    var kids = container.querySelectorAll(childSel);
-    var so = new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting) return;
-        kids.forEach(function(k, i){
-          if(reduce){ k.classList.add('in'); } else { setTimeout(function(){ k.classList.add('in'); }, i*110); }
-        });
-        so.unobserve(e.target);
-      });
-    }, {threshold:0.16});
-    so.observe(container);
-  }
-  stagger(document.querySelector('.features'), '.feat', 110);
-  stagger(document.querySelector('.tiers'), '.tier', 140);
-  stagger(document.querySelector('.flow'), 'li', 130);
-
-  /* preview light/dark toggles */
-  document.querySelectorAll('.mode-toggle').forEach(function(mt){
-    var shot = mt.closest('.shot');
-    var tw = shot && shot.querySelector('.termwrap');
-    if(!tw) return;
-    mt.addEventListener('click', function(e){
-      e.preventDefault();
-      var light = tw.classList.toggle('lightmode');
-      mt.querySelectorAll('.mt-opt').forEach(function(o){
-        o.classList.toggle('on', (o.dataset.m === 'light') === light);
-      });
-    });
-  });
-
-  if(matchMedia('(pointer:fine)').matches && !reduce){
-    document.querySelectorAll('.feat').forEach(function(t){
-      t.addEventListener('pointermove', function(e){
-        var r = t.getBoundingClientRect();
-        var px = (e.clientX - r.left)/r.width, py = (e.clientY - r.top)/r.height;
-        t.classList.add('tilting');
-        t.style.setProperty('--ry', ((px-0.5)*8).toFixed(2)+'deg');
-        t.style.setProperty('--rx', ((0.5-py)*6).toFixed(2)+'deg');
-        t.style.setProperty('--mx', (px*100).toFixed(1)+'%');
-        t.style.setProperty('--my', (py*100).toFixed(1)+'%');
-      });
-      t.addEventListener('pointerleave', function(){
-        t.classList.remove('tilting');
-        t.style.setProperty('--rx','0deg'); t.style.setProperty('--ry','0deg');
-      });
-    });
-  }
-
-  var glyphs = 'ABCDEFGHJKLMNPRSTUVWXYZ0123456789#%/<>*';
-  function scramble(el){
-    var sig = el.querySelector('.sig'); var full = el.textContent; var steps = 0, total = full.length;
-    var iv = setInterval(function(){
-      steps++; var out = '';
-      for(var i=0;i<full.length;i++){
-        if(i<steps){ out += full[i]; } else if(full[i]===' '){ out += ' '; } else { out += glyphs[Math.floor(Math.random()*glyphs.length)]; }
-      }
-      el.textContent = out;
-      if(steps>=total){ clearInterval(iv); el.textContent = full; if(sig){ el.insertBefore(sig, el.firstChild); } }
-    }, 34);
-  }
-  if(!reduce){
-    var sio = new IntersectionObserver(function(es){
-      es.forEach(function(e){ if(e.isIntersecting){ scramble(e.target); sio.unobserve(e.target); } });
-    }, {threshold:0.6});
-    document.querySelectorAll('[data-scramble]').forEach(function(el){ sio.observe(el); });
-  }
-
-  var clock = document.getElementById('clock');
-  function tickClock(){
-    var d = new Date(); var p = function(n){ return (n<10?'0':'')+n; };
-    clock.textContent = 'KORVUS // ' + p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());
-  }
-  tickClock(); setInterval(tickClock, 1000);
-
-  if(matchMedia('(pointer:fine)').matches && !reduce){
-    document.querySelectorAll('.btn').forEach(function(b){
-      b.addEventListener('mousemove', function(e){
-        var r = b.getBoundingClientRect();
-        b.style.transform = 'translate(' + ((e.clientX-r.left-r.width/2)*0.18) + 'px,' + ((e.clientY-r.top-r.height/2)*0.28 - 2) + 'px)';
-      });
-      b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
-    });
-  }
-
-  function startIntro(){
-    var t = document.querySelector('.phero h1'); if(t) t.classList.add('show');
-    document.querySelectorAll('.phero .intro-el').forEach(function(el,i){ setTimeout(function(){ el.classList.add('show'); }, 260+i*120); });
-    var shot = document.querySelector('.phero .shot'); if(shot) setTimeout(function(){ shot.classList.add('show'); }, 480);
-    var cue = document.querySelector('.scroll-cue'); if(cue) cue.classList.add('show');
-    window.__bcIntro = true;
-    window.dispatchEvent(new CustomEvent('bc:introstart'));
-  }
-
-  var pre = document.getElementById('preloader');
-  var bar = document.getElementById('plBar'); var pct = document.getElementById('plPct');
-  var seen = false; try { seen = sessionStorage.getItem('bcSeen') === '1'; } catch(err){}
-  if(reduce || !pre || seen){ if(pre){ pre.style.transition = 'none'; pre.classList.add('done'); } startIntro(); }
-  else {
-    try { sessionStorage.setItem('bcSeen', '1'); } catch(err){}
-    var v = 0;
-    var pl = setInterval(function(){
-      v += Math.random()*16 + 14; if(v>=100){ v = 100; clearInterval(pl); }
-      bar.style.width = v+'%'; pct.textContent = Math.floor(v);
-      if(v===100){ setTimeout(function(){ pre.classList.add('done'); startIntro(); }, 160); }
-    }, 55);
-  }
-})();
-</script>
-
-<!-- ================= 3D ambient hero (self-hosted Three.js, no CDN) ================= -->
-<script src="/assets/bc3d.js"></script>
-<script>
-(function(){
-  var canvas = document.getElementById('bc3d');
-  if(!canvas || !window.THREE || !window.BC3D){ if(canvas) canvas.style.display='none'; return; }
-  var THREE = window.THREE;
-  var SVGLoader = window.BC3D.SVGLoader, EffectComposer = window.BC3D.EffectComposer,
-      RenderPass = window.BC3D.RenderPass, UnrealBloomPass = window.BC3D.UnrealBloomPass;
-
-  var hero = document.querySelector('.phero');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var isMobile = window.matchMedia('(max-width: 760px)').matches;
-  var ACCENT = 0xff2d95;
-
-  var renderer;
-  try { renderer = new THREE.WebGLRenderer({ canvas:canvas, antialias:true, alpha:true, powerPreference:'high-performance' }); }
-  catch (err) { canvas.style.display = 'none'; return; }
-
-  var w = hero.clientWidth, h = hero.clientHeight;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(w, h, false);
-  renderer.setClearColor(0x000000, 0);
-
-  var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(38, w/h, 0.1, 100);
-  camera.position.set(0, 0, 9);
-
-  scene.add(new THREE.AmbientLight(0x241019, 1.1));
-  var key = new THREE.PointLight(ACCENT, 42, 60); key.position.set(6, 8, 9); scene.add(key);
-  var fill = new THREE.PointLight(0xff6fb6, 15, 60); fill.position.set(-8, -4, 6); scene.add(fill);
-  var dir = new THREE.DirectionalLight(0xffffff, 0.5); dir.position.set(0,2,-6); scene.add(dir);
-
-  var crown = new THREE.Group(); scene.add(crown);
-  crown.position.x = 2.1;
-  var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 30"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/></svg>';
-  var path = new SVGLoader().parse(svg).paths[0];
-  var shapes = (SVGLoader.createShapes ? SVGLoader.createShapes(path) : path.toShapes(true));
-  var geo = new THREE.ExtrudeGeometry(shapes, { depth:7, bevelEnabled:true, bevelThickness:0.9, bevelSize:0.8, bevelSegments:4, curveSegments:6 });
-  geo.scale(1,-1,1); geo.center(); geo.computeVertexNormals(); geo.computeBoundingBox();
-  var sz = new THREE.Vector3(); geo.boundingBox.getSize(sz);
-  var fit = 5.2 / Math.max(sz.x, sz.y);
-  var faceMat = new THREE.MeshStandardMaterial({ color:0x0b0b10, metalness:0.7, roughness:0.34, emissive:ACCENT, emissiveIntensity:0.16, transparent:true });
-  var solid = new THREE.Mesh(geo, faceMat);
-  var edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 22), new THREE.LineBasicMaterial({ color:ACCENT, transparent:true }));
-  crown.add(solid, edges); crown.scale.setScalar(fit); crown.rotation.x = -0.12;
-
-  var floaters = [
-    { g:new THREE.IcosahedronGeometry(1,0), p:[-4.8,2.4,-3], s:0.85 },
-    { g:new THREE.OctahedronGeometry(1,0), p:[4.9,-2.2,-2], s:0.95 },
-    { g:new THREE.TorusGeometry(0.9,0.3,8,24), p:[-3.4,-2.6,-4], s:0.7 }
-  ].map(function(d){
-    var m = new THREE.LineSegments(new THREE.WireframeGeometry(d.g), new THREE.LineBasicMaterial({ color:ACCENT, transparent:true, opacity:0.18 }));
-    m.position.set(d.p[0],d.p[1],d.p[2]); m.scale.setScalar(d.s);
-    m.userData.spin = (Math.random()*0.4+0.1)*(Math.random()<0.5?-1:1); m.userData.bob = Math.random()*Math.PI*2;
-    scene.add(m); return m;
-  });
-
-  var COUNT = isMobile ? 260 : 720;
-  var pos = new Float32Array(COUNT*3), col = new Float32Array(COUNT*3);
-  var cA = new THREE.Color(ACCENT), cW = new THREE.Color(0xffffff);
-  for (var i=0;i<COUNT;i++){
-    var r = 6+Math.random()*14, th = Math.random()*Math.PI*2, ph = Math.acos(2*Math.random()-1);
-    pos[i*3]=r*Math.sin(ph)*Math.cos(th); pos[i*3+1]=r*Math.sin(ph)*Math.sin(th)*0.7; pos[i*3+2]=r*Math.cos(ph)-4;
-    var c = Math.random()<0.6 ? cA : cW; col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
-  }
-  var pGeo = new THREE.BufferGeometry();
-  pGeo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  pGeo.setAttribute('color', new THREE.BufferAttribute(col,3));
-  var particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ size:0.05, vertexColors:true, transparent:true, opacity:0.85, depthWrite:false, blending:THREE.AdditiveBlending, sizeAttenuation:true }));
-  scene.add(particles);
-
-  var composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
-  var bloom = new UnrealBloomPass(new THREE.Vector2(w,h), 0.95, 0.6, 0.05);
-  composer.addPass(bloom);
-
-  var mouse = { x:0,y:0,tx:0,ty:0 };
-  if (!reduce) window.addEventListener('pointermove', function(e){ mouse.tx=(e.clientX/window.innerWidth)*2-1; mouse.ty=(e.clientY/window.innerHeight)*2-1; }, {passive:true});
-
-  var intro = reduce ? 1 : 0, introRunning = reduce;
-  if (window.__bcIntro) introRunning = true;
-  window.addEventListener('bc:introstart', function(){ introRunning = true; });
-  var ease = function(t){ return 1-Math.pow(1-t,3); };
-  var clock = new THREE.Clock(); var raf = 0;
-
-  function resize(){ w=hero.clientWidth; h=hero.clientHeight; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h,false); composer.setSize(w,h); bloom.setSize(w,h); }
-  window.addEventListener('resize', resize, {passive:true});
-
-  function frame(){
-    raf = requestAnimationFrame(frame);
-    var dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
-    if (introRunning && intro < 1) intro = Math.min(1, intro + dt/1.3);
-    var e = ease(intro);
-    mouse.x += (mouse.tx-mouse.x)*0.05; mouse.y += (mouse.ty-mouse.y)*0.05;
-    crown.scale.setScalar(fit*(0.25+0.75*e));
-    crown.rotation.y = (1-e)*Math.PI*1.4 + t*0.16 + mouse.x*0.45;
-    crown.rotation.x = -0.12 + mouse.y*0.24 + Math.sin(t*0.5)*0.04;
-    edges.material.opacity = e; faceMat.opacity = e;
-    floaters.forEach(function(m){ m.rotation.x += m.userData.spin*dt; m.rotation.y += m.userData.spin*dt*0.7; m.position.y += Math.sin(t*0.6+m.userData.bob)*dt*0.18; m.material.opacity = 0.18*e; });
-    particles.rotation.y = t*0.02; particles.rotation.x = mouse.y*0.06;
-    var sp = Math.min(1, Math.max(0, window.scrollY/Math.max(h,1)));
-    crown.position.y = sp*2.6; crown.position.z = -sp*4.5; canvas.style.opacity = String(1 - sp*0.9);
-    composer.render();
-    if (reduce) cancelAnimationFrame(raf);
-  }
-  var heroVisible = true;
-  function sync(){
-    cancelAnimationFrame(raf);
-    if(heroVisible && !document.hidden && !reduce){ clock.getDelta(); frame(); }
-  }
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){ heroVisible = es[0].isIntersecting; sync(); }, {threshold:0}).observe(hero);
-  }
-  document.addEventListener('visibilitychange', sync);
-  resize(); frame();
-})();
-</script>
-
-<script>
-(function(){
-  var done = {};
-  document.addEventListener('mouseover', function(e){
-    var a = e.target.closest && e.target.closest('a[href]');
-    if(!a || a.host !== location.host) return;
-    var href = a.getAttribute('href');
-    if(!href || href.charAt(0) === '#' || done[a.pathname]) return;
-    done[a.pathname] = 1;
-    var l = document.createElement('link'); l.rel = 'prefetch'; l.href = a.pathname;
-    document.head.appendChild(l);
-  }, {passive:true});
-})();
-</script>
-
-<!-- BlackCrown analytics beacon -->
-<script>
-(function(){
-  var EP="https://admin.blackcrownvxj.com/api/track";
-  function hit(e,k,x){try{new Image().src=EP+"?e="+e+"&k="+encodeURIComponent(k)+(x||"")+"&_="+Date.now();}catch(_){}}
-  var d=(window.innerWidth<768)?"m":"d";
-  var r=encodeURIComponent((document.referrer||"").slice(0,200));
-  hit("visit","korvus","&d="+d+"&r="+r);
-  document.addEventListener("click",function(ev){
-    var a=ev.target&&ev.target.closest?ev.target.closest("a[href]"):null;
-    if(!a)return;
-    var h=a.getAttribute("href")||"";
-    if(/korvus\.industries/i.test(h))hit("click","korvus");
-    else if(/blackcrown-intelligence\.com/i.test(h))hit("click","intelligence");
-    else if(/discord\.(gg|com)/i.test(h))hit("click","collective");
-  },true);
-})();
-</script>
+<script src="/assets/site.js?v=20261111" defer></script>
 </body>
 </html>

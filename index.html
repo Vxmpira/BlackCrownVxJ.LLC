@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BlackCrown | Tools for independent operators</title>
-<meta name="description" content="One house, three edges: Korvus market intelligence, the Crown private AI workspace, and the Eclipse-X community for traders, founders and builders.">
+<title>BlackCrown | Tools for people who trade and build on their own</title>
+<meta name="description" content="BlackCrown makes four tools for independent traders and builders: the Korvus market terminal, the LodeStone chart indicator, the Crown private AI workspace and the Eclipse-X community.">
 <link rel="canonical" href="https://blackcrownvxj.com/">
-<meta property="og:title" content="BlackCrown: one house, three edges">
-<meta property="og:description" content="Real-time market intelligence, a private AI that holds your context, and a room of operators who actually build.">
+<meta property="og:title" content="BlackCrown: tools for people who trade and build on their own">
+<meta property="og:description" content="A market terminal that reads the news for you, an indicator that draws your levels, a private AI workspace you own, and a community to check your thinking.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://blackcrownvxj.com/">
 <meta property="og:image" content="https://blackcrownvxj.com/og-image.png">
@@ -15,1311 +15,374 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://blackcrownvxj.com/og-image.png">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-<style>
-  :root{
-    --vanta:#000000;--ink-2:#060608;--ink-3:#0A0A0D;--panel:#0D0D11;
-    --white:#FFFFFF;--bone:#E8E8EF;--mute:#85838F;
-    --pink:#FF2D95;--pink-soft:#FF6FB6;--pink-deep:#C81E73;
-    --line:rgba(255,45,149,.20);--line-soft:rgba(255,255,255,.07);
-    --glow-pink:0 0 6px rgba(255,45,149,.36),0 0 18px rgba(255,45,149,.16);
-    --glow-white:0 0 8px rgba(255,255,255,.24);--logo-glow:0 0 11px rgba(255,255,255,.38);
-    --max:1200px;--pad:clamp(1.25rem,5vw,4.5rem);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--vanta);color:var(--bone);font-family:'Manrope',system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  ::selection{background:var(--pink);color:#0A0008}
-  :focus-visible{outline:2px solid var(--pink);outline-offset:3px;border-radius:3px}
-  .wrap{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink)}
-  .neon{color:var(--pink);text-shadow:var(--glow-pink)}
-
-  /* ---------- film grain + scroll progress ---------- */
-  .grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:screen;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-  .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:95;background:var(--pink);box-shadow:var(--glow-pink);transition:width .1s linear}
-
-  /* ---------- preloader / intro curtain ---------- */
-  #preloader{position:fixed;inset:0;z-index:120;background:var(--vanta);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;transition:opacity .7s ease,visibility .7s ease}
-  #preloader.done{opacity:0;visibility:hidden}
-  #preloader .pl-crown{width:74px;height:62px;filter:drop-shadow(0 0 14px rgba(255,45,149,.55))}
-  #preloader .pl-crown path,#preloader .pl-crown line{stroke:var(--pink);stroke-width:1.6;fill:none;stroke-linejoin:round;stroke-linecap:round;
-    stroke-dasharray:120;stroke-dashoffset:120;animation:plDraw 1.15s cubic-bezier(.6,.05,.2,1) forwards}
-  #preloader .pl-crown line{animation-delay:.5s}
-  @keyframes plDraw{to{stroke-dashoffset:0}}
-  .pl-meter{width:140px;height:2px;background:rgba(255,255,255,.10);border-radius:2px;overflow:hidden}
-  .pl-meter i{display:block;height:100%;width:0;background:var(--pink);box-shadow:var(--glow-pink)}
-  .pl-label{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mute)}
-  .pl-label b{color:var(--pink);font-weight:500}
-
-  /* ---------- nav ---------- */
-  .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
-    padding:1rem var(--pad);transition:background .35s ease,border-color .35s ease,backdrop-filter .35s ease;border-bottom:1px solid transparent}
-  .nav.scrolled{background:rgba(0,0,0,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-  .brand{display:flex;align-items:center;gap:.6rem}
-  .brand .crownmark{filter:drop-shadow(0 0 6px rgba(255,45,149,.7))}
-  .brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.02em;font-size:1.18rem;color:var(--white);text-shadow:var(--logo-glow)}
-  .nav-links{display:flex;gap:2.1rem;align-items:center}
-  .nav-links a{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);transition:color .25s,text-shadow .25s}
-  .nav-links a:hover{color:var(--pink);text-shadow:var(--glow-pink)}
-  .nav-drop{position:relative;display:inline-flex;align-items:center}
-  .nav-drop-btn{display:inline-flex;align-items:center;gap:.45rem;line-height:1}
-  .nav-drop-btn .caret{width:9px;height:6px;opacity:.7;transition:transform .25s ease}
-  .nav-drop:hover .nav-drop-btn .caret,.nav-drop:focus-within .nav-drop-btn .caret{transform:rotate(180deg)}
-  .nav-drop-menu{position:absolute;top:100%;left:50%;min-width:252px;padding:.55rem;margin-top:.85rem;transform:translate(-50%,10px);
-    background:rgba(5,5,8,.96);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:12px;
-    box-shadow:0 18px 44px rgba(0,0,0,.6),0 0 20px rgba(255,45,149,.08);
-    opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,transform .22s ease,visibility .22s}
-  .nav-drop-menu::before{content:"";position:absolute;left:0;right:0;top:-.95rem;height:.95rem}
-  .nav-drop:hover .nav-drop-menu,.nav-drop:focus-within .nav-drop-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translate(-50%,0)}
-  .nav-drop-menu a{display:flex;align-items:center;gap:.6rem;padding:.62rem .8rem;border-radius:8px;white-space:nowrap}
-  .nav-drop-menu a:hover{background:rgba(255,255,255,.05);color:var(--c,var(--pink));text-shadow:0 0 6px color-mix(in srgb,var(--c,var(--pink)) 55%,transparent)}
-  .nav-drop-menu .pd{width:7px;height:7px;border-radius:50%;background:var(--c,var(--pink));box-shadow:0 0 6px var(--c,var(--pink));flex:none}
-  .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:42px;height:42px;padding:0;background:transparent;border:1px solid var(--line);border-radius:9px;cursor:pointer;transition:border-color .25s ease}
-  .nav-toggle span{display:block;width:20px;height:2px;background:var(--bone);margin:0 auto;border-radius:2px;transition:transform .3s ease,opacity .25s ease}
-  .nav-toggle:hover{border-color:var(--pink)}
-  .nav.open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  .nav.open .nav-toggle span:nth-child(2){opacity:0}
-  .nav.open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .nav-cta{display:none}
-  .btn{position:relative;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
-    padding:.72rem 1.3rem;border-radius:8px;cursor:pointer;display:inline-block;transition:transform .2s ease,background .25s ease,box-shadow .25s ease,color .25s ease,border-color .25s ease}
-  .btn.solid{background:var(--pink);color:#0A0008;border:1px solid var(--pink);box-shadow:var(--glow-pink)}
-  .btn.solid:hover{background:var(--pink-soft);box-shadow:0 0 12px rgba(255,45,149,.5),0 0 30px rgba(255,45,149,.28);transform:translateY(-2px)}
-  .btn.ghost{background:transparent;color:var(--bone);border:1px solid rgba(255,255,255,.22)}
-  .btn.ghost:hover{border-color:var(--pink);color:var(--pink);box-shadow:var(--glow-pink);text-shadow:var(--glow-pink);transform:translateY(-2px)}
-  .btn .sheen{position:absolute;top:0;left:-120%;width:60%;height:100%;pointer-events:none;
-    background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-18deg)}
-  .btn:hover .sheen{animation:sheen .7s ease}
-  @keyframes sheen{from{left:-120%}to{left:160%}}
-
-  /* ---------- hero ---------- */
-  .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden;isolation:isolate}
-  #bc3d{position:absolute;inset:0;width:100%;height:100%;z-index:1;display:block}
-  .hero .aura{position:absolute;border-radius:50%;filter:blur(70px);z-index:0;pointer-events:none}
-  .hero .a1{top:8%;left:50%;width:62vw;max-width:760px;height:62vw;max-height:760px;transform:translateX(-50%);
-    background:radial-gradient(circle,rgba(255,45,149,.16),transparent 64%);animation:auraPulse 8s ease-in-out infinite}
-  .hero .a2{bottom:-14%;right:-6%;width:44vw;max-width:520px;height:44vw;max-height:520px;
-    background:radial-gradient(circle,rgba(200,30,115,.13),transparent 66%);animation:auraPulse 11s ease-in-out infinite reverse}
-  @keyframes auraPulse{0%,100%{opacity:.65}50%{opacity:1}}
-  .hero::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
-    background:radial-gradient(120% 78% at 50% 46%,transparent 38%,rgba(0,0,0,.62) 100%)}
-
-  .hud{position:absolute;top:6.2rem;left:var(--pad);z-index:4;display:flex;align-items:center;gap:.55rem;
-    font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
-  .hud .dot{width:7px;height:7px;border-radius:50%;background:var(--pink);box-shadow:var(--glow-pink);animation:blink 2.4s ease-in-out infinite}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-
-  .hero-inner{position:relative;z-index:4;width:100%;text-align:center;padding-top:5rem;padding-bottom:5rem}
-  .hero-inner .eyebrow{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.6rem}
-  .hero-inner .eyebrow .sig{width:26px;height:1px;background:var(--pink);box-shadow:var(--glow-pink);display:inline-block}
-  .hero-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(3rem,11vw,7.4rem);line-height:.92;letter-spacing:-0.035em;color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.6rem}
-  .hero-title .w{display:inline-block;opacity:0;transform:translateY(38px) rotateX(40deg);transform-origin:bottom;transition:opacity .8s ease,transform .9s cubic-bezier(.2,.85,.25,1)}
-  .hero-title.show .w{opacity:1;transform:none}
-  .hero-title.show .w:nth-child(1){transition-delay:.05s}
-  .hero-title.show .w:nth-child(2){transition-delay:.13s}
-  .hero-title.show .w:nth-child(3){transition-delay:.21s}
-  .lead{max-width:60ch;margin:0 auto;font-size:clamp(1.05rem,1.6vw,1.28rem);color:var(--bone);opacity:.9}
-  .cta-row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;margin-top:2.2rem}
-  .intro-el{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-  .intro-el.show{opacity:1;transform:none}
-  .lead.intro-el.show{opacity:.9}
-
-  .scroll-cue{position:absolute;bottom:1.7rem;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:.5rem;
-    font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);opacity:0;transition:opacity 1s ease .9s}
-  .scroll-cue.show{opacity:1}
-  .scroll-cue .bar{width:1px;height:38px;background:linear-gradient(var(--pink),transparent);position:relative;overflow:hidden}
-  .scroll-cue .bar::after{content:"";position:absolute;top:-40%;left:0;width:100%;height:40%;background:var(--pink);box-shadow:var(--glow-pink);animation:cue 2s ease-in-out infinite}
-  @keyframes cue{0%{top:-40%}100%{top:120%}}
-
-  /* ---------- ticker ---------- */
-  .ticker{position:relative;z-index:5;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink-2);overflow:hidden;padding:.9rem 0}
-  .ticker-track{display:flex;align-items:center;gap:2.2rem;width:max-content;animation:tick 34s linear infinite;will-change:transform}
-  .ticker:hover .ticker-track{animation-play-state:paused}
-  .ticker-track span{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
-  .ticker-track .star{color:var(--pink);text-shadow:var(--glow-pink)}
-  @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-  /* ---------- generic section ---------- */
-  .sec{position:relative;padding:clamp(4.5rem,9vw,7rem) 0;border-top:1px solid var(--line-soft)}
-  .sec-head{margin-bottom:3.2rem;max-width:760px}
-  .sec-head .eyebrow{display:block;margin-bottom:1rem}
-  .sec-head h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,5vw,3.2rem);line-height:1;letter-spacing:-0.02em;color:var(--white)}
-  .sec-head .kicker{color:var(--mute);margin-top:1rem;max-width:60ch}
-
-  /* ---------- mission ---------- */
-  .mission{overflow:hidden}
-  .mission .ghost{position:absolute;top:50%;right:-4%;width:min(46vw,540px);transform:translate(0,calc(-50% + var(--py,0px)));opacity:.5;pointer-events:none;will-change:transform}
-  .mission .ghost .gb{stroke:var(--line);stroke-width:.4;fill:none}
-  .mission .ghost .gt{stroke:var(--pink);stroke-width:.5;fill:none;stroke-dasharray:140;stroke-dashoffset:140;filter:drop-shadow(0 0 4px rgba(255,45,149,.5))}
-  .mission .ghost.in .gt{animation:plDraw 2.4s ease forwards}
-  .mission .wrap{position:relative;z-index:1}
-  .mission blockquote{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2rem,6vw,4rem);line-height:1.02;letter-spacing:-0.02em;color:var(--white);text-shadow:var(--glow-white);max-width:18ch;margin-bottom:1.6rem}
-  .mission blockquote .neon{position:relative}
-  .mission blockquote .neon::after{content:"";position:absolute;left:0;bottom:-.06em;height:3px;width:100%;background:var(--pink);box-shadow:var(--glow-pink);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.8,.2,1) .35s}
-  .mission blockquote.in .neon::after{transform:scaleX(1)}
-  .mission .body{color:var(--bone);opacity:.86;max-width:60ch;font-size:clamp(1rem,1.5vw,1.18rem)}
-
-  /* ---------- products ---------- */
-  .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
-  .ptile{position:relative;display:flex;flex-direction:column;background:var(--ink-2);border:1px solid var(--line);border-radius:16px;overflow:hidden;opacity:0;
-    transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,30px)) translateZ(0);
-    transition:opacity .7s ease,transform .55s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
-  .ptile.in{opacity:1;--ty:0px}
-  .ptile:hover{--ty:-8px;border-color:var(--pink);box-shadow:0 0 18px rgba(255,45,149,.22),0 22px 48px rgba(0,0,0,.65)}
-  .ptile.tilting{transition:transform .09s linear,border-color .4s ease,box-shadow .4s ease}
-  .ptile::after{content:"";position:absolute;inset:0;z-index:3;border-radius:16px;pointer-events:none;opacity:0;transition:opacity .35s ease;
-    background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),rgba(255,45,149,.14),transparent 60%)}
-  .ptile:hover::after{opacity:1}
-  .ptile-screen{position:relative;height:172px;background:linear-gradient(180deg,#0b0b0f,#050507);border-bottom:1px solid var(--line-soft);overflow:hidden}
-  .ptile-screen svg{position:absolute;inset:0;width:100%;height:100%}
-  .ptile-screen .scan{position:absolute;left:0;right:0;top:0;height:38%;pointer-events:none;
-    background:linear-gradient(180deg,rgba(255,45,149,.10),transparent);animation:scan 4.5s ease-in-out infinite}
-  @keyframes scan{0%,100%{transform:translateY(-30%)}50%{transform:translateY(220%)}}
-  .ptile-tag{position:absolute;top:.9rem;left:.9rem;z-index:2;display:inline-flex;align-items:center;gap:.45rem;
-    font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink)}
-  .ptile-tag .d{width:6px;height:6px;border-radius:50%;background:var(--pink);box-shadow:var(--glow-pink)}
-  .mv-grid{stroke:var(--line-soft);stroke-width:1}
-  .mv-area{fill:rgba(255,45,149,.10)}
-  .mv-line{stroke:var(--pink);stroke-width:2;fill:none;filter:drop-shadow(0 0 4px rgba(255,45,149,.6));stroke-dasharray:520;stroke-dashoffset:520}
-  .ptile.in .mv-line{animation:plDraw 1.8s ease forwards}
-  .mv-net{stroke:var(--pink);stroke-width:1.4;fill:none;opacity:.55}
-  .mv-node{fill:var(--pink);filter:drop-shadow(0 0 5px rgba(255,45,149,.8))}
-  .mv-ring{fill:none;stroke:var(--pink);stroke-width:1.4;transform-origin:center;transform-box:fill-box}
-  .mv-ring.r1{animation:ringPulse 3s ease-out infinite}
-  .mv-ring.r2{animation:ringPulse 3s ease-out 1.5s infinite}
-  @keyframes ringPulse{0%{opacity:.8;transform:scale(.4)}100%{opacity:0;transform:scale(1.7)}}
-  .mv-bubble{fill:none;stroke:var(--line);stroke-width:1.4}
-  .mv-dot{fill:var(--pink-soft)}
-  .mv-dot.d1{animation:typ 1.4s ease-in-out infinite}
-  .mv-dot.d2{animation:typ 1.4s ease-in-out .2s infinite}
-  .mv-dot.d3{animation:typ 1.4s ease-in-out .4s infinite}
-  @keyframes typ{0%,100%{opacity:.3}50%{opacity:1}}
-  .ptile-body{padding:1.6rem 1.6rem 1.8rem;display:flex;flex-direction:column;flex:1}
-  .ptile-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.32rem;color:var(--white);letter-spacing:-0.01em}
-  .ptile-sub{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-top:.3rem}
-  .ptile-desc{color:var(--bone);opacity:.82;font-size:.96rem;margin-top:1rem;flex:1}
-  .ptile-link{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink);margin-top:1.4rem;display:inline-flex;gap:.45rem;align-items:center}
-  .ptile-link span{transition:transform .25s ease}
-  .ptile:hover .ptile-link span{transform:translateX(5px)}
-
-  /* ---------- contact ---------- */
-  .contact{text-align:left}
-  .contact h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.2rem,7vw,4.4rem);line-height:1;letter-spacing:-0.02em;color:var(--white);text-shadow:var(--glow-white);margin-bottom:2.4rem}
-  .lines{display:flex;flex-direction:column;border-top:1px solid var(--line-soft)}
-  .lines a{position:relative;display:flex;align-items:baseline;gap:1.4rem;padding:1.5rem .2rem;border-bottom:1px solid var(--line-soft);
-    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.15rem,3vw,1.9rem);color:var(--bone);opacity:0;transform:translateX(-18px);
-    transition:color .25s,padding-left .3s cubic-bezier(.2,.8,.2,1),opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
-  .lines a.in{opacity:1;transform:none}
-  .lines a:hover{color:var(--pink);text-shadow:var(--glow-pink);padding-left:1rem}
-  .lines a .k{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);min-width:64px}
-  .lines a::after{content:"↗";margin-left:auto;color:var(--pink);font-size:.78em;opacity:0;transform:translateX(-8px);text-shadow:var(--glow-pink);transition:opacity .3s ease,transform .3s ease}
-  .lines a:hover::after{opacity:1;transform:none}
-  .contact .note{color:var(--mute);margin-top:2rem;max-width:54ch}
-
-  /* ---------- footer ---------- */
-  footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--ink-2)}
-  .foot-grid{display:flex;justify-content:space-between;gap:3rem;flex-wrap:wrap;margin-bottom:3.5rem}
-  .foot-brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.35rem;color:var(--white);text-shadow:var(--logo-glow);display:flex;align-items:center;gap:.6rem}
-  .foot-brand p{color:var(--mute);font-size:.95rem;margin-top:.9rem;max-width:30ch}
-  .foot-col h4{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink);margin-bottom:1.2rem}
-  .foot-col a{display:block;color:var(--mute);font-size:.95rem;margin-bottom:.6rem;transition:color .25s}
-  .foot-col a:hover{color:var(--pink)}
-  .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:2rem;border-top:1px solid var(--line-soft);
-    font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-  .foot-grid .reveal:nth-child(2){transition-delay:.1s}
-  .foot-grid .reveal:nth-child(3){transition-delay:.2s}
-
-
-  /* ---------- who / personas ---------- */
-  .mission .body{margin-bottom:0}
-  .personas{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:3rem}
-  .persona{position:relative;background:var(--ink-2);border:1px solid var(--line);border-radius:16px;padding:1.9rem 1.7rem;overflow:hidden;
-    opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
-  .persona.in{opacity:1;transform:none}
-  .persona:hover{border-color:var(--pink);box-shadow:0 0 16px rgba(255,45,149,.16),0 18px 40px rgba(0,0,0,.55);transform:translateY(-5px)}
-  .persona .pico{width:38px;height:38px;color:var(--pink);margin-bottom:1.1rem;filter:drop-shadow(0 0 6px rgba(255,45,149,.5))}
-  .persona .plabel{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);text-shadow:var(--glow-pink);display:block;margin-bottom:.5rem}
-  .persona h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;color:var(--white);margin-bottom:.6rem;letter-spacing:-0.01em}
-  .persona p{color:var(--bone);opacity:.82;font-size:.94rem}
-
-  /* ---------- product tiles: per-product accent + need line ---------- */
-  .ptile{--tile:var(--pink)}
-  .ptile .mv-line{stroke:var(--tile)}
-  .ptile .mv-net{stroke:var(--tile)}
-  .ptile .mv-node{fill:var(--tile)}
-  .ptile .mv-ring{stroke:var(--tile)}
-  .ptile .mv-dot{fill:var(--tile)}
-  .ptile .ptile-tag{color:var(--tile);text-shadow:0 0 6px color-mix(in srgb,var(--tile) 55%,transparent)}
-  .ptile .ptile-tag .d{background:var(--tile)}
-  .ptile .ptile-link{color:var(--tile);text-shadow:0 0 6px color-mix(in srgb,var(--tile) 55%,transparent)}
-  .ptile .scan{background:linear-gradient(180deg,color-mix(in srgb,var(--tile) 12%,transparent),transparent)}
-  .ptile:hover{--ty:-8px;border-color:var(--tile);box-shadow:0 0 20px color-mix(in srgb,var(--tile) 26%,transparent),0 22px 48px rgba(0,0,0,.65)}
-  .ptile::after{background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),var(--tile),transparent 60%);opacity:0}
-  .ptile:hover::after{opacity:.13}
-  .ptile-need{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.04em;color:var(--mute);margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--line-soft);line-height:1.5}
-  .ptile-need b{color:var(--tile);font-weight:500}
-
-  /* ---------- why ---------- */
-  .vgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}
-  .vcard{position:relative;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:16px;padding:1.9rem 1.8rem;overflow:hidden;
-    opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease}
-  .vcard.in{opacity:1;transform:none}
-  .vcard:hover{border-color:var(--line)}
-  .vcard::before{content:"";position:absolute;left:0;top:1.9rem;width:3px;height:26px;background:var(--pink);box-shadow:var(--glow-pink);border-radius:2px}
-  .vcard h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;color:var(--white);margin-bottom:.55rem;padding-left:1.1rem;letter-spacing:-0.01em}
-  .vcard p{color:var(--bone);opacity:.8;font-size:.95rem;padding-left:1.1rem}
-
-  /* ---------- connect ---------- */
-  .connect{position:relative;overflow:hidden}
-  .connect .aura{position:absolute;top:50%;left:50%;width:60vw;max-width:640px;height:60vw;max-height:640px;transform:translate(-50%,-50%);border-radius:50%;
-    background:radial-gradient(circle,rgba(255,45,149,.12),transparent 64%);filter:blur(64px);z-index:0}
-  .connect .wrap{position:relative;z-index:1;text-align:center}
-  .connect h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,5vw,3.2rem);color:var(--white);text-shadow:var(--glow-white);letter-spacing:-0.02em;margin-bottom:1rem}
-  .connect p{color:var(--mute);max-width:52ch;margin:0 auto 2rem}
-  .connect .eyebrow{display:block;margin-bottom:1rem}
-  .connect .cta-row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.4rem}
-  .socials{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
-  .soc{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:12px;border:1px solid var(--line);
-    color:var(--bone);background:var(--ink-2);transition:transform .25s ease,border-color .25s ease,color .25s ease,box-shadow .25s ease}
-  .soc svg{width:20px;height:20px}
-  .soc:hover{color:var(--pink);border-color:var(--pink);box-shadow:var(--glow-pink);transform:translateY(-3px)}
-
-  /* ---------- eclipse-x connect ---------- */
-  .connect .wrap.connect-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;text-align:left}
-  .connect .connect-copy p{color:var(--mute);max-width:56ch;margin:0}
-  .ex-points{list-style:none;display:flex;flex-direction:column;gap:1rem;margin:1.9rem 0 2.1rem}
-  .ex-points li{position:relative;padding-left:1.7rem;color:var(--bone);opacity:.86;font-size:.95rem;line-height:1.55}
-  .ex-points li::before{content:"";position:absolute;left:0;top:.4em;width:10px;height:10px;border-radius:50%;
-    background:radial-gradient(circle at 32% 32%,var(--pink) 0%,#050505 62%);box-shadow:0 0 9px rgba(255,45,149,.65)}
-  .ex-points b{display:block;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.04rem;color:var(--white);margin-bottom:.15rem}
-  .connect .connect-grid .cta-row{justify-content:flex-start;margin-bottom:0}
-  .eclipse-vis{position:relative;width:min(100%,420px);aspect-ratio:1;margin:0 auto;display:flex;align-items:center;justify-content:center}
-  .eclipse-vis::before{content:"";position:absolute;inset:0;border-radius:50%;
-    background-image:radial-gradient(rgba(255,255,255,.55) 1px,transparent 1.3px);background-size:54px 54px;opacity:.14;
-    -webkit-mask-image:radial-gradient(circle,#000 30%,transparent 72%);mask-image:radial-gradient(circle,#000 30%,transparent 72%)}
-  .ex-orbit{position:absolute;width:88%;height:88%;border-radius:50%;border:1px dashed rgba(255,255,255,.09);animation:oSpin 46s linear infinite}
-  .ex-orbit i{position:absolute;top:-4px;left:50%;width:7px;height:7px;border-radius:50%;background:var(--pink);box-shadow:0 0 9px var(--pink)}
-  .ex-corona{position:absolute;width:64%;height:64%;border-radius:50%;
-    background:radial-gradient(circle,rgba(255,45,149,.55),rgba(255,45,149,.14) 55%,transparent 72%);filter:blur(26px);animation:exCorona 5.5s ease-in-out infinite}
-  .ex-ring{position:absolute;width:57%;height:57%;border-radius:50%;
-    box-shadow:0 0 22px rgba(255,45,149,.6),0 0 70px rgba(255,45,149,.3),inset 0 0 20px rgba(255,45,149,.55)}
-  .ex-disc{position:absolute;width:56%;height:56%;border-radius:50%;background:#020203;box-shadow:inset 0 0 26px rgba(0,0,0,.95)}
-  .ex-flare{position:absolute;top:20%;right:27%;width:9px;height:9px;border-radius:50%;background:#fff;
-    box-shadow:0 0 12px #fff,0 0 26px var(--pink),0 0 52px var(--pink);animation:exFlare 4s ease-in-out infinite}
-  .ex-label{position:absolute;bottom:-.4rem;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;
-    font-size:.64rem;letter-spacing:.34em;text-transform:uppercase;color:var(--mute);white-space:nowrap}
-  .ex-label b{color:var(--pink);text-shadow:var(--glow-pink);font-weight:500}
-  @keyframes exCorona{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
-  @keyframes exFlare{0%,100%{opacity:.65;transform:scale(.8)}50%{opacity:1;transform:scale(1.3)}}
-
-  /* ---------- contact (slimmer) ---------- */
-  .contact .lines a{font-size:clamp(1rem,2vw,1.32rem);padding:1.1rem .2rem;font-weight:600}
-  .contact .lines a .k{min-width:56px}
-  .contact-actions{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:2rem}
-  .contact .note{margin-top:1.4rem}
-
-  /* ---------- footer extras ---------- */
-  .foot-socials{display:flex;gap:.6rem;margin-top:1.2rem}
-  .foot-socials .soc{width:38px;height:38px;border-radius:10px}
-  .foot-socials .soc svg{width:17px;height:17px}
-  .foot-disclaimer{color:var(--mute);opacity:.68;font-size:.76rem;line-height:1.6;max-width:94ch;margin-bottom:1.8rem;padding-top:1.6rem;border-top:1px solid var(--line-soft)}
-  .foot-links{display:flex;gap:1.3rem}
-  .foot-links a{transition:color .25s}
-  .foot-links a:hover{color:var(--pink)}
-
-  /* ---------- stack (how it fits) ---------- */
-  .stack{overflow:hidden}
-  .stack::before{content:"";position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(rgba(255,45,149,.08) 1px,transparent 1.4px);background-size:28px 28px;
-    -webkit-mask-image:radial-gradient(62% 82% at 72% 50%,#000,transparent);mask-image:radial-gradient(62% 82% at 72% 50%,#000,transparent)}
-  .stack-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center}
-  .flow{list-style:none;display:flex;flex-direction:column;gap:1.1rem}
-  .flow li{position:relative;padding:1.1rem 1.2rem 1.1rem 1.3rem;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:14px;
-    color:var(--bone);font-size:.96rem;line-height:1.6;transition:border-color .3s ease,transform .3s ease}
-  .flow li:hover{border-color:color-mix(in srgb,var(--c,#FF2D95) 45%,transparent);transform:translateX(6px)}
-  .flow li::before{content:"";position:absolute;left:0;top:1.1rem;bottom:1.1rem;width:3px;border-radius:2px;
-    background:var(--c,#FF2D95);box-shadow:0 0 8px color-mix(in srgb,var(--c,#FF2D95) 60%,transparent)}
-  .flow .fk{display:block;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--c,#FF2D95);text-shadow:0 0 6px color-mix(in srgb,var(--c,#FF2D95) 55%,transparent);margin-bottom:.35rem}
-  .orbit-wrap{display:flex;justify-content:center}
-  .orbit{width:min(100%,440px);height:auto}
-  .o-ring{fill:none;stroke:rgba(255,255,255,.10);stroke-dasharray:3 7;transform-origin:230px 230px;animation:oSpin 70s linear infinite}
-  .o-ring.o2{stroke:rgba(255,45,149,.14);animation-duration:110s;animation-direction:reverse}
-  @keyframes oSpin{to{transform:rotate(360deg)}}
-  .o-spoke{stroke:rgba(255,255,255,.07);stroke-width:1}
-  .o-crown path,.o-crown line{stroke:var(--pink);stroke-width:1.7;fill:none;stroke-linejoin:round;stroke-linecap:round;
-    filter:drop-shadow(0 0 8px rgba(255,45,149,.6))}
-  .o-crown{animation:crownPulse 4s ease-in-out infinite;transform-origin:230px 230px}
-  @keyframes crownPulse{0%,100%{opacity:.85}50%{opacity:1}}
-  .o-node .dot{fill:var(--c);filter:drop-shadow(0 0 6px var(--c))}
-  .o-node .pulse{fill:none;stroke:var(--c);stroke-width:1.3;transform-origin:center;transform-box:fill-box;animation:ringPulse 3.2s ease-out infinite}
-  .o-node text{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;fill:var(--mute)}
-
-  /* ---------- readout strip ---------- */
-  .readout{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink-2)}
-  .readout-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;padding-top:2.2rem;padding-bottom:2.2rem}
-  .ro{text-align:center}
-  .ro b{display:block;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--white);text-shadow:var(--glow-white);line-height:1}
-  .ro span{display:block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:.55rem}
-  .ro b .neon{font-size:inherit}
-
-  /* ---------- faq ---------- */
-  .faq{max-width:820px}
-  .qa{border-bottom:1px solid var(--line-soft)}
-  .qa summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;
-    padding:1.15rem .2rem;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.05rem;color:var(--bone);transition:color .25s}
-  .qa summary::-webkit-details-marker{display:none}
-  .qa summary:hover{color:var(--pink)}
-  .qa .qi{font-family:'JetBrains Mono',monospace;color:var(--pink);text-shadow:var(--glow-pink);transition:transform .25s ease;flex:none}
-  .qa[open] .qi{transform:rotate(45deg)}
-  .qa p{color:var(--mute);font-size:.95rem;padding:0 .2rem 1.2rem;max-width:72ch}
-  .qa p a{color:var(--pink);text-shadow:var(--glow-pink)}
-
-  /* ---------- reveal ---------- */
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-  .reveal.in{opacity:1;transform:none}
-
-  /* ---------- responsive ---------- */
-  @media(max-width:920px){
-    .nav-toggle{display:flex}
-    .nav > .btn.solid{display:none}
-    .nav-links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;align-items:stretch;
-      background:rgba(8,8,11,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);
-      padding:.4rem var(--pad) 1.3rem;transform:translateY(-10px);opacity:0;visibility:hidden;pointer-events:none;
-      transition:opacity .28s ease,transform .28s ease,visibility .28s}
-    .nav.open .nav-links{opacity:1;visibility:visible;transform:none;pointer-events:auto}
-    .nav-links a{padding:1rem .2rem;border-bottom:1px solid var(--line-soft);font-size:.82rem}
-    .nav-drop{position:static}
-    .nav-drop-menu{position:static;transform:none;opacity:1;visibility:visible;pointer-events:auto;min-width:0;margin:0;padding:0 0 .3rem .95rem;background:transparent;border:none;box-shadow:none;backdrop-filter:none}
-    .nav-drop-menu::before{display:none}
-    .nav-drop-menu a{border-bottom:none;padding:.55rem .2rem;font-size:.76rem}
-    .nav-drop-btn .caret{display:none}
-    .nav-cta{display:block;margin-top:1rem;text-align:center;background:var(--pink);color:#0A0008;border:1px solid var(--pink);
-      border-radius:8px;padding:.95rem 1rem;box-shadow:var(--glow-pink)}
-    .nav.open{background:rgba(0,0,0,.9);backdrop-filter:blur(16px);border-bottom-color:var(--line)}
-    .tiles{grid-template-columns:1fr}
-    .personas{grid-template-columns:1fr}
-    .vgrid{grid-template-columns:1fr}
-    .stack-grid{grid-template-columns:1fr;gap:2.2rem}
-    .connect-grid{grid-template-columns:1fr;gap:2.4rem}
-    .eclipse-vis{max-width:300px}
-    .readout-grid{grid-template-columns:repeat(2,1fr);gap:1.6rem 1rem}
-    .foot-grid{gap:2rem}
-  }
-  @media(max-width:640px){
-    :root{--pad:1.15rem}
-    .sec{padding:clamp(3.4rem,11vw,5rem) 0}
-    .cta-row .btn,.contact-actions .btn{flex:1 1 100%;justify-content:center}
-    .lines a{font-size:1.12rem;flex-wrap:wrap;gap:.35rem;overflow-wrap:anywhere}
-    .lines a .k{flex-basis:100%;min-width:0}
-    .lines a::after{display:none}
-    .foot-grid{flex-direction:column;gap:1.8rem}
-    .foot-bottom{flex-direction:column;align-items:flex-start;gap:.7rem}
-    .ticker-track span{font-size:.66rem}
-    .personas,.vgrid,.tiles{gap:1rem}
-    .mission .ghost{opacity:.28}
-  }
-  @media(prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important}
-    html{scroll-behavior:auto}
-    .reveal,.intro-el,.scroll-cue{opacity:1;transform:none}
-    .hero-title .w{opacity:1;transform:none}
-    .ptile{opacity:1;--ty:0px;--rx:0deg;--ry:0deg}
-    .lines a{opacity:1;transform:none}
-    .persona,.vcard{opacity:1;transform:none}
-    .mission blockquote .neon::after{transform:scaleX(1)}
-    #preloader{display:none}
-    .mv-line,.mission .ghost .gt,#preloader .pl-crown path,#preloader .pl-crown line{stroke-dashoffset:0}
-  }
-</style>
+<link rel="stylesheet" href="/assets/site.css?v=20261111">
 </head>
-<body data-bc-page="brand">
-
-<!-- intro curtain -->
-<div id="preloader" aria-hidden="true">
-  <svg class="pl-crown" viewBox="0 0 36 30" fill="none">
-    <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-    <line x1="7" y1="27.4" x2="29" y2="27.4"/>
-  </svg>
-  <div class="pl-meter"><i id="plBar"></i></div>
-  <div class="pl-label">Entering <b id="plPct">0</b><b>%</b></div>
-</div>
-
-<div class="grain"></div>
-<div class="progress" id="progress"></div>
-
-<nav class="nav" id="nav">
-  <a class="brand" href="#top" aria-label="BlackCrown home">
-    <svg class="crownmark" width="28" height="23" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-      <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-      <line x1="7" y1="28" x2="29" y2="28"/>
-    </svg>
-    <span class="wordmark">BlackCrown</span>
-  </a>
-  <div class="nav-links" id="navLinks">
-    <a href="#mission">Mission</a>
-    <div class="nav-drop">
-      <a href="#products" class="nav-drop-btn" aria-haspopup="true">Products<svg class="caret" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 1 L5 5 L9 1"/></svg></a>
-      <div class="nav-drop-menu">
-        <a href="/korvus.html" style="--c:#FF2D95"><span class="pd"></span>Korvus Industries</a>
-        <a href="/lodestone.html" style="--c:#49D7FF"><span class="pd"></span>LodeStone Indicator</a>
-        <a href="/intelligence.html" style="--c:#E8C77F"><span class="pd"></span>BlackCrown Intelligence</a>
-        <a href="/eclipse-x.html" style="--c:#FF2D95"><span class="pd"></span>Eclipse-X</a>
-      </div>
-    </div>
-    <a href="#connect">Connect</a>
-    <a href="/support.html">Contact</a>
-    <a href="#contact" class="nav-cta">Get in touch</a>
-  </div>
-  <a href="#contact" class="btn solid">Get in touch<span class="sheen"></span></a>
-  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
-</nav>
-
-<header class="hero" id="top">
-  <div class="aura a1"></div>
-  <div class="aura a2"></div>
-  <canvas id="bc3d" aria-hidden="true"></canvas>
-  <div class="hud"><span class="dot"></span><span id="clock">SYS // ONLINE</span></div>
-
-  <div class="wrap hero-inner">
-    <span class="eyebrow intro-el" data-scramble><span class="sig"></span>One house · Three edges</span>
-    <h1 class="hero-title">
-      <span class="w">Claim</span> <span class="w">your</span> <span class="w"><span class="neon">crown</span>.</span>
-    </h1>
-    <p class="lead intro-el">BlackCrown arms independent operators with three edges under one roof: real-time market intelligence, a private AI that holds your context, and a room of people who actually build.</p>
-    <div class="cta-row intro-el">
-      <a href="#products" class="btn solid">See the three edges<span class="sheen"></span></a>
-      <a href="#mission" class="btn ghost">What we stand for<span class="sheen"></span></a>
-    </div>
-  </div>
-  <div class="scroll-cue"><span class="bar"></span>Scroll</div>
-</header>
-
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>Korvus Industries · real-time market intelligence</span><span class="star">✦</span>
-    <span>LodeStone · every level, already drawn</span><span class="star">✦</span>
-    <span>BlackCrown Intelligence · a private AI tuned to you</span><span class="star">✦</span>
-    <span>Eclipse-X · the house community on Discord</span><span class="star">✦</span>
-    <span>Korvus Industries · real-time market intelligence</span><span class="star">✦</span>
-    <span>LodeStone · every level, already drawn</span><span class="star">✦</span>
-    <span>BlackCrown Intelligence · a private AI tuned to you</span><span class="star">✦</span>
-    <span>Eclipse-X · the house community on Discord</span><span class="star">✦</span>
-  </div>
-</div>
-
-<section class="sec mission" id="mission">
-  <svg class="ghost" viewBox="0 0 36 30" fill="none" aria-hidden="true">
-    <path class="gb" d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-    <line class="gb" x1="7" y1="28" x2="29" y2="28"/>
-    <path class="gt" d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-  </svg>
+<body data-track="home">
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="site-head">
   <div class="wrap">
-    <span class="eyebrow reveal" data-scramble>Who we are</span>
-    <blockquote class="reveal">A crown isn't handed down. It's <span class="neon">built</span>.</blockquote>
-    <p class="body reveal">BlackCrown is one house of tools for people who build their own edge. The trader watching the open, the founder shipping after hours, the operator scaling a store: everything we make exists to hand the individual the kind of edge that used to sit locked inside institutions. Four products, one crown, and no gatekeepers between you and the work.</p>
+    <a class="brand" href="/" aria-label="BlackCrown home"><svg viewBox="0 0 36 30" aria-hidden="true"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>BlackCrown</a>
+    <nav class="nav" aria-label="Main">
+      <details>
+        <summary>Products</summary>
+        <div class="menu">
+          <a href="/korvus.html" style="--c:#FF2D95"><i></i><b>Korvus</b><span>A market terminal that reads and scores the news and SEC filings for index futures traders.</span></a>
+          <a href="/lodestone.html" style="--c:#49D7FF"><i></i><b>LodeStone</b><span>A chart indicator that draws your session levels, value and structure for you.</span></a>
+          <a href="/intelligence.html" style="--c:#FF2D95"><i></i><b>Crown</b><span>A private AI workspace by BlackCrown Intelligence. Your work is never sold or trained on.</span></a>
+          <a href="/eclipse-x.html" style="--c:#FF6FB6"><i></i><b>Eclipse-X</b><span>The free BlackCrown community on Discord, with live scored news and the desk in the open.</span></a>
+        </div>
+      </details>
+      <a href="/#fit">Find your fit</a>
+      <a href="/#company">Company</a>
+      <a href="/support.html">Support</a>
+    </nav>
+    <a class="btn primary small head-cta" href="/#fit">Find your fit</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
+  </div>
+</header>
+<main id="main">
+
+<section class="hero">
+  <div class="hero-wash" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="tag" data-in style="--i:0">BlackCrownVxJ LLC</span>
+      <h1 data-in style="--i:1">Claim your crown.</h1>
+      <p class="lead" data-in style="--i:2">BlackCrown builds tools for people who trade and build on their own. A market terminal that reads the news for you. An indicator that draws your levels. A private AI workspace that stays yours. A community to check your thinking against.</p>
+      <div class="btn-row" data-in style="--i:3">
+        <a class="btn primary" href="#fit">Find your fit</a>
+        <a class="btn" href="#products">See all four products</a>
+      </div>
+      <dl class="facts" data-in style="--i:4">
+        <div><dt>Free to start</dt><dd>Korvus, Crown, Eclipse-X</dd></div>
+        <div><dt>Your data</dt><dd>Never sold, never trained on</dd></div>
+        <div><dt>Built by</dt><dd>The desk that uses them</dd></div>
+      </dl>
+    </div>
+    <div class="crown-stage" data-in style="--i:2" aria-hidden="true">
+      <svg class="fallback" viewBox="0 0 36 30"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>
+      <canvas id="bc3d"></canvas>
+    </div>
   </div>
 </section>
 
-<section class="sec" id="who">
+<section class="sec" id="fit">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow" data-scramble>Who it's for</span>
-      <h2>Built for the ones who build.</h2>
-      <p class="kicker">You do not wait for permission. Here is where each edge fits the way you already work.</p>
+    <div class="stack" style="margin-bottom:2.4rem">
+      <h2>Tell us what you need.<br>We will tell you if we have it.</h2>
+      <p class="sub">Pick the line that sounds most like you. If one of our tools fits, you will see what it does, what it costs and where to start. If none do, we will say that too.</p>
     </div>
-    <div class="personas">
-      <div class="persona">
-        <svg class="pico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3 17 L9 11 L13 14 L21 5"/><path d="M15 5 h6 v6"/></svg>
-        <span class="plabel">The trader</span>
-        <h3>You live by the catalyst.</h3>
-        <p>You watch the open and know the tape moves on news. Korvus reads the wires overnight, so you walk in already knowing what moved and why.</p>
+    <div class="fit">
+      <div class="fit-needs" data-pick="fit" role="tablist" aria-label="What do you need?">
+        <button type="button" role="tab" data-for="news" aria-selected="true" style="--c:#FF2D95">News moves the market while I sleep, and I find out after the move.</button>
+        <button type="button" role="tab" data-for="levels" style="--c:#49D7FF">I redraw the same levels on my chart every night before the open.</button>
+        <button type="button" role="tab" data-for="ai" style="--c:#FF2D95">I want an AI I can trust with my real work, not one that learns from it.</button>
+        <button type="button" role="tab" data-for="room" style="--c:#FF6FB6">I trade or build alone and want people to check my thinking.</button>
+        <button type="button" role="tab" data-for="learn" style="--c:#35E08F">I am new to futures and want to understand how it works first.</button>
+        <button type="button" role="tab" data-for="none" style="--c:#9A98A6">None of these. I am looking for something else.</button>
       </div>
-      <div class="persona">
-        <svg class="pico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><rect x="13.5" y="13.5" width="7" height="7" rx="1"/></svg>
-        <span class="plabel">The builder</span>
-        <h3>You ship after hours.</h3>
-        <p>You think in projects and move fast. BlackCrown Intelligence holds your context across all of them and keeps every word you write yours.</p>
-      </div>
-      <div class="persona">
-        <svg class="pico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M3.5 9 L5 4.5 h14 L20.5 9"/><path d="M4.5 9 v10.5 h15 V9"/><path d="M9.5 19.5 v-5.5 h5 v5.5"/></svg>
-        <span class="plabel">The operator</span>
-        <h3>You run the whole thing.</h3>
-        <p>You carry a store or a book of business alone. Eclipse-X puts you in a room of people solving the same problems a step ahead of you.</p>
+
+      <div>
+        <article class="fit-answer" data-view="fit" data-id="news" style="--c:#FF2D95">
+          <span class="tag">Korvus fits</span>
+          <h3>Korvus reads the wires overnight so you start the session already briefed.</h3>
+          <p>It reads newswires in Asia, London and New York around the clock, plus SEC filings the moment they are accepted. Every story is scored for impact and direction on index futures, with the key numbers pulled out and a line on why it matters.</p>
+          <dl>
+            <div><dt>Cost</dt><dd>Free, or $9.99 a month</dd></div>
+            <div><dt>Where it runs</dt><dd>In your browser</dd></div>
+            <div><dt>Time to start</dt><dd>About a minute</dd></div>
+          </dl>
+          <p class="not"><b>Not the right fit if</b> you want trade signals or entries. Korvus gives you information and context, and the decision stays yours.</p>
+          <div class="btn-row">
+            <a class="btn primary" href="/korvus.html">See how Korvus works</a>
+            <a class="btn" href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=index" target="_blank" rel="noopener">Open a free account</a>
+          </div>
+        </article>
+
+        <article class="fit-answer" data-view="fit" data-id="levels" style="--c:#49D7FF" hidden>
+          <span class="tag">LodeStone fits</span>
+          <h3>LodeStone puts the whole map on your chart the moment it loads.</h3>
+          <p>Session highs and lows, prior day and week, value, equilibrium, resting liquidity and SMT divergence, drawn automatically on index futures and cleaned up as price takes each level. You spend the open deciding, not drawing.</p>
+          <dl>
+            <div><dt>Cost</dt><dd>$149 once, or $19.99 a month</dd></div>
+            <div><dt>Where it runs</dt><dd>Tradovate, TradingView</dd></div>
+            <div><dt>Also included</dt><dd>With Korvus Operator</dd></div>
+          </dl>
+          <p class="not"><b>Not the right fit if</b> you want buy and sell arrows, or you do not trade index futures. LodeStone maps levels and never tells you what to do with them.</p>
+          <div class="btn-row">
+            <a class="btn primary" href="/lodestone.html">See it on a chart</a>
+          </div>
+        </article>
+
+        <article class="fit-answer" data-view="fit" data-id="ai" style="--c:#FF2D95" hidden>
+          <span class="tag">Crown fits</span>
+          <h3>Crown is an AI workspace where your work stays yours.</h3>
+          <p>Nothing you write or upload is sold, and nothing is used to train a model. The paid plan opens four rooms tuned for different kinds of thinking, plus projects, uploads and live web access. You can judge the output yourself on the free tier, with no card.</p>
+          <dl>
+            <div><dt>Cost</dt><dd>Free, or $49.99 a month</dd></div>
+            <div><dt>Where it runs</dt><dd>In your browser</dd></div>
+            <div><dt>On the paid tier</dt><dd>$100 of room credit monthly</dd></div>
+          </dl>
+          <p class="not"><b>Not the right fit if</b> you need an AI built into your phone or office suite. Crown is a focused workspace you open when the work matters.</p>
+          <div class="btn-row">
+            <a class="btn primary" href="/intelligence.html">See how Crown works</a>
+            <a class="btn" href="https://blackcrown-intelligence.com" target="_blank" rel="noopener">Open Crown free</a>
+          </div>
+        </article>
+
+        <article class="fit-answer" data-view="fit" data-id="room" style="--c:#FF6FB6" hidden>
+          <span class="tag">Eclipse-X fits</span>
+          <h3>Eclipse-X is a room of people watching the same tape you are.</h3>
+          <p>It is our free Discord community. Scored news posts around the clock, the market floor talks through every session, and the person who builds these tools answers questions in the open. Read as long as you like before you say anything.</p>
+          <dl>
+            <div><dt>Cost</dt><dd>Free</dd></div>
+            <div><dt>Where it runs</dt><dd>Discord</dd></div>
+            <div><dt>To join</dt><dd>One open invite link</dd></div>
+          </dl>
+          <p class="not"><b>Not the right fit if</b> you want paid signals, a course or a guru. There are none here, on purpose.</p>
+          <div class="btn-row">
+            <a class="btn primary" href="/eclipse-x.html">See what is inside</a>
+            <a class="btn" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Join on Discord</a>
+          </div>
+        </article>
+
+        <article class="fit-answer" data-view="fit" data-id="learn" style="--c:#35E08F" hidden>
+          <span class="tag">Start with the free guides</span>
+          <h3>Learn the basics first. It costs nothing, and nothing needs to be bought.</h3>
+          <p>Korvus publishes plain-English guides on sessions, margin, tick value, rollover and what moves the indexes. A free Observer account then shows you scored news on real sessions, and Eclipse-X is a good place to ask the questions the guides raise.</p>
+          <dl>
+            <div><dt>Cost</dt><dd>Free</dd></div>
+            <div><dt>Where to begin</dt><dd>The beginner guide</dd></div>
+            <div><dt>Then</dt><dd>A free Observer account</dd></div>
+          </dl>
+          <p class="not"><b>A fair warning:</b> trading futures carries a substantial risk of loss. Learn on paper before you risk money, and never trade money you cannot afford to lose.</p>
+          <div class="btn-row">
+            <a class="btn primary" href="https://korvus.industries/p/beginner-futures-trading?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=index" target="_blank" rel="noopener">Read the beginner guide</a>
+            <a class="btn" href="/eclipse-x.html">Meet the community</a>
+          </div>
+        </article>
+
+        <article class="fit-answer" data-view="fit" data-id="none" style="--c:#9A98A6" hidden>
+          <span class="tag">We may not be the right fit</span>
+          <h3>We would rather tell you that than sell you something you will not use.</h3>
+          <p>We make four things: a market news terminal, a chart indicator for index futures, a private AI workspace and a free community. If what you need sits outside those, we probably cannot help today. If it sits close, tell us what you are trying to do and we will give you a straight answer.</p>
+          <dl>
+            <div><dt>Email</dt><dd>A real person replies</dd></div>
+            <div><dt>Discord</dt><dd>Usually the fastest</dd></div>
+          </dl>
+          <p class="not"><b>What helps:</b> one or two sentences on what you do now and what gets in your way.</p>
+          <div class="btn-row">
+            <a class="btn primary" href="/support.html">Tell us what you need</a>
+            <a class="btn" href="#products">Look at all four anyway</a>
+          </div>
+        </article>
       </div>
     </div>
   </div>
 </section>
 
 <section class="sec" id="products">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow" data-scramble>The three points</span>
-      <h2>Three edges, one crown.</h2>
-      <p class="kicker">Every BlackCrown product is a point of the same crown, and LodeStone rides with Korvus on the chart. Take the edge you need, or claim them all.</p>
-    </div>
-
-    <div class="tiles">
-
-      <a class="ptile" href="/korvus.html" style="--tile:#FF2D95" aria-label="Explore Korvus Industries">
-        <div class="ptile-screen">
-          <div class="scan"></div>
-          <span class="ptile-tag"><span class="d"></span>Information</span>
-          <svg viewBox="0 0 320 172" aria-hidden="true">
-            <circle class="mv-bubble" cx="160" cy="92" r="72" style="opacity:.5"/>
-            <circle class="mv-bubble" cx="160" cy="92" r="48" style="opacity:.6"/>
-            <circle class="mv-bubble" cx="160" cy="92" r="24" style="opacity:.7"/>
-            <line class="mv-grid" x1="160" y1="16" x2="160" y2="168"/>
-            <line class="mv-grid" x1="84" y1="92" x2="236" y2="92"/>
-            <path fill="rgba(255,45,149,.20)" d="M160 92 L160 20 A72 72 0 0 1 218 49 Z">
-              <animateTransform attributeName="transform" type="rotate" from="0 160 92" to="360 160 92" dur="6s" repeatCount="indefinite"/>
-            </path>
-            <circle class="mv-ring r1" cx="198" cy="62" r="6"/>
-            <circle class="mv-ring r2" cx="198" cy="62" r="6"/>
-            <circle class="mv-node" cx="198" cy="62" r="3.5"/>
-            <circle class="mv-node" cx="124" cy="122" r="3"/>
-            <circle class="mv-node" cx="184" cy="132" r="2.5" style="opacity:.7"/>
-            <circle class="mv-node" cx="266" cy="40" r="1.6" style="opacity:.45"/>
-            <circle class="mv-node" cx="52" cy="46" r="1.5" style="opacity:.4"/>
-          </svg>
-        </div>
-        <div class="ptile-body">
-          <div class="ptile-name">Korvus Industries</div>
-          <div class="ptile-sub">korvus.industries</div>
-          <p class="ptile-desc">A 24/7 terminal that scores every headline for impact, direction and confidence across a 59-instrument universe, with SMT divergence and full session context. Free as Observer, $9.99 a month as Operator.</p>
-          <div class="ptile-need"><b>For you if</b> the news always seems to hit after the move already happened.</div>
-          <span class="ptile-link">Explore Korvus <span aria-hidden="true">&#8594;</span></span>
-        </div>
+  <div class="wrap rail">
+    <header>
+      <h2>Four products. Each one stands on its own.</h2>
+      <p>None of them requires another. Use the one that solves your problem, or run them together.</p>
+    </header>
+    <div class="lineup">
+      <a href="/korvus.html" style="--c:#FF2D95">
+        <div><h3>Korvus</h3><div class="kind">Market intelligence terminal</div></div>
+        <p>Reads three news desks and SEC filings around the clock, and scores every story for index futures so you know what moved and why.</p>
+        <div class="cost">Free<span>or $9.99 a month</span></div>
+        <span class="go" aria-hidden="true"></span>
       </a>
-
-      <a class="ptile" href="/lodestone.html" style="--tile:#49D7FF" aria-label="Explore LodeStone">
-        <div class="ptile-screen">
-          <div class="scan"></div>
-          <span class="ptile-tag"><span class="d"></span>Chart · Korvus stack</span>
-          <svg viewBox="0 0 320 172" preserveAspectRatio="none" aria-hidden="true">
-            <line class="mv-grid" x1="0" y1="58" x2="320" y2="58"/>
-            <line class="mv-grid" x1="0" y1="100" x2="320" y2="100"/>
-            <line class="mv-grid" x1="0" y1="142" x2="320" y2="142"/>
-            <line class="mv-net" x1="24" y1="44" x2="296" y2="44" style="stroke-dasharray:7 5"/>
-            <line class="mv-net" x1="24" y1="86" x2="296" y2="86" style="stroke-dasharray:2 4;opacity:.4"/>
-            <line class="mv-net" x1="24" y1="126" x2="296" y2="126" style="stroke-dasharray:7 5"/>
-            <path class="mv-line" d="M16 118 L52 104 L84 124 L120 88 L156 100 L192 60 L228 76 L262 50 L304 64"/>
-            <circle class="mv-ring r1" cx="262" cy="50" r="6"/>
-            <circle class="mv-ring r2" cx="262" cy="50" r="6"/>
-            <circle class="mv-node" cx="262" cy="50" r="4"/>
-            <circle class="mv-node" cx="24" cy="44" r="2.5"/>
-            <circle class="mv-node" cx="24" cy="126" r="2.5"/>
-          </svg>
-        </div>
-        <div class="ptile-body">
-          <div class="ptile-name">LodeStone</div>
-          <div class="ptile-sub">indicator · tradovate + tradingview</div>
-          <p class="ptile-desc">The chart side of the Korvus stack. Session levels, prior highs and lows, value, structure and SMT divergence, drawn on your futures chart automatically. Standalone, or included with Korvus Operator.</p>
-          <div class="ptile-need"><b>For you if</b> you redraw the same levels every single night before the open.</div>
-          <span class="ptile-link">Explore LodeStone <span aria-hidden="true">&#8594;</span></span>
-        </div>
+      <a href="/lodestone.html" style="--c:#49D7FF">
+        <div><h3>LodeStone</h3><div class="kind">Chart indicator</div></div>
+        <p>Draws session levels, prior highs and lows, value, structure and SMT divergence on your futures chart, and keeps them current.</p>
+        <div class="cost">$149 once<span>or $19.99 a month</span></div>
+        <span class="go" aria-hidden="true"></span>
       </a>
-
-      <a class="ptile" href="/intelligence.html" style="--tile:#E8C77F" aria-label="Explore BlackCrown Intelligence">
-        <div class="ptile-screen">
-          <div class="scan"></div>
-          <span class="ptile-tag"><span class="d"></span>Intelligence</span>
-          <svg viewBox="0 0 320 172" aria-hidden="true">
-            <circle class="mv-node" cx="36" cy="30" r="1.6" style="opacity:.45"/>
-            <circle class="mv-node" cx="288" cy="140" r="1.5" style="opacity:.4"/>
-            <circle class="mv-node" cx="262" cy="24" r="1.4" style="opacity:.35"/>
-            <circle class="mv-node" cx="64" cy="148" r="1.4" style="opacity:.35"/>
-            <path d="M124 148 L124 66 L148 88 L166 46 L184 88 L208 66 L208 148 Z" fill="none" stroke="rgba(232,199,127,.10)" stroke-width="2"/>
-            <rect x="156" y="24" width="138" height="32" rx="10" fill="rgba(232,199,127,.10)" stroke="rgba(232,199,127,.32)"/>
-            <line x1="172" y1="36" x2="272" y2="36" stroke="rgba(232,199,127,.4)" stroke-width="3.5" stroke-linecap="round"/>
-            <line x1="172" y1="46" x2="240" y2="46" stroke="rgba(232,199,127,.22)" stroke-width="3.5" stroke-linecap="round"/>
-            <rect x="26" y="68" width="176" height="48" rx="10" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.13)"/>
-            <path d="M40 88 L40 79 L45 83.5 L49 76 L53 83.5 L58 79 L58 88 Z" fill="none" stroke="var(--tile)" stroke-width="1.6" stroke-linejoin="round" style="filter:drop-shadow(0 0 4px rgba(232,199,127,.7))"/>
-            <line x1="68" y1="82" x2="186" y2="82" stroke="rgba(255,255,255,.30)" stroke-width="3.5" stroke-linecap="round"/>
-            <line x1="68" y1="93" x2="162" y2="93" stroke="rgba(255,255,255,.18)" stroke-width="3.5" stroke-linecap="round"/>
-            <line x1="40" y1="104" x2="140" y2="104" stroke="rgba(255,255,255,.12)" stroke-width="3.5" stroke-linecap="round"/>
-            <rect class="mv-bubble" x="26" y="128" width="66" height="26" rx="13"/>
-            <circle class="mv-dot d1" cx="44" cy="141" r="3.2"/>
-            <circle class="mv-dot d2" cx="59" cy="141" r="3.2"/>
-            <circle class="mv-dot d3" cx="74" cy="141" r="3.2"/>
-            <circle class="mv-ring r1" cx="49" cy="82" r="10"/>
-            <circle class="mv-ring r2" cx="49" cy="82" r="10"/>
-          </svg>
-        </div>
-        <div class="ptile-body">
-          <div class="ptile-name">BlackCrown Intelligence</div>
-          <div class="ptile-sub">blackcrown-intelligence.com</div>
-          <p class="ptile-desc">The AI division of the house and its flagship, Crown: a private workspace with four rooms, projects that hold context, and data that is never sold or trained on. Free to start, unlimited on Crowned.</p>
-          <div class="ptile-need"><b>For you if</b> every AI tool forgets you and you do not trust it with your work.</div>
-          <span class="ptile-link">Explore Crown <span aria-hidden="true">&#8594;</span></span>
-        </div>
+      <a href="/intelligence.html" style="--c:#FF2D95">
+        <div><h3>Crown</h3><div class="kind">Private AI workspace</div></div>
+        <p>An AI workspace with four rooms for different kinds of thinking. Nothing you write is sold or used to train a model.</p>
+        <div class="cost">Free<span>or $49.99 a month</span></div>
+        <span class="go" aria-hidden="true"></span>
       </a>
-
-      <a class="ptile" href="/eclipse-x.html" style="--tile:#FF2D95" aria-label="Enter Eclipse-X">
-        <div class="ptile-screen">
-          <div class="scan"></div>
-          <span class="ptile-tag"><span class="d"></span>Community</span>
-          <svg viewBox="0 0 320 172" aria-hidden="true">
-            <circle class="mv-node" cx="42" cy="34" r="1.6" style="opacity:.5"/>
-            <circle class="mv-node" cx="84" cy="120" r="1.4" style="opacity:.4"/>
-            <circle class="mv-node" cx="252" cy="38" r="1.5" style="opacity:.45"/>
-            <circle class="mv-node" cx="286" cy="128" r="1.4" style="opacity:.4"/>
-            <circle class="mv-node" cx="128" cy="24" r="1.3" style="opacity:.35"/>
-            <ellipse cx="160" cy="86" rx="118" ry="62" fill="none" stroke="rgba(255,255,255,.10)" stroke-dasharray="3 7"/>
-            <circle cx="160" cy="86" r="52" fill="rgba(255,45,149,.16)"/>
-            <circle cx="160" cy="86" r="44" fill="rgba(255,45,149,.22)"/>
-            <circle class="mv-ring r1" cx="160" cy="86" r="40"/>
-            <circle cx="160" cy="86" r="40" fill="none" stroke="var(--tile)" stroke-width="1.6" style="filter:drop-shadow(0 0 6px rgba(255,45,149,.8))"/>
-            <circle cx="160" cy="86" r="39" fill="#050507"/>
-            <circle class="mv-node" cx="188" cy="58" r="3.4"/>
-            <circle class="mv-node" cx="278" cy="86" r="3"/>
-          </svg>
-        </div>
-        <div class="ptile-body">
-          <div class="ptile-name">Eclipse-X</div>
-          <div class="ptile-sub">community · discord</div>
-          <p class="ptile-desc">The BlackCrown community on Discord. Live market talk through every session, product rooms run by the desk, and an open invite. Free to join, always on.</p>
-          <div class="ptile-need"><b>For you if</b> trading and building alone has started to get loud in your head.</div>
-          <span class="ptile-link">Enter Eclipse-X <span aria-hidden="true">&#8594;</span></span>
-        </div>
+      <a href="/eclipse-x.html" style="--c:#FF6FB6">
+        <div><h3>Eclipse-X</h3><div class="kind">Community on Discord</div></div>
+        <p>Live market talk through every session, scored news posting around the clock, and the desk answering questions in the open.</p>
+        <div class="cost">Free<span>open invite</span></div>
+        <span class="go" aria-hidden="true"></span>
       </a>
-
     </div>
   </div>
 </section>
 
-<section class="sec stack" id="stack">
-  <div class="wrap stack-grid">
-    <div>
-      <div class="sec-head reveal" style="margin-bottom:2rem">
-        <span class="eyebrow" data-scramble>How it fits together</span>
-        <h2>One system, four moving parts.</h2>
-        <p class="kicker">Each product stands on its own. Run together, they cover the whole loop an independent operator actually lives in.</p>
+<section class="sec" id="day">
+  <div class="wrap">
+    <div class="stack" style="margin-bottom:2.2rem">
+      <h2>Where each tool earns its place in your day.</h2>
+      <p class="sub">The futures day starts at 6 PM New York time. Drag across it to see what is working for you at each hour.</p>
+    </div>
+    <div class="day">
+      <div class="day-track" style="grid-template-columns:repeat(48,1fr)">
+        <i style="grid-column:1/13;--c:#FF2D95" data-from="0" data-to="6" data-title="Korvus is reading the Asia desk." data-text="Nikkei Asia, CNBC Asia, the Bank of Japan and the other Asia wires are read and scored as they publish. You do not need to be awake for any of it." data-link="How Korvus scores a story" data-href="/korvus.html#demo">Asia session</i>
+        <i style="grid-column:13/25;--c:#FF2D95" data-from="6" data-to="12" data-title="Korvus is reading London while you sleep." data-text="The London desk and the European central banks are covered through the night. On Operator, a high-impact story sends you an email, and everything else waits on your screen, already read." data-link="See the three desks" data-href="/korvus.html#get">London session</i>
+        <i style="grid-column:25/32;--c:#49D7FF" data-from="12" data-to="15.5" data-title="LodeStone already has your levels drawn." data-text="Open the chart and the Asia and London highs and lows, yesterday's range and equilibrium are on it. Korvus starts watching SEC filings at 6 AM, and the economic calendar shows what prints before the bell." data-link="Try the chart layers" data-href="/lodestone.html#demo">Before the open</i>
+        <i style="grid-column:32/45;--c:#FF6FB6" data-from="15.5" data-to="22" data-title="Everything is live, and the floor is talking." data-text="Korvus tracks SMT divergence across NQ, ES and YM with the macro picture beside it. LodeStone keeps the map current on your chart. In Eclipse-X, the market floor reads the session together." data-link="Walk the Eclipse-X floor" data-href="/eclipse-x.html#demo">US session</i>
+        <i style="grid-column:45/49;--c:#FF2D95" data-from="22" data-to="24" data-title="Crown is where you review the day." data-text="Put your notes, screenshots and plan for tomorrow in a private project. Earnings filings land after the bell, and Korvus reads those too, until 10 PM on business days." data-link="See the Crown rooms" data-href="/intelligence.html#demo">After the close</i>
+        <span class="day-needle"></span>
       </div>
-      <ol class="flow reveal">
-        <li style="--c:#FF2D95"><span class="fk">01 · Korvus reads</span>The terminal watches the wires around the clock and scores every headline for impact, direction and confidence, so you start each session already briefed.</li>
-        <li style="--c:#49D7FF"><span class="fk">02 · LodeStone maps</span>The indicator puts the levels on your chart before you sit down: sessions, prior highs and lows, value, structure and SMT.</li>
-        <li style="--c:#E8C77F"><span class="fk">03 · Crown remembers</span>Your notes, plans and reviews live in private projects, so the thinking compounds instead of evaporating between sessions.</li>
-        <li style="--c:#FF2D95"><span class="fk">04 · Eclipse-X checks</span>Before you commit, the room pressure-tests the idea with operators who trade and build the same way you do.</li>
-      </ol>
-    </div>
-    <div class="orbit-wrap reveal" aria-hidden="true">
-      <svg class="orbit" viewBox="0 0 460 460">
-        <line class="o-spoke" x1="230" y1="230" x2="230" y2="88"/>
-        <line class="o-spoke" x1="230" y1="230" x2="372" y2="230"/>
-        <line class="o-spoke" x1="230" y1="230" x2="230" y2="372"/>
-        <line class="o-spoke" x1="230" y1="230" x2="88" y2="230"/>
-        <circle class="o-ring" cx="230" cy="230" r="142"/>
-        <circle class="o-ring o2" cx="230" cy="230" r="196"/>
-        <g class="o-crown">
-          <path d="M206 246 L206 225 L218 236 L230 216 L242 236 L254 225 L254 246 Z"/>
-          <line x1="211" y1="251" x2="249" y2="251"/>
-        </g>
-        <g class="o-node" style="--c:#FF2D95">
-          <circle class="pulse" cx="230" cy="88" r="7"/>
-          <circle class="dot" cx="230" cy="88" r="5"/>
-          <text x="230" y="66" text-anchor="middle">KORVUS</text>
-        </g>
-        <g class="o-node" style="--c:#49D7FF">
-          <circle class="pulse" cx="372" cy="230" r="7" style="animation-delay:.8s"/>
-          <circle class="dot" cx="372" cy="230" r="5"/>
-          <text x="372" y="258" text-anchor="middle">LODESTONE</text>
-        </g>
-        <g class="o-node" style="--c:#FF2D95">
-          <circle class="pulse" cx="230" cy="372" r="7" style="animation-delay:1.6s"/>
-          <circle class="dot" cx="230" cy="372" r="5"/>
-          <text x="230" y="400" text-anchor="middle">ECLIPSE-X</text>
-        </g>
-        <g class="o-node" style="--c:#E8C77F">
-          <circle class="pulse" cx="88" cy="230" r="7" style="animation-delay:2.4s"/>
-          <circle class="dot" cx="88" cy="230" r="5"/>
-          <text x="88" y="258" text-anchor="middle">CROWN</text>
-        </g>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<div class="readout">
-  <div class="wrap readout-grid">
-    <div class="ro reveal"><b>24/7</b><span>Newswire coverage</span></div>
-    <div class="ro reveal"><b>59</b><span>Instruments tracked by Korvus</span></div>
-    <div class="ro reveal"><b>4</b><span>Products under one crown</span></div>
-    <div class="ro reveal"><b>2</b><span>Charting platforms for LodeStone</span></div>
-  </div>
-</div>
-
-<section class="sec" id="why">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow" data-scramble>Why BlackCrown</span>
-      <h2>One house. One standard.</h2>
-      <p class="kicker">Plenty of tools promise an edge. Here is what makes ours worth logging into.</p>
-    </div>
-    <div class="vgrid">
-      <div class="vcard"><h3>Built by an operator</h3><p>These tools come off the same desk that uses them every day, not out of a boardroom guessing at what you need.</p></div>
-      <div class="vcard"><h3>Edge, not hype</h3><p>No guru theater, no noise for the sake of noise. Just tools that make your next real decision sharper and faster.</p></div>
-      <div class="vcard"><h3>Your data stays yours</h3><p>Nothing you write, track, or share is sold or used to train a model. Privacy is the default, not a buried setting.</p></div>
-      <div class="vcard"><h3>Edges that compound</h3><p>Market intelligence, a private AI, and a real network live under one roof, so each edge quietly makes the others sharper.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="sec connect" id="connect">
-  <div class="aura"></div>
-  <div class="wrap connect-grid">
-    <div class="connect-copy">
-      <span class="eyebrow reveal" data-scramble style="display:block;margin-bottom:1rem">Connect · The BlackCrown Discord</span>
-      <h2 class="reveal">Enter <span class="neon">Eclipse-X</span>.</h2>
-      <p class="reveal">Eclipse-X is where the house actually talks. Market chatter while the sessions turn, the desk answering questions in the open, and operators comparing notes in real time. The invite is open, and it costs nothing to walk in.</p>
-      <ul class="ex-points reveal">
-        <li><b>Live market talk</b>The floor runs while the markets do, from the Asia open through the New York close.</li>
-        <li><b>Product rooms</b>Korvus and LodeStone live here: delivery, setup and questions answered by the desk in #korvus-indicator.</li>
-        <li><b>Open invite</b>No application and no velvet rope. Walk in, read the room, speak when you are ready.</li>
-      </ul>
-      <div class="cta-row reveal">
-        <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" class="btn solid">Join Eclipse-X<span class="sheen"></span></a>
-        <a href="/eclipse-x.html" class="btn ghost">About Eclipse-X<span class="sheen"></span></a>
+      <input type="range" min="0" max="24" step="0.25" value="15.5" aria-label="Time of day, starting at 6 PM New York time">
+      <div class="day-hours"><span>6 PM</span><span>12 AM</span><span>6 AM</span><span>12 PM</span><span>6 PM</span></div>
+      <div class="day-read" style="--c:#FF2D95">
+        <div class="day-clock"><b>9:30 AM</b><small>US session, New York time</small></div>
+        <div>
+          <h3>Everything is live, and the floor is talking.</h3>
+          <p></p>
+          <a class="link" href="/korvus.html">How Korvus scores a story</a>
+        </div>
       </div>
     </div>
-    <div class="eclipse-vis reveal" aria-hidden="true">
-      <div class="ex-orbit"><i></i></div>
-      <div class="ex-corona"></div>
-      <div class="ex-ring"></div>
-      <div class="ex-disc"></div>
-      <div class="ex-flare"></div>
-      <span class="ex-label">ECLIPSE <b>//</b> X</span>
+  </div>
+</section>
+
+<section class="sec" id="standard">
+  <div class="wrap rail">
+    <header>
+      <h2>How we work.</h2>
+      <p>Four rules every BlackCrown product is held to.</p>
+    </header>
+    <div class="principles">
+      <div><h3>Built by the desk that uses it</h3><p>These tools come off a working trading and building desk. If something is in the product, it is because it earned its place in a real session.</p></div>
+      <div><h3>Information, never signals</h3><p>We tell you what happened, how much it matters and what to watch. We do not tell you to buy or sell, and we do not promise results.</p></div>
+      <div><h3>Your data stays yours</h3><p>Nothing you write, track or upload in a BlackCrown product is sold or used to train a model. That is the default, not a setting.</p></div>
+      <div><h3>Try it before you pay</h3><p>Korvus, Crown and Eclipse-X are free to start with no card. Paid plans cancel anytime, and LodeStone on Tradovate is a single purchase.</p></div>
     </div>
   </div>
 </section>
 
-<section class="sec" id="faq">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow" data-scramble>Questions</span>
-      <h2>Straight answers.</h2>
-    </div>
+<section class="sec" id="company">
+  <div class="wrap rail">
+    <header>
+      <h2>The company.</h2>
+      <p>BlackCrown is a small, independent firm. One desk builds, runs and supports everything on this site.</p>
+    </header>
+    <dl class="company">
+      <div><dt>Legal name</dt><dd>BlackCrownVxJ LLC</dd></div>
+      <div><dt>What we make</dt><dd>Korvus, LodeStone, Crown by BlackCrown Intelligence, and the Eclipse-X community</dd></div>
+      <div><dt>Who it is for</dt><dd>Independent traders, founders and builders who make their own decisions</dd></div>
+      <div><dt>Payments</dt><dd>Handled by Stripe at checkout</dd></div>
+      <div><dt>Email</dt><dd><a class="link" href="mailto:BlackCrownVxJ.LLC@outlook.com">BlackCrownVxJ.LLC@outlook.com</a></dd></div>
+      <div><dt>Phone</dt><dd><a class="link" href="tel:+17032989426">(703) 298-9426</a>. If we miss you, leave a voicemail and we will call back.</dd></div>
+      <div><dt>Community</dt><dd><a class="link" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Eclipse-X on Discord</a>, where product questions are usually answered fastest</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="sec" id="questions">
+  <div class="wrap rail">
+    <header>
+      <h2>Questions.</h2>
+      <p>Not answered here? <a class="link" href="/support.html">Ask the desk.</a></p>
+    </header>
     <div class="faq">
-      <details class="qa reveal">
-        <summary>Do the products work on their own?<span class="qi" aria-hidden="true">+</span></summary>
-        <p>Yes. Korvus, LodeStone, Crown and Eclipse-X are each built to stand alone, and none of them requires another. They are designed so that running more than one compounds the edge, not so that one is useless without the rest.</p>
+      <details>
+        <summary>Do the products work on their own?</summary>
+        <p>Yes. Korvus, LodeStone, Crown and Eclipse-X each stand alone, and none of them requires another. They are built so that using more than one adds up, not so that one is useless without the rest.</p>
       </details>
-      <details class="qa reveal">
-        <summary>Where should I start?<span class="qi" aria-hidden="true">+</span></summary>
-        <p>If you trade, open a free Observer account on <a href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=index" target="_blank" rel="noopener">korvus.industries</a> and see the scored feed for yourself. If you want the chart side, <a href="/lodestone.html">LodeStone</a> is a one-time purchase on Tradovate or comes included with Korvus Operator. If you want a private AI, Crown is free to start with no card. Eclipse-X, the house Discord, is open to everyone.</p>
+      <details>
+        <summary>Where should I start?</summary>
+        <p>Use the <a class="link" href="#fit">fit finder</a> above. In short: if you trade, open a free Observer account on Korvus. If you want levels on your chart, look at LodeStone. If you want a private AI, Crown is free to start with no card. Eclipse-X is open to everyone.</p>
       </details>
-      <details class="qa reveal">
-        <summary>What happens to my data?<span class="qi" aria-hidden="true">+</span></summary>
-        <p>Nothing you write, track or upload in a BlackCrown product is sold or used to train a model. Privacy is the default across the house, not a setting you go hunting for.</p>
+      <details>
+        <summary>What does it all cost?</summary>
+        <p>Korvus is free as an Observer, or $9.99 a month ($79.99 a year) as an Operator. LodeStone is $149 once on Tradovate or $19.99 a month on TradingView, and it is included with Korvus Operator. Crown is free to start, or $49.99 a month for Crowned. Eclipse-X is free.</p>
       </details>
-      <details class="qa reveal">
-        <summary>How do I get support?<span class="qi" aria-hidden="true">+</span></summary>
-        <p>The <a href="/support.html">support desk</a> routes billing, bugs and product questions to the right place. The product rooms in Eclipse-X, the house Discord, usually answer fastest, and email reaches the desk directly at BlackCrownVxJ.LLC@outlook.com.</p>
+      <details>
+        <summary>What happens to my data?</summary>
+        <p>Nothing you write, track or upload in a BlackCrown product is sold or used to train a model. The details are in the <a class="link" href="/privacy.html">privacy policy</a>.</p>
+      </details>
+      <details>
+        <summary>Is any of this financial advice?</summary>
+        <p>No. Our tools give information and context. They do not place trades, give signals or predict outcomes, and trading carries a substantial risk of loss. See the <a class="link" href="/disclaimer.html">disclaimer</a>.</p>
+      </details>
+      <details>
+        <summary>How do I get support?</summary>
+        <p>The <a class="link" href="/support.html">support desk</a> routes billing, bugs and product questions to the right place. The product rooms in Eclipse-X usually answer fastest, and email reaches the desk directly at BlackCrownVxJ.LLC@outlook.com.</p>
       </details>
     </div>
   </div>
 </section>
 
-<section class="sec contact" id="contact">
+<section class="closing">
   <div class="wrap">
-    <span class="eyebrow reveal" data-scramble style="display:block;margin-bottom:1rem">Get in touch</span>
-    <h2 class="reveal">Let's build.</h2>
-    <div class="lines">
-      <a href="mailto:BlackCrownVxJ.LLC@outlook.com"><span class="k">Email</span>BlackCrownVxJ.LLC@outlook.com</a>
-      <a href="tel:+17032989426"><span class="k">Call</span>(703) 298-9426</a>
+    <div>
+      <h2>Start with the one that fits.</h2>
+      <p>Three of the four are free to try. Pick the problem you want solved and see whether we solve it.</p>
     </div>
-    <p class="note reveal">Have a question, a bug, a billing issue, or a partnership in mind? The support desk routes it to the right place.</p>
-    <div class="contact-actions reveal">
-      <a href="/support.html" class="btn solid">Get support<span class="sheen"></span></a>
-      <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" class="btn ghost">Ask in the Discord<span class="sheen"></span></a>
+    <div class="btn-row">
+      <a class="btn primary" href="#fit">Find your fit</a>
+      <a class="btn" href="/support.html">Talk to the desk</a>
     </div>
   </div>
 </section>
 
-<footer>
+</main>
+<footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
-      <div class="foot-brand reveal">
-        <span class="wordmark">
-          <svg width="24" height="20" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 5px rgba(255,45,149,.7))" aria-hidden="true">
-            <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-            <line x1="7" y1="28" x2="29" y2="28"/>
-          </svg>
-          BlackCrown
-        </span>
-        <p>Market intelligence, AI, and a private network for independent operators.</p>
-        <div class="foot-socials">
-          <a class="soc" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.371-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.245.198.372.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.42 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.086-2.157-2.42 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.419-2.157 2.419z"/></svg></a>
-          <a class="soc" href="https://www.tiktok.com/@blackcrown_vxj" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
-          <a class="soc" href="https://www.instagram.com/blackcrownvxj.llc/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg></a>
+      <div class="foot-brand">
+        <span class="brand"><svg viewBox="0 0 36 30" aria-hidden="true"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>BlackCrown</span>
+        <p>Tools for people who trade and build on their own: market intelligence, a chart indicator, a private AI workspace and a community.</p>
+        <div class="social">
+          <a href="https://www.tiktok.com/@blackcrown_vxj" target="_blank" rel="noopener" aria-label="BlackCrown on TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
+          <a href="https://www.instagram.com/blackcrownvxj.llc/" target="_blank" rel="noopener" aria-label="BlackCrown on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg></a>
         </div>
       </div>
-      <div class="foot-col reveal">
+      <div>
         <h4>Products</h4>
-        <a href="/korvus.html">Korvus Industries</a>
-        <a href="/lodestone.html">LodeStone Indicator</a>
-        <a href="/intelligence.html">BlackCrown Intelligence</a>
-        <a href="/eclipse-x.html">Eclipse-X</a>
+        <nav aria-label="Products">
+          <a href="/korvus.html">Korvus</a>
+          <a href="/lodestone.html">LodeStone</a>
+          <a href="/intelligence.html">Crown by BlackCrown Intelligence</a>
+          <a href="/eclipse-x.html">Eclipse-X</a>
+        </nav>
       </div>
-      <div class="foot-col reveal">
+      <div>
         <h4>Company</h4>
-        <a href="/support.html">Support</a>
-        <a href="/terms.html">Terms of Service</a>
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/disclaimer.html">Disclaimer</a>
+        <nav aria-label="Company">
+          <a href="/#company">About BlackCrown</a>
+          <a href="/support.html">Support</a>
+          <a href="/terms.html">Terms of Service</a>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/disclaimer.html">Disclaimer</a>
+        </nav>
       </div>
-      <div class="foot-col reveal">
+      <div>
         <h4>Contact</h4>
-        <a href="mailto:BlackCrownVxJ.LLC@outlook.com">Email us</a>
-        <a href="tel:+17032989426">(703) 298-9426</a>
-        <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Discord</a>
+        <nav aria-label="Contact">
+          <a href="mailto:BlackCrownVxJ.LLC@outlook.com">BlackCrownVxJ.LLC@outlook.com</a>
+          <a href="tel:+17032989426">(703) 298-9426</a>
+          <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Eclipse-X on Discord</a>
+        </nav>
       </div>
     </div>
-    <p class="foot-disclaimer">BlackCrown provides tools and information for independent operators. Nothing on this site is financial, investment, legal, or tax advice, and nothing here is a recommendation to buy or sell any security or instrument. Trading and investing carry a substantial risk of loss. You are solely responsible for your own decisions.</p>
-    <div class="foot-bottom reveal">
+    <p class="foot-note">BlackCrown provides tools and information for independent operators. Nothing on this site is financial, investment, legal, or tax advice, and nothing here is a recommendation to buy or sell any security or instrument. Trading and investing carry a substantial risk of loss. You are solely responsible for your own decisions.</p>
+    <div class="foot-base">
       <span>&copy; 2026 BlackCrownVxJ LLC. All rights reserved.</span>
-      <span class="foot-links">
-        <a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a>
-      </span>
+      <span>Built and operated by BlackCrownVxJ LLC</span>
     </div>
   </div>
 </footer>
-
-<!-- ====================== UX layer (no dependencies) ====================== -->
-<script>
-(function(){
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* nav + scroll progress */
-  var nav = document.getElementById('nav');
-  var prog = document.getElementById('progress');
-  var scrollTick = false;
-  function applyScroll(){
-    scrollTick = false;
-    nav.classList.toggle('scrolled', window.scrollY > 24);
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    prog.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
-  }
-  function onScroll(){ if(!scrollTick){ scrollTick = true; requestAnimationFrame(applyScroll); } }
-  applyScroll();
-  window.addEventListener('scroll', onScroll, {passive:true});
-
-  /* mobile nav toggle */
-  var navToggle = document.getElementById('navToggle');
-  if(navToggle){
-    navToggle.addEventListener('click', function(){
-      var open = nav.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    document.querySelectorAll('#navLinks a').forEach(function(a){
-      a.addEventListener('click', function(){ nav.classList.remove('open'); navToggle.setAttribute('aria-expanded','false'); });
-    });
-    window.addEventListener('resize', function(){
-      if(window.innerWidth > 920 && nav.classList.contains('open')){ nav.classList.remove('open'); navToggle.setAttribute('aria-expanded','false'); }
-    }, {passive:true});
-  }
-
-  /* reveal on scroll */
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.14});
-  document.querySelectorAll('.reveal, .mission .ghost').forEach(function(el){ io.observe(el); });
-
-  /* staggered cascade for grouped children (tiles, contact lines) */
-  function stagger(container, childSel, step){
-    if(!container) return;
-    var kids = container.querySelectorAll(childSel);
-    var so = new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting) return;
-        kids.forEach(function(k, i){
-          if(reduce){ k.classList.add('in'); }
-          else { setTimeout(function(){ k.classList.add('in'); }, i*step); }
-        });
-        so.unobserve(e.target);
-      });
-    }, {threshold:0.18});
-    so.observe(container);
-  }
-  stagger(document.querySelector('.tiles'), '.ptile', 120);
-  stagger(document.querySelector('.lines'), 'a', 110);
-  stagger(document.querySelector('.personas'), '.persona', 110);
-  stagger(document.querySelector('.vgrid'), '.vcard', 90);
-
-  /* pointer tilt + cursor spotlight on product tiles */
-  if(matchMedia('(pointer:fine)').matches && !reduce){
-    document.querySelectorAll('.ptile').forEach(function(t){
-      t.addEventListener('pointermove', function(e){
-        var r = t.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width;   // 0..1
-        var py = (e.clientY - r.top) / r.height;   // 0..1
-        t.classList.add('tilting');
-        t.style.setProperty('--ry', ((px - 0.5) * 9).toFixed(2) + 'deg');
-        t.style.setProperty('--rx', ((0.5 - py) * 7).toFixed(2) + 'deg');
-        t.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
-        t.style.setProperty('--my', (py * 100).toFixed(1) + '%');
-      });
-      t.addEventListener('pointerleave', function(){
-        t.classList.remove('tilting');
-        t.style.setProperty('--rx', '0deg');
-        t.style.setProperty('--ry', '0deg');
-      });
-    });
-  }
-
-  /* mission ghost crown parallax */
-  var ghost = document.querySelector('.mission .ghost');
-  var mission = document.getElementById('mission');
-  if(ghost && mission && !reduce){
-    var ghostRaf = 0;
-    window.addEventListener('scroll', function(){
-      if(ghostRaf) return;
-      ghostRaf = requestAnimationFrame(function(){
-        ghostRaf = 0;
-        var r = mission.getBoundingClientRect();
-        var prog = 1 - (r.top + r.height/2) / window.innerHeight;  // ~ -1..1 across viewport
-        ghost.style.setProperty('--py', (prog * 46).toFixed(1) + 'px');
-      });
-    }, {passive:true});
-  }
-
-  /* scramble eyebrows when they enter view */
-  var glyphs = 'ABCDEFGHJKLMNPRSTUVWXYZ0123456789#%/<>*';
-  function scramble(el){
-    var sig = el.querySelector('.sig');
-    var full = el.textContent;
-    var steps = 0, total = full.length;
-    var iv = setInterval(function(){
-      steps++;
-      var out = '';
-      for(var i=0;i<full.length;i++){
-        if(i < steps){ out += full[i]; }
-        else if(full[i] === ' '){ out += ' '; }
-        else { out += glyphs[Math.floor(Math.random()*glyphs.length)]; }
-      }
-      el.textContent = out;
-      if(steps >= total){
-        clearInterval(iv);
-        el.textContent = full;
-        if(sig){ el.insertBefore(sig, el.firstChild); }
-      }
-    }, 34);
-  }
-  if(!reduce){
-    var sio = new IntersectionObserver(function(es){
-      es.forEach(function(e){ if(e.isIntersecting){ scramble(e.target); sio.unobserve(e.target); } });
-    }, {threshold:0.6});
-    document.querySelectorAll('[data-scramble]').forEach(function(el){ sio.observe(el); });
-  }
-
-  /* clock */
-  var clock = document.getElementById('clock');
-  function tickClock(){
-    var d = new Date();
-    var p = function(n){ return (n<10?'0':'') + n; };
-    clock.textContent = 'SYS // ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
-  }
-  tickClock(); setInterval(tickClock, 1000);
-
-  /* magnetic buttons (pointer devices only) */
-  if(matchMedia('(pointer:fine)').matches && !reduce){
-    document.querySelectorAll('.btn').forEach(function(b){
-      b.addEventListener('mousemove', function(e){
-        var r = b.getBoundingClientRect();
-        var x = e.clientX - r.left - r.width/2;
-        var y = e.clientY - r.top - r.height/2;
-        b.style.transform = 'translate(' + (x*0.18) + 'px,' + (y*0.28 - 2) + 'px)';
-      });
-      b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
-    });
-  }
-
-  /* intro reveal of hero content */
-  function startIntro(){
-    var t = document.querySelector('.hero-title');
-    if(t) t.classList.add('show');
-    document.querySelectorAll('.hero .intro-el').forEach(function(el, i){
-      setTimeout(function(){ el.classList.add('show'); }, 260 + i*120);
-    });
-    var cue = document.querySelector('.scroll-cue');
-    if(cue) cue.classList.add('show');
-    window.__bcIntro = true;
-    window.dispatchEvent(new CustomEvent('bc:introstart'));
-  }
-
-  /* preloader: count up, then hand off to intro */
-  var pre = document.getElementById('preloader');
-  var bar = document.getElementById('plBar');
-  var pct = document.getElementById('plPct');
-  var seen = false; try { seen = sessionStorage.getItem('bcSeen') === '1'; } catch(err){}
-  if(reduce || !pre || seen){
-    if(pre){ pre.style.transition = 'none'; pre.classList.add('done'); }
-    startIntro();
-  } else {
-    try { sessionStorage.setItem('bcSeen', '1'); } catch(err){}
-    var v = 0;
-    var pl = setInterval(function(){
-      v += Math.random()*16 + 14;
-      if(v >= 100){ v = 100; clearInterval(pl); }
-      bar.style.width = v + '%';
-      pct.textContent = Math.floor(v);
-      if(v === 100){
-        setTimeout(function(){
-          pre.classList.add('done');
-          startIntro();
-        }, 160);
-      }
-    }, 55);
-  }
-})();
-</script>
-
-<!-- ====================== 3D crown hero (Three.js) ====================== -->
-<script src="/assets/bc3d.js"></script>
-<script>
-(function(){
-const canvas = document.getElementById('bc3d');
-if(!canvas || !window.THREE || !window.BC3D){ if(canvas) canvas.style.display='none'; return; }
-const THREE = window.THREE;
-const SVGLoader = window.BC3D.SVGLoader, EffectComposer = window.BC3D.EffectComposer,
-      RenderPass = window.BC3D.RenderPass, UnrealBloomPass = window.BC3D.UnrealBloomPass;
-const hero = document.getElementById('top');
-const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isMobile = window.matchMedia('(max-width: 760px)').matches;
-
-let renderer;
-try {
-  renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance' });
-} catch (err) {
-  // No WebGL: the CSS auras and vignette keep the hero looking intentional.
-  canvas.style.display = 'none';
-  console.warn('WebGL unavailable, falling back to CSS hero.', err);
-}
-
-if (renderer) {
-  const PINK = 0xff2d95;
-  let w = hero.clientWidth, h = hero.clientHeight;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(w, h, false);
-  renderer.setClearColor(0x000000, 0);
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(38, w/h, 0.1, 100);
-  camera.position.set(0, 0, 9);
-
-  // lights
-  scene.add(new THREE.AmbientLight(0x241019, 1.1));
-  const key = new THREE.PointLight(PINK, 40, 60); key.position.set(6, 8, 9); scene.add(key);
-  const fill = new THREE.PointLight(0xff6fb6, 14, 60); fill.position.set(-8, -4, 6); scene.add(fill);
-  const rim = new THREE.DirectionalLight(0xffffff, 0.5); rim.position.set(0, 2, -6); scene.add(rim);
-
-  // ---- crown built from the brand SVG path, extruded to 3D ----
-  const crown = new THREE.Group();
-  scene.add(crown);
-  const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 30"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/></svg>';
-  const paths = new SVGLoader().parse(svg).paths;
-  const path = paths[0];
-  const shapes = (SVGLoader.createShapes ? SVGLoader.createShapes(path) : path.toShapes(true));
-  const geo = new THREE.ExtrudeGeometry(shapes, {
-    depth: 7, bevelEnabled:true, bevelThickness:0.9, bevelSize:0.8, bevelSegments:4, curveSegments:6
-  });
-  geo.scale(1, -1, 1);          // SVG y points down, flip to stand upright
-  geo.center();
-  geo.computeVertexNormals();
-  geo.computeBoundingBox();
-  const size = new THREE.Vector3(); geo.boundingBox.getSize(size);
-  const fit = 5.4 / Math.max(size.x, size.y);
-
-  const faceMat = new THREE.MeshStandardMaterial({ color:0x0b0b10, metalness:0.7, roughness:0.34, emissive:PINK, emissiveIntensity:0.14 });
-  const solid = new THREE.Mesh(geo, faceMat);
-  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 22), new THREE.LineBasicMaterial({ color:PINK, transparent:true }));
-  crown.add(solid); crown.add(edges);
-  crown.scale.setScalar(fit);
-  crown.rotation.x = -0.12;
-
-  // ---- drifting wireframe shapes ----
-  const shapeDefs = [
-    { g:new THREE.IcosahedronGeometry(1.0, 0), p:[-4.6, 2.2, -3], s:0.9 },
-    { g:new THREE.OctahedronGeometry(1.0, 0), p:[4.8, -2.0, -2], s:1.0 },
-    { g:new THREE.TorusGeometry(0.9, 0.32, 8, 24), p:[3.6, 2.7, -4], s:0.8 },
-    { g:new THREE.DodecahedronGeometry(1.0, 0), p:[-4.0, -2.6, -3.5], s:0.7 }
-  ];
-  const floaters = shapeDefs.map(function(d){
-    var m = new THREE.LineSegments(new THREE.WireframeGeometry(d.g), new THREE.LineBasicMaterial({ color:PINK, transparent:true, opacity:0.20 }));
-    m.position.set(d.p[0], d.p[1], d.p[2]); m.scale.setScalar(d.s);
-    m.userData.spin = (Math.random()*0.4 + 0.1) * (Math.random()<0.5?-1:1);
-    m.userData.bob = Math.random()*Math.PI*2;
-    scene.add(m); return m;
-  });
-
-  // ---- particle field ----
-  const COUNT = isMobile ? 280 : 760;
-  const pos = new Float32Array(COUNT*3);
-  const col = new Float32Array(COUNT*3);
-  const cPink = new THREE.Color(PINK), cWhite = new THREE.Color(0xffffff);
-  for (let i=0;i<COUNT;i++){
-    const r = 6 + Math.random()*14;
-    const th = Math.random()*Math.PI*2, ph = Math.acos(2*Math.random()-1);
-    pos[i*3]   = r*Math.sin(ph)*Math.cos(th);
-    pos[i*3+1] = r*Math.sin(ph)*Math.sin(th)*0.7;
-    pos[i*3+2] = r*Math.cos(ph) - 4;
-    const c = Math.random() < 0.6 ? cPink : cWhite;
-    col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
-  }
-  const pGeo = new THREE.BufferGeometry();
-  pGeo.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  pGeo.setAttribute('color', new THREE.BufferAttribute(col,3));
-  const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({
-    size:0.045, vertexColors:true, transparent:true, opacity:0.85, depthWrite:false, blending:THREE.AdditiveBlending, sizeAttenuation:true
-  }));
-  scene.add(particles);
-
-  // ---- bloom composer ----
-  const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(w, h), 0.95, 0.6, 0.06);
-  composer.addPass(bloom);
-
-  // ---- interaction state ----
-  const mouse = { x:0, y:0, tx:0, ty:0 };
-  if (!reduce){
-    window.addEventListener('pointermove', function(e){
-      mouse.tx = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.ty = (e.clientY / window.innerHeight) * 2 - 1;
-    }, {passive:true});
-  }
-
-  let intro = 0;            // 0..1 assemble progress
-  let introRunning = reduce ? true : false;
-  if (reduce) intro = 1;
-  if (window.__bcIntro) introRunning = true;   // intro may have fired before this module loaded
-  window.addEventListener('bc:introstart', function(){ introRunning = true; });
-
-  const ease = function(t){ return 1 - Math.pow(1 - t, 3); };
-  const clock = new THREE.Clock();
-  let raf = 0, visible = true;
-
-  function resize(){
-    w = hero.clientWidth; h = hero.clientHeight;
-    camera.aspect = w/h; camera.updateProjectionMatrix();
-    renderer.setSize(w, h, false);
-    composer.setSize(w, h);
-    bloom.setSize(w, h);
-  }
-  window.addEventListener('resize', resize, {passive:true});
-
-  function frame(){
-    raf = requestAnimationFrame(frame);
-    const dt = Math.min(clock.getDelta(), 0.05);
-    const t = clock.elapsedTime;
-
-    if (introRunning && intro < 1){
-      intro = Math.min(1, intro + dt/1.3);
-    }
-    const e = ease(intro);
-
-    // crown assemble + idle + parallax
-    mouse.x += (mouse.tx - mouse.x) * 0.05;
-    mouse.y += (mouse.ty - mouse.y) * 0.05;
-    crown.scale.setScalar(fit * (0.25 + 0.75*e));
-    crown.rotation.y = (1-e)*Math.PI*1.4 + t*0.18 + mouse.x*0.5;
-    crown.rotation.x = -0.12 + mouse.y*0.28 + Math.sin(t*0.5)*0.04;
-    edges.material.opacity = e;
-    faceMat.opacity = e; faceMat.transparent = true;
-
-    // floaters drift
-    floaters.forEach(function(m, i){
-      m.rotation.x += m.userData.spin * dt;
-      m.rotation.y += m.userData.spin * dt * 0.7;
-      m.position.y += Math.sin(t*0.6 + m.userData.bob) * dt * 0.18;
-      m.material.opacity = 0.20 * e;
-    });
-
-    // particle slow swirl
-    particles.rotation.y = t*0.02;
-    particles.rotation.x = mouse.y*0.06;
-
-    // scroll recede
-    const sp = Math.min(1, Math.max(0, window.scrollY / Math.max(h, 1)));
-    crown.position.y = sp*2.6;
-    crown.position.z = -sp*4.5;
-    canvas.style.opacity = String(1 - sp*0.9);
-
-    composer.render();
-
-    if (reduce){ cancelAnimationFrame(raf); }  // single static frame for reduced motion
-  }
-
-  let heroVisible = true;
-  function sync(){
-    cancelAnimationFrame(raf);
-    if (heroVisible && !document.hidden && !reduce){ clock.getDelta(); frame(); }
-  }
-  if ('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){ heroVisible = es[0].isIntersecting; sync(); }, {threshold:0}).observe(hero);
-  }
-  document.addEventListener('visibilitychange', sync);
-
-  resize();
-  frame();
-}
-})();
-</script>
-
-<script>
-(function(){
-  var done = {};
-  document.addEventListener('mouseover', function(e){
-    var a = e.target.closest && e.target.closest('a[href]');
-    if(!a || a.host !== location.host) return;
-    var href = a.getAttribute('href');
-    if(!href || href.charAt(0) === '#' || done[a.pathname]) return;
-    done[a.pathname] = 1;
-    var l = document.createElement('link'); l.rel = 'prefetch'; l.href = a.pathname;
-    document.head.appendChild(l);
-  }, {passive:true});
-})();
-</script>
-
-<!-- BlackCrown analytics beacon -->
-<script>
-(function(){
-  var EP="https://admin.blackcrownvxj.com/api/track";
-  function hit(e,k,x){try{new Image().src=EP+"?e="+e+"&k="+encodeURIComponent(k)+(x||"")+"&_="+Date.now();}catch(_){}}
-  var d=(window.innerWidth<768)?"m":"d";
-  var r=encodeURIComponent((document.referrer||"").slice(0,200));
-  hit("visit","home","&d="+d+"&r="+r);
-  document.addEventListener("click",function(ev){
-    var a=ev.target&&ev.target.closest?ev.target.closest("a[href]"):null;
-    if(!a)return;
-    var h=a.getAttribute("href")||"";
-    if(/korvus\.industries/i.test(h))hit("click","korvus");
-    else if(/blackcrown-intelligence\.com/i.test(h))hit("click","intelligence");
-    else if(/discord\.(gg|com)/i.test(h))hit("click","collective");
-  },true);
-})();
-</script>
-<script>
-(function(){
-  var c=document.querySelector('.foot-brand svg')||document.querySelector('footer svg');
-  if(!c)return;
-  var n=0,t=0;
-  c.addEventListener('click',function(){
-    var now=Date.now();
-    if(now-t>1400)n=0;
-    t=now;n++;
-    if(n>=3){n=0;window.location.href='https://admin.blackcrownvxj.com';}
-  });
-})();
-</script>
+<script src="/assets/bc3d.js" defer></script>
+<script src="/assets/crown3d.js?v=20261111" defer></script>
+<script src="/assets/site.js?v=20261111" defer></script>
 </body>
 </html>

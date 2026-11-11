@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LodeStone: session levels for index futures | BlackCrown</title>
-<meta name="description" content="The Korvus chart indicator that maps session highs and lows, prior day and week levels, and ICT structure on NQ, ES and YM. Included with Operator.">
+<title>LodeStone | Session levels, value and SMT drawn on your futures chart | BlackCrown</title>
+<meta name="description" content="LodeStone is an indicator for index futures that draws session highs and lows, prior day and week levels, value, structure and SMT divergence automatically, on Tradovate and TradingView.">
 <link rel="canonical" href="https://blackcrownvxj.com/lodestone.html">
 <meta property="og:title" content="LodeStone: every level, already drawn">
-<meta property="og:description" content="The Korvus chart indicator. Session extremes, prior day and week levels, value, equilibrium, structure and SMT divergence, mapped automatically on index futures.">
+<meta property="og:description" content="The chart side of Korvus. Session levels, prior highs and lows, value, structure and SMT divergence, drawn for you and kept current.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://blackcrownvxj.com/lodestone.html">
 <meta property="og:image" content="https://blackcrownvxj.com/og-image.png">
@@ -15,887 +15,346 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://blackcrownvxj.com/og-image.png">
+<meta name="theme-color" content="#000000">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-<style>
-  :root{
-    --vanta:#000000;--ink-2:#060608;--ink-3:#0A0A0D;--panel:#0D0D11;
-    --white:#FFFFFF;--bone:#E8E8EF;--mute:#85838F;
-    --pink:#FF2D95;--pink-soft:#FF6FB6;--pink-deep:#C81E73;
-    --accent:#49D7FF;--accent-soft:#8CE6FF;--accent-deep:#1E9FD1;
-    --line:rgba(73,215,255,.20);--line-soft:rgba(255,255,255,.07);
-    --accent-glow:0 0 6px rgba(73,215,255,.40),0 0 18px rgba(73,215,255,.18);
-    --glow-white:0 0 8px rgba(255,255,255,.24);--logo-glow:0 0 11px rgba(255,255,255,.38);
-    --glow-pink:0 0 6px rgba(255,45,149,.36),0 0 16px rgba(255,45,149,.16);
-    --max:1200px;--pad:clamp(1.25rem,5vw,4.5rem);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--vanta);color:var(--bone);font-family:'Manrope',system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  ::selection{background:var(--accent);color:#001018}
-  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
-  .wrap{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow)}
-  .neon{color:var(--accent);text-shadow:var(--accent-glow)}
-
-  .grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:screen;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-  .progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:95;background:var(--accent);box-shadow:var(--accent-glow);transition:width .1s linear}
-
-  /* preloader */
-  #preloader{position:fixed;inset:0;z-index:120;background:var(--vanta);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;transition:opacity .7s ease,visibility .7s ease}
-  #preloader.done{opacity:0;visibility:hidden}
-  #preloader .pl-crown{width:74px;height:62px;filter:drop-shadow(0 0 14px rgba(255,45,149,.55))}
-  #preloader .pl-crown path,#preloader .pl-crown line{stroke:var(--pink);stroke-width:1.6;fill:none;stroke-linejoin:round;stroke-linecap:round;
-    stroke-dasharray:120;stroke-dashoffset:120;animation:plDraw 1.15s cubic-bezier(.6,.05,.2,1) forwards}
-  #preloader .pl-crown line{animation-delay:.5s}
-  @keyframes plDraw{to{stroke-dashoffset:0}}
-  .pl-meter{width:140px;height:2px;background:rgba(255,255,255,.10);border-radius:2px;overflow:hidden}
-  .pl-meter i{display:block;height:100%;width:0;background:var(--accent);box-shadow:var(--accent-glow)}
-  .pl-label{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mute)}
-  .pl-label b{color:var(--accent);font-weight:500}
-
-  /* backbar nav */
-  .backbar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
-    padding:1rem var(--pad);transition:background .35s ease,border-color .35s ease,backdrop-filter .35s ease;border-bottom:1px solid transparent}
-  .backbar.scrolled{background:rgba(0,0,0,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-  .brand{display:flex;align-items:center;gap:.6rem}
-  .brand .crownmark{filter:drop-shadow(0 0 6px rgba(255,45,149,.7))}
-  .brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.02em;font-size:1.08rem;color:var(--white);text-shadow:var(--logo-glow)}
-  .back-link{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);display:inline-flex;align-items:center;gap:.5rem;transition:color .25s,text-shadow .25s}
-  .back-link:hover{color:var(--accent);text-shadow:var(--accent-glow)}
-  .back-link .arr{transition:transform .25s ease}
-  .back-link:hover .arr{transform:translateX(-4px)}
-
-  .btn{position:relative;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
-    padding:.72rem 1.3rem;border-radius:8px;cursor:pointer;display:inline-block;transition:transform .2s ease,background .25s ease,box-shadow .25s ease,color .25s ease,border-color .25s ease}
-  .btn.accent{background:var(--accent);color:#001018;border:1px solid var(--accent);box-shadow:var(--accent-glow)}
-  .btn.accent:hover{background:var(--accent-soft);box-shadow:0 0 12px rgba(73,215,255,.5),0 0 30px rgba(73,215,255,.28);transform:translateY(-2px)}
-  .btn.ghost{background:transparent;color:var(--bone);border:1px solid rgba(255,255,255,.22)}
-  .btn.ghost:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--accent-glow);text-shadow:var(--accent-glow);transform:translateY(-2px)}
-  .btn .sheen{position:absolute;top:0;left:-120%;width:60%;height:100%;pointer-events:none;
-    background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-18deg)}
-  .btn:hover .sheen{animation:sheen .7s ease}
-  @keyframes sheen{from{left:-120%}to{left:160%}}
-
-  /* hero */
-  .phero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;isolation:isolate;padding:8rem 0 4rem}
-  .phero .aura{position:absolute;border-radius:50%;filter:blur(70px);z-index:0;pointer-events:none}
-  .phero .a1{top:-10%;left:8%;width:52vw;max-width:640px;height:52vw;max-height:640px;
-    background:radial-gradient(circle,rgba(73,215,255,.14),transparent 64%);animation:auraPulse 9s ease-in-out infinite}
-  .phero .a2{bottom:-18%;right:-8%;width:46vw;max-width:560px;height:46vw;max-height:560px;
-    background:radial-gradient(circle,rgba(30,159,209,.12),transparent 66%);animation:auraPulse 12s ease-in-out infinite reverse}
-  @keyframes auraPulse{0%,100%{opacity:.65}50%{opacity:1}}
-  .phero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:radial-gradient(120% 78% at 50% 46%,transparent 38%,rgba(0,0,0,.62) 100%)}
-  .hud{position:absolute;top:6.2rem;left:var(--pad);z-index:4;display:flex;align-items:center;gap:.55rem;
-    font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
-  .hud .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:var(--accent-glow);animation:blink 2.4s ease-in-out infinite}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-
-  .phero-grid{position:relative;z-index:4;display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;width:100%}
-  .phero .eyebrow{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.5rem}
-  .phero .eyebrow .sig{width:26px;height:1px;background:var(--accent);box-shadow:var(--accent-glow);display:inline-block}
-  .phero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.6rem,6vw,4.6rem);line-height:.96;letter-spacing:-0.03em;color:var(--white);text-shadow:var(--glow-white);margin-bottom:1.4rem}
-  .phero h1 .w{display:inline-block;opacity:0;transform:translateY(34px) rotateX(38deg);transform-origin:bottom;transition:opacity .8s ease,transform .9s cubic-bezier(.2,.85,.25,1)}
-  .phero h1.show .w{opacity:1;transform:none}
-  .phero h1.show .w:nth-child(1){transition-delay:.05s}
-  .phero h1.show .w:nth-child(2){transition-delay:.13s}
-  .phero h1.show .w:nth-child(3){transition-delay:.21s}
-  .phero h1.show .w:nth-child(4){transition-delay:.29s}
-  .statement{color:var(--bone);opacity:.88;font-size:clamp(1rem,1.5vw,1.16rem);max-width:54ch}
-  .pmeta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
-  .chip{display:inline-flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);
-    border:1px solid var(--line);border-radius:999px;padding:.42rem .85rem;background:rgba(73,215,255,.04)}
-  .chip .d{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:var(--accent-glow)}
-  .cta-row{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:2rem}
-  .intro-el{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-  .intro-el.show{opacity:1;transform:none}
-  .statement.intro-el.show{opacity:.88}
-
-  /* product shot frame */
-  .shot{position:relative;border:1px solid var(--line);border-radius:16px;background:var(--ink-2);overflow:hidden;
-    box-shadow:0 40px 90px -24px rgba(0,0,0,.85),0 10px 32px rgba(0,0,0,.5),0 0 46px rgba(73,215,255,.14);
-    transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
-  .shot::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 22%);mix-blend-mode:screen}
-  .shot:hover{border-color:var(--accent);box-shadow:0 56px 112px -26px rgba(0,0,0,.9),0 16px 42px rgba(0,0,0,.55),0 0 66px rgba(73,215,255,.30),inset 0 0 0 1px rgba(73,215,255,.12)}
-  @media(prefers-reduced-motion:no-preference){.shot:hover{transform:translateY(-7px)}}
-  .shot-bar{display:flex;align-items:center;gap:.8rem;padding:.6rem .9rem;border-bottom:1px solid var(--line-soft);background:var(--ink-3)}
-  .shot-bar .dots{display:inline-flex;gap:.32rem}
-  .shot-bar .dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.14)}
-  .shot-bar .url{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
-  .shot img{display:block;width:100%;height:auto}
-  .shot-cap{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;color:var(--mute);margin-top:.9rem;line-height:1.6}
-
-  /* generic section */
-  .sec{position:relative;padding:clamp(4.5rem,9vw,7rem) 0;border-top:1px solid var(--line-soft)}
-  .sec-head{margin-bottom:3.2rem;max-width:760px}
-  .sec-head .eyebrow{display:block;margin-bottom:1rem}
-  .sec-head h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,5vw,3.2rem);line-height:1;letter-spacing:-0.02em;color:var(--white)}
-  .sec-head .kicker{color:var(--mute);margin-top:1rem;max-width:60ch}
-
-  /* fit: where you are vs where it puts you */
-  .fit{border-top:1px solid var(--line-soft)}
-  .fit .wrap{padding-top:clamp(4rem,8vw,6rem);padding-bottom:clamp(4rem,8vw,6rem)}
-  .fit-eyebrow{display:block;margin-bottom:2rem}
-  .fit-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:1.6rem;align-items:stretch}
-  .fit-card{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:16px;padding:2rem 1.8rem;
-    opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease}
-  .fit-card.in{opacity:1;transform:none}
-  .fit-card .lab{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:.8rem}
-  .fit-card h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.35rem;color:var(--white);margin-bottom:.6rem;letter-spacing:-0.01em}
-  .fit-card p{color:var(--bone);opacity:.82;font-size:.97rem}
-  .fit-card.answer{border-color:var(--line)}
-  .fit-card.answer .lab{color:var(--accent);text-shadow:var(--accent-glow)}
-  .fit-card.answer:hover{border-color:var(--accent);box-shadow:0 0 18px rgba(73,215,255,.16)}
-  .fit-arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.6rem;text-shadow:var(--accent-glow);
-    opacity:0;transition:opacity .7s ease .3s}
-  .fit-arrow.in{opacity:1}
-
-  /* features */
-  .features{display:grid;grid-template-columns:repeat(2,1fr);gap:1.3rem}
-  .feat{position:relative;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:16px;padding:1.9rem 1.8rem;overflow:hidden;
-    opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
-  .feat.in{opacity:1;transform:none}
-  .feat:hover{border-color:var(--accent);box-shadow:0 0 16px rgba(73,215,255,.14),0 18px 40px rgba(0,0,0,.55);transform:translateY(-5px)}
-  .feat .fnum{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);display:block;margin-bottom:.9rem}
-  .feat h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;color:var(--white);margin-bottom:.55rem;letter-spacing:-0.01em}
-  .feat p{color:var(--bone);opacity:.82;font-size:.95rem}
-
-  /* shots row */
-  .shot-row{display:grid;grid-template-columns:1.2fr 1fr;gap:1.6rem;align-items:start}
-
-  /* glossary */
-  .gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9rem}
-  .g{background:var(--ink-2);border:1px solid var(--line-soft);border-radius:12px;padding:1rem 1.1rem;transition:border-color .3s ease}
-  .g:hover{border-color:var(--line)}
-  .gt{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);display:block;margin-bottom:.35rem}
-  .g p{color:var(--mute);font-size:.85rem;line-height:1.5}
-
-  /* controls */
-  .controls-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:3rem;align-items:center}
-  .spec-list{list-style:none}
-  .spec-list li{position:relative;padding-left:1.5rem;color:var(--bone);opacity:.85;font-size:.97rem;margin-bottom:1rem}
-  .spec-list li::before{content:"\25C6";position:absolute;left:0;top:.15em;font-size:.6em;color:var(--accent);text-shadow:var(--accent-glow)}
-  .spec-list b{color:var(--white);font-weight:700}
-
-  /* pricing */
-  .plans{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;max-width:940px}
-  .plan{position:relative;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:18px;padding:2.2rem 2rem;display:flex;flex-direction:column;
-    opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s ease,box-shadow .4s ease}
-  .plan.in{opacity:1;transform:none}
-  .plan:hover{border-color:var(--accent);box-shadow:0 0 20px rgba(73,215,255,.16),0 22px 48px rgba(0,0,0,.6);transform:translateY(-6px)}
-  .plan .plat{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.2rem}
-  .plan .plat .d{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:var(--accent-glow)}
-  .plan .price{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:2.6rem;color:var(--white);letter-spacing:-0.02em;line-height:1}
-  .plan .per{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-top:.4rem;margin-bottom:1.4rem}
-  .plan ul{list-style:none;margin-bottom:1.8rem;flex:1}
-  .plan li{position:relative;padding-left:1.4rem;color:var(--bone);opacity:.85;font-size:.95rem;margin-bottom:.6rem}
-  .plan li::before{content:"◆";position:absolute;left:0;top:.1em;font-size:.6em;color:var(--accent);text-shadow:var(--accent-glow)}
-  .plan .btn{text-align:center}
-  .plan.feature{border-color:var(--line)}
-  .plans-note{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;color:var(--mute);margin-top:1.8rem;line-height:1.7;max-width:70ch}
-  .plans-note a{color:var(--accent);text-shadow:var(--accent-glow)}
-
-  /* hero level-line backdrop */
-  .phero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-    background-image:
-      radial-gradient(rgba(255,255,255,.5) 1px,transparent 1.2px),
-      repeating-linear-gradient(180deg,transparent 0 54px,rgba(73,215,255,.07) 54px 55px);
-    background-size:72px 72px,100% 55px;opacity:.5;
-    animation:levelDrift 26s linear infinite;
-    -webkit-mask-image:radial-gradient(85% 90% at 50% 45%,#000 30%,transparent 80%);mask-image:radial-gradient(85% 90% at 50% 45%,#000 30%,transparent 80%)}
-  @keyframes levelDrift{from{background-position:0 0,0 0}to{background-position:0 0,0 55px}}
-
-  /* hero status strip */
-  .hero-strip{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:1.8rem}
-  .hero-strip .hs{display:inline-flex;align-items:center;gap:.5rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
-  .hero-strip .hs i{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:var(--accent-glow);animation:hsBlink 2.4s ease-in-out infinite}
-  .hero-strip .hs:nth-child(2) i{animation-delay:.8s}
-  .hero-strip .hs:nth-child(3) i{animation-delay:1.6s}
-  @keyframes hsBlink{0%,100%{opacity:1}50%{opacity:.25}}
-
-  /* HUD corner brackets on shots */
-  .shot::before{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:16px;opacity:.6;
-    background:
-      linear-gradient(var(--accent),var(--accent)) top left/18px 2px,
-      linear-gradient(var(--accent),var(--accent)) top left/2px 18px,
-      linear-gradient(var(--accent),var(--accent)) bottom right/18px 2px,
-      linear-gradient(var(--accent),var(--accent)) bottom right/2px 18px;
-    background-repeat:no-repeat}
-
-  /* magnetic field rings behind fit */
-  #fit{overflow:hidden}
-  #fit::before{content:"";position:absolute;inset:0;pointer-events:none;
-    background:repeating-radial-gradient(circle at 88% 50%,rgba(73,215,255,.07) 0 1px,transparent 1px 58px);
-    -webkit-mask-image:radial-gradient(60% 90% at 78% 50%,#000,transparent);mask-image:radial-gradient(60% 90% at 78% 50%,#000,transparent)}
-  #fit .wrap{position:relative}
-
-  /* feature icons */
-  .ficon{width:30px;height:30px;color:var(--accent);filter:drop-shadow(0 0 6px rgba(73,215,255,.5));margin-bottom:.9rem;display:block}
-
-  /* glossary backdrop */
-  #levels{overflow:hidden}
-  #levels::before{content:"";position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(rgba(73,215,255,.07) 1px,transparent 1.4px);background-size:30px 30px;
-    -webkit-mask-image:radial-gradient(64% 80% at 70% 45%,#000,transparent);mask-image:radial-gradient(64% 80% at 70% 45%,#000,transparent)}
-  #levels .wrap{position:relative}
-
-  /* pricing dress-up */
-  #pricing{overflow:hidden}
-  #pricing::before{content:"";position:absolute;top:20%;left:50%;transform:translateX(-50%);width:70vw;max-width:820px;height:60%;
-    border-radius:50%;background:radial-gradient(ellipse,rgba(73,215,255,.09),transparent 65%);filter:blur(50px);pointer-events:none}
-  #pricing .wrap{position:relative}
-  .plan{position:relative}
-  .plan::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:18px;opacity:.45;
-    background:
-      linear-gradient(var(--accent),var(--accent)) top left/16px 2px,
-      linear-gradient(var(--accent),var(--accent)) top left/2px 16px,
-      linear-gradient(var(--accent),var(--accent)) bottom right/16px 2px,
-      linear-gradient(var(--accent),var(--accent)) bottom right/2px 16px;
-    background-repeat:no-repeat}
-  .pglyph{width:19px;height:19px;color:var(--accent);filter:drop-shadow(0 0 5px rgba(73,215,255,.5))}
-
-  /* page watermark + section flare */
-  .pagemark{position:fixed;top:50%;left:-.4rem;transform:translateY(-50%);writing-mode:vertical-rl;
-    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(4rem,9vw,7.5rem);letter-spacing:.32em;
-    color:transparent;-webkit-text-stroke:1px rgba(73,215,255,.08);pointer-events:none;z-index:0;user-select:none}
-  #features::after{content:"";position:absolute;top:-8%;right:-240px;width:600px;height:600px;border-radius:50%;
-    border:1px solid rgba(73,215,255,.15);box-shadow:0 0 70px rgba(73,215,255,.09),inset 0 0 70px rgba(73,215,255,.06);pointer-events:none}
-  #levels::after{content:"";position:absolute;bottom:-22%;left:-210px;width:540px;height:540px;border-radius:50%;
-    border:1px dashed rgba(73,215,255,.14);animation:ringSpin 85s linear infinite;pointer-events:none}
-  @keyframes ringSpin{to{transform:rotate(360deg)}}
-  #inside{overflow:hidden}
-  #inside::before{content:"";position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(115deg,transparent 40%,rgba(73,215,255,.05) 50%,transparent 60%)}
-  #inside .wrap{position:relative}
-  #faq{overflow:hidden}
-  #faq::before{content:"";position:absolute;top:-14%;right:-180px;width:440px;height:440px;border-radius:50%;
-    border:1px solid rgba(73,215,255,.10);pointer-events:none}
-  #faq .wrap{position:relative}
-
-  /* card flare */
-  .feat{background:linear-gradient(165deg,rgba(73,215,255,.06),var(--ink-2) 42%)}
-  .feat::before{content:"";position:absolute;top:0;left:1.6rem;width:34%;height:2px;
-    background:linear-gradient(90deg,var(--accent),transparent);opacity:.75}
-  .feat::after{content:"◆";position:absolute;right:.7rem;bottom:-1.4rem;font-family:'Space Grotesk',sans-serif;font-weight:700;
-    font-size:6rem;line-height:1;color:rgba(73,215,255,.06);pointer-events:none}
-  .plan{background:linear-gradient(165deg,rgba(73,215,255,.05),var(--ink-2) 40%)}
-  .g{background:linear-gradient(160deg,rgba(73,215,255,.045),var(--ink-2) 55%)}
-  .fit-card{background:linear-gradient(165deg,rgba(73,215,255,.04),var(--ink-2) 45%)}
-
-  /* auto-draw map */
-  .mapframe{max-width:920px;margin:0 auto}
-  .mapviz{display:block;width:100%;height:auto;background:linear-gradient(180deg,#0b0b0f,#050507)}
-  .mgrid{stroke:rgba(255,255,255,.06);stroke-width:1}
-  .mapviz text{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;fill:var(--mute)}
-  .lv{opacity:0;transform:translateX(-14px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
-  .mapframe.in .lv{opacity:1;transform:none}
-  .mapframe.in .l1{transition-delay:.15s}
-  .mapframe.in .l2{transition-delay:.35s}
-  .mapframe.in .l3{transition-delay:.55s}
-  .mapframe.in .l4{transition-delay:.75s}
-  .mapframe.in .l5{transition-delay:.95s}
-  .mprice{fill:none;stroke:var(--accent);stroke-width:2;filter:drop-shadow(0 0 5px rgba(73,215,255,.6));stroke-dasharray:1400;stroke-dashoffset:1400}
-  .mapframe.in .mprice{animation:mDraw 2.4s ease .5s forwards}
-  @keyframes mDraw{to{stroke-dashoffset:0}}
-  .mnode{fill:var(--accent);filter:drop-shadow(0 0 6px var(--accent));opacity:0;transition:opacity .4s ease 2.6s}
-  .mapframe.in .mnode{opacity:1}
-  .mnode-ring{fill:none;stroke:var(--accent);stroke-width:1.3;transform-origin:center;transform-box:fill-box;opacity:0}
-  .mapframe.in .mnode-ring{animation:lsPulse 3s ease-out 2.8s infinite}
-  .mapframe.in .mnode-ring.r2{animation-delay:4.3s}
-  @keyframes lsPulse{0%{opacity:.8;transform:scale(.4)}100%{opacity:0;transform:scale(1.8)}}
-
-  /* compass */
-  .faq-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}
-  .compass-wrap{display:flex;flex-direction:column;align-items:center;gap:1.2rem}
-  .compass{width:min(100%,300px);height:auto}
-  .compass .card{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em;fill:var(--mute)}
-  .compass .card.n{fill:var(--accent);filter:drop-shadow(0 0 5px rgba(73,215,255,.7))}
-  .needle{transform-origin:110px 110px;transform-box:view-box;animation:nWobble 7s ease-in-out infinite}
-  @keyframes nWobble{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(5deg)}}
-  .compass-label{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mute)}
-  .compass-label b{color:var(--accent);text-shadow:var(--accent-glow);font-weight:500}
-
-  /* section backdrops */
-  #features{overflow:hidden}
-  #features::before{content:"";position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(rgba(73,215,255,.08) 1px,transparent 1.4px);background-size:28px 28px;
-    -webkit-mask-image:radial-gradient(66% 80% at 74% 40%,#000,transparent);mask-image:radial-gradient(66% 80% at 74% 40%,#000,transparent)}
-  #features .wrap{position:relative}
-  #controls{overflow:hidden}
-  #controls::before{content:"";position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(rgba(73,215,255,.07) 1px,transparent 1.4px);background-size:30px 30px;
-    -webkit-mask-image:radial-gradient(60% 80% at 24% 55%,#000,transparent);mask-image:radial-gradient(60% 80% at 24% 55%,#000,transparent)}
-  #controls .wrap{position:relative}
-  .cta-band::after{content:"";position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1.2px);background-size:64px 64px;opacity:.12;
-    -webkit-mask-image:radial-gradient(70% 90% at 50% 50%,#000,transparent);mask-image:radial-gradient(70% 90% at 50% 50%,#000,transparent)}
-
-  /* faq */
-  .faq{max-width:820px}
-  .qa{border-bottom:1px solid var(--line-soft)}
-  .qa summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;
-    padding:1.15rem .2rem;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.05rem;color:var(--bone);transition:color .25s}
-  .qa summary::-webkit-details-marker{display:none}
-  .qa summary:hover{color:var(--accent)}
-  .qa .qi{font-family:'JetBrains Mono',monospace;color:var(--accent);text-shadow:var(--accent-glow);transition:transform .25s ease;flex:none}
-  .qa[open] .qi{transform:rotate(45deg)}
-  .qa p{color:var(--mute);font-size:.95rem;padding:0 .2rem 1.2rem;max-width:70ch}
-
-  /* cta band */
-  .cta-band{position:relative;overflow:hidden;border-top:1px solid var(--line);background:var(--ink-2);padding:clamp(4.5rem,9vw,6.5rem) 0;text-align:center}
-  .cta-band .aura{position:absolute;top:50%;left:50%;width:60vw;max-width:640px;height:60vw;max-height:640px;transform:translate(-50%,-50%);border-radius:50%;
-    background:radial-gradient(circle,rgba(73,215,255,.12),transparent 64%);filter:blur(64px);z-index:0}
-  .cta-band .wrap{position:relative;z-index:1}
-  .cta-band h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.9rem,5vw,3.2rem);color:var(--white);text-shadow:var(--glow-white);letter-spacing:-0.02em;margin-bottom:1rem}
-  .cta-band p{color:var(--mute);max-width:54ch;margin:0 auto 2rem}
-  .cta-band .cta-row{justify-content:center;margin-top:0}
-
-  /* footer */
-  footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--ink-2)}
-  .foot-grid{display:flex;justify-content:space-between;gap:3rem;flex-wrap:wrap;margin-bottom:3.5rem}
-  .foot-brand .wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.35rem;color:var(--white);text-shadow:var(--logo-glow);display:flex;align-items:center;gap:.6rem}
-  .foot-brand p{color:var(--mute);font-size:.95rem;margin-top:.9rem;max-width:30ch}
-  .foot-col h4{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);text-shadow:var(--accent-glow);margin-bottom:1.2rem}
-  .foot-col a{display:block;color:var(--mute);font-size:.95rem;margin-bottom:.6rem;transition:color .25s}
-  .foot-col a:hover{color:var(--accent)}
-  .foot-disclaimer{color:var(--mute);opacity:.68;font-size:.76rem;line-height:1.6;max-width:94ch;margin-bottom:1.8rem;padding-top:1.6rem;border-top:1px solid var(--line-soft)}
-  .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:2rem;border-top:1px solid var(--line-soft);
-    font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-  .foot-links{display:flex;gap:1.3rem}
-  .foot-links a:hover{color:var(--accent)}
-
-  /* reveal */
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-  .reveal.in{opacity:1;transform:none}
-
-  /* responsive */
-  @media(max-width:920px){
-    .phero{min-height:auto;padding:7rem 0 3rem}
-    .phero-grid{grid-template-columns:1fr;gap:2.4rem}
-    .fit-grid{grid-template-columns:1fr}
-    .fit-arrow{transform:rotate(90deg);padding:.2rem 0}
-    .features{grid-template-columns:1fr}
-    .shot-row{grid-template-columns:1fr}
-    .controls-grid{grid-template-columns:1fr;gap:2.2rem}
-    .faq-grid{grid-template-columns:1fr;gap:2.2rem}
-    .compass{max-width:240px}
-    .plans{grid-template-columns:1fr}
-    .foot-grid{gap:2rem}
-  }
-  @media(max-width:640px){
-    :root{--pad:1.15rem}
-    .phero h1{font-size:clamp(2.2rem,10vw,3.2rem)}
-    .cta-row .btn{flex:1 1 100%;justify-content:center;text-align:center}
-    .sec{padding:clamp(3.4rem,11vw,5rem) 0}
-    .fit .wrap{padding-top:clamp(3rem,9vw,4.5rem);padding-bottom:clamp(3rem,9vw,4.5rem)}
-    .fit-card{padding:1.6rem 1.4rem}
-    .feat{padding:1.6rem 1.4rem}
-    .plan{padding:1.8rem 1.5rem}
-    .foot-grid{flex-direction:column;gap:1.8rem}
-    .foot-bottom{flex-direction:column;align-items:flex-start;gap:.7rem}
-  }
-  @media(prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important}
-    html{scroll-behavior:auto}
-    .reveal,.intro-el,.shot,.fit-card,.fit-arrow,.feat,.plan{opacity:1;transform:none}
-    .phero h1 .w{opacity:1;transform:none}
-    #preloader{display:none}
-    #preloader .pl-crown path,#preloader .pl-crown line{stroke-dashoffset:0}
-  }
-@media(max-width:920px){.pagemark{display:none}}
-</style>
+<link rel="stylesheet" href="/assets/site.css?v=20261111">
 </head>
-<body data-bc-page="lodestone">
-
-<div id="preloader" aria-hidden="true">
-  <svg class="pl-crown" viewBox="0 0 36 30" fill="none">
-    <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-    <line x1="7" y1="27.4" x2="29" y2="27.4"/>
-  </svg>
-  <div class="pl-meter"><i id="plBar"></i></div>
-  <div class="pl-label">Loading LodeStone <b id="plPct">0</b><b>%</b></div>
-</div>
-
-<div class="grain"></div>
-<div class="pagemark" aria-hidden="true">LODESTONE</div>
-<div class="progress" id="progress"></div>
-
-<nav class="backbar" id="backbar">
-  <a class="brand" href="/" aria-label="BlackCrown home">
-    <svg class="crownmark" width="24" height="20" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-      <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-      <line x1="7" y1="28" x2="29" y2="28"/>
-    </svg>
-    <span class="wordmark">BlackCrown</span>
-  </a>
-  <a class="back-link" href="/korvus.html"><span class="arr" aria-hidden="true">←</span> Back to Korvus</a>
-</nav>
-
-<header class="phero">
-  <div class="aura a1"></div>
-  <div class="aura a2"></div>
-  <div class="hud"><span class="dot"></span><span id="clock">LODESTONE // V7.5</span></div>
-
-  <div class="wrap phero-grid">
-    <div>
-      <span class="eyebrow intro-el"><span class="sig"></span>Korvus stack · The chart edge</span>
-      <h1>
-        <span class="w">Every</span> <span class="w">level,</span> <span class="w">already</span> <span class="w"><span class="neon">drawn</span>.</span>
-      </h1>
-      <p class="statement intro-el">You know the ritual: mark the prior day and week, box the sessions, find equilibrium, then do it all again tomorrow. LodeStone puts the whole map on the chart the moment it loads. Session extremes, value, structure and SMT, built on ICT concepts for index futures.</p>
-      <div class="pmeta intro-el">
-        <span class="chip"><span class="d"></span>Build V7.5</span>
-        <span class="chip"><span class="d"></span>ICT session levels</span>
-        <span class="chip"><span class="d"></span>SMT divergence</span>
-        <span class="chip"><span class="d"></span>NQ · ES · YM</span>
-        <span class="chip"><span class="d"></span>Nothing repaints</span>
-      </div>
-      <div class="cta-row intro-el">
-        <a href="#pricing" class="btn accent">Get LodeStone<span class="sheen"></span></a>
-        <a href="#inside" class="btn ghost">See it on a chart<span class="sheen"></span></a>
-      </div>
-      <div class="hero-strip intro-el" aria-hidden="true">
-        <span class="hs"><i></i>Sessions mapped</span>
-        <span class="hs"><i></i>Levels pinned</span>
-        <span class="hs"><i></i>Nothing repaints</span>
-      </div>
-    </div>
-    <div class="shot">
-      <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">LodeStone · live session map</span></div>
-      <img src="/assets/lodestone-sessions.webp" decoding="async" alt="LodeStone indicator on an index futures chart showing session highs and lows, prior day and week levels, value areas, equilibrium and SMT flags" width="1132" height="857">
-    </div>
+<body data-product="lodestone" data-track="lodestone">
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="BlackCrown home"><svg viewBox="0 0 36 30" aria-hidden="true"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>BlackCrown</a>
+    <nav class="nav" aria-label="Main">
+      <details>
+        <summary>Products</summary>
+        <div class="menu">
+          <a href="/korvus.html" style="--c:#FF2D95"><i></i><b>Korvus</b><span>A market terminal that reads and scores the news and SEC filings for index futures traders.</span></a>
+          <a href="/lodestone.html" style="--c:#49D7FF"><i></i><b>LodeStone</b><span>A chart indicator that draws your session levels, value and structure for you.</span></a>
+          <a href="/intelligence.html" style="--c:#FF2D95"><i></i><b>Crown</b><span>A private AI workspace by BlackCrown Intelligence. Your work is never sold or trained on.</span></a>
+          <a href="/eclipse-x.html" style="--c:#FF6FB6"><i></i><b>Eclipse-X</b><span>The free BlackCrown community on Discord, with live scored news and the desk in the open.</span></a>
+        </div>
+      </details>
+      <a href="/#fit">Find your fit</a>
+      <a href="/#company">Company</a>
+      <a href="/support.html">Support</a>
+    </nav>
+    <a class="btn primary small head-cta" href="#pricing">Get LodeStone</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span></button>
   </div>
 </header>
+<main id="main">
 
-<section class="fit" id="fit">
-  <div class="wrap">
-    <span class="eyebrow fit-eyebrow reveal">Is this you</span>
-    <div class="fit-grid">
-      <div class="fit-card reveal">
-        <span class="lab">Where you are</span>
+<section class="hero">
+  <div class="hero-wash" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <a class="crumb" href="/korvus.html" data-in style="--i:0">Part of the Korvus stack</a>
+      <h1 data-in style="--i:1">Every level, already drawn.</h1>
+      <p class="lead" data-in style="--i:2">LodeStone is a chart indicator for index futures. It draws your session highs and lows, prior day and week levels, value, structure and SMT divergence the moment the chart loads, and clears each level once price takes it.</p>
+      <div class="btn-row" data-in style="--i:3">
+        <a class="btn primary" href="#pricing">Get LodeStone</a>
+        <a class="btn" href="#demo">Try the layers</a>
+      </div>
+      <dl class="facts" data-in style="--i:4">
+        <div><dt>Price</dt><dd>$149 once, or $19.99 a month</dd></div>
+        <div><dt>Platforms</dt><dd>Tradovate, TradingView</dd></div>
+        <div><dt>Repainting</dt><dd>Never. Confirmed bars only.</dd></div>
+      </dl>
+    </div>
+    <div class="window" data-in style="--i:2">
+      <div class="window-bar">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="grow">LodeStone on a futures chart</span>
+      </div>
+      <img src="/assets/lodestone-sessions.webp" width="1132" height="857" decoding="async" alt="LodeStone indicator on an index futures chart showing session highs and lows, prior day and week levels, value areas, equilibrium and SMT flags">
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="problem">
+  <div class="wrap rail">
+    <header>
+      <h2>The problem it solves.</h2>
+      <p>The same twenty minutes of drawing, every night, before the first real decision.</p>
+    </header>
+    <div class="shift">
+      <div>
+        <span class="when">Without LodeStone</span>
         <h3>Your night starts with a ritual.</h3>
-        <p>Prior day high and low, the weekly levels, Asia and London extremes, value area, equilibrium. Twenty minutes of drawing before the first real decision, and one mismarked level can cost the trade.</p>
+        <p>Prior day high and low, the weekly levels, Asia and London extremes, value area, equilibrium. You redraw all of it by hand, and one mismarked level can cost you the trade.</p>
       </div>
-      <div class="fit-arrow reveal" aria-hidden="true"><span>→</span></div>
-      <div class="fit-card answer reveal">
-        <span class="lab">Where LodeStone puts you</span>
+      <span class="arrow" aria-hidden="true"></span>
+      <div>
+        <span class="when">With LodeStone</span>
         <h3>The map is up before you are.</h3>
-        <p>LodeStone drops the full session map automatically and keeps it current as the day builds. You open the chart to levels you trust and spend the open deciding, not drawing.</p>
+        <p>The full session map draws itself and stays current as the day builds. You open the chart to levels you can trust and spend the open deciding, not drawing.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="sec" id="draws">
+<section class="sec" id="demo">
   <div class="wrap">
-    <div class="sec-head reveal" style="margin-bottom:2.2rem">
-      <span class="eyebrow">Watch it work</span>
-      <h2>The map draws itself.</h2>
-      <p class="kicker">Load the chart and the framework appears: prior levels pinned, sessions boxed, value and equilibrium marked, price threading through it all.</p>
+    <div class="stack" style="margin-bottom:2rem">
+      <h2>Switch the layers on and off.</h2>
+      <p class="sub">A sample trading day, from the 6 PM open to the next afternoon. Each switch is one LodeStone module. In the real indicator they toggle exactly like this.</p>
     </div>
-    <div class="shot mapframe reveal">
-      <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">LodeStone / auto-draw</span></div>
-      <svg class="mapviz" viewBox="0 0 720 340" aria-hidden="true">
-        <rect x="0" y="0" width="720" height="150" fill="rgba(255,255,255,.025)"/>
-        <rect x="0" y="190" width="720" height="150" fill="rgba(73,215,255,.05)"/>
-        <line class="mgrid" x1="0" y1="85" x2="720" y2="85"/>
-        <line class="mgrid" x1="0" y1="170" x2="720" y2="170"/>
-        <line class="mgrid" x1="0" y1="255" x2="720" y2="255"/>
-        <g class="lv l1"><line x1="24" y1="48" x2="640" y2="48" stroke="rgba(255,255,255,.55)" stroke-width="1.4"/><text x="650" y="52">PDH</text></g>
-        <g class="lv l2"><line x1="24" y1="110" x2="640" y2="110" stroke="rgba(73,215,255,.8)" stroke-width="1.2" stroke-dasharray="7 5"/><text x="650" y="114">ASIA H</text></g>
-        <g class="lv l3"><line x1="24" y1="170" x2="640" y2="170" stroke="rgba(255,255,255,.35)" stroke-width="1" stroke-dasharray="2 4"/><text x="650" y="174">EQ</text></g>
-        <g class="lv l4"><line x1="24" y1="228" x2="640" y2="228" stroke="rgba(73,215,255,.8)" stroke-width="1.2" stroke-dasharray="7 5"/><text x="650" y="232">VAL</text></g>
-        <g class="lv l5"><line x1="24" y1="296" x2="640" y2="296" stroke="rgba(255,255,255,.55)" stroke-width="1.4"/><text x="650" y="300">PDL</text></g>
-        <path class="mprice" d="M24 268 L84 246 L128 278 L188 220 L244 238 L306 176 L352 198 L410 132 L462 156 L520 96 L572 122 L622 74"/>
-        <circle class="mnode-ring r1" cx="622" cy="74" r="7"/>
-        <circle class="mnode-ring r2" cx="622" cy="74" r="7"/>
-        <circle class="mnode" cx="622" cy="74" r="4.5"/>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="features">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">What's inside</span>
-      <h2>The toolkit on the chart.</h2>
-      <p class="kicker">One indicator carries the whole framework. Levels, value, structure and divergence, labeled and current, so nothing important hides off screen.</p>
-    </div>
-    <div class="features">
-      <div class="feat">
-        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-        <span class="fnum">Sessions</span>
-        <h3>The session map</h3>
-        <p>Asia, London and New York AM and PM highs and lows are marked and labeled as each session hands off to the next, so you always know which pool of liquidity is in play.</p>
+    <div class="window" data-chart>
+      <div class="window-bar">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="grow">Sample session, 15-minute bars</span>
+        <span class="sample">Illustration, not market data</span>
       </div>
-      <div class="feat">
-        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 8h12"/><path d="M4 16h8"/><rect x="18" y="6.5" width="3" height="3"/><rect x="14" y="14.5" width="3" height="3"/></svg>
-        <span class="fnum">Prior</span>
-        <h3>Yesterday and last week</h3>
-        <p>PDH, PDL, PWH and PWL stay pinned to the chart, so the levels the market keeps coming back to are never something you forgot to draw.</p>
-      </div>
-      <div class="feat">
-        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><rect x="5" y="6" width="14" height="12" rx="1.5"/><path d="M5 12h14" stroke-dasharray="2.5 2.5"/></svg>
-        <span class="fnum">Value</span>
-        <h3>Value and equilibrium</h3>
-        <p>Value area high and low, point of control and the equilibrium of the range, so premium and discount are visible the second you look at the chart.</p>
-      </div>
-      <div class="feat">
-        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 18V6M8 6L5 9M8 6l3 3"/><path d="M16 6v12M16 18l-3-3M16 18l3-3"/></svg>
-        <span class="fnum">SMT</span>
-        <h3>Structure and divergence</h3>
-        <p>Swing labels track HH, HL, LH and LL as structure builds, and SMT flags mark the moments the indices stop agreeing with each other.</p>
-      </div>
-      <div class="feat">
-        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 9h10"/><path d="M4 15h10"/><circle cx="18.5" cy="9" r="1.4"/><circle cx="18.5" cy="15" r="1.4"/></svg>
-        <span class="fnum">Liquidity</span>
-        <h3>Resting liquidity</h3>
-        <p>Relative equal highs and lows are flagged where they form, the pools price tends to reach for before it turns, so you see the draw before the run at it.</p>
-      </div>
-      <div class="feat">
-        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M5 18v-7M10 18V6M15 18V9M20 18v-5"/></svg>
-        <span class="fnum">Volume</span>
-        <h3>A restrained volume profile</h3>
-        <p>Daily point of control and value area, drawn as clean levels instead of a histogram, so volume context lands without burying the candles.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="inside" style="border-top:none;padding-top:0">
-  <div class="wrap">
-    <div class="sec-head reveal" style="margin-bottom:2.2rem">
-      <span class="eyebrow">A look inside</span>
-      <h2>On the chart, not in the way.</h2>
-    </div>
-    <div class="shot-row">
-      <div>
-        <div class="shot reveal">
-          <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">LodeStone / sessions</span></div>
-          <img src="/assets/lodestone-sessions.webp" alt="LodeStone marking session extremes, prior day and week levels, value and SMT flags" loading="lazy" width="1132" height="857">
+      <div class="chart-wrap">
+        <div class="chart-scroll"><svg viewBox="0 0 760 400" role="img" aria-label="A sample candlestick chart with LodeStone layers: sessions, prior levels, premium and discount, resting liquidity and SMT divergence"></svg></div>
+        <div class="layers">
+          <p>Layers</p>
+          <label><input type="checkbox" value="sessions" checked><span>Sessions<small>Asia, London, NY AM and PM</small></span></label>
+          <label><input type="checkbox" value="prior" checked><span>Prior levels<small>Yesterday's high and low</small></span></label>
+          <label><input type="checkbox" value="pd"><span>Premium and discount<small>The range, split at equilibrium</small></span></label>
+          <label><input type="checkbox" value="liq"><span>Resting liquidity<small>Equal highs and lows</small></span></label>
+          <label><input type="checkbox" value="smt"><span>SMT divergence<small>When NQ and ES disagree</small></span></label>
         </div>
-        <p class="shot-cap">Session extremes, prior levels, value and SMT flags, all labeled at the right edge</p>
       </div>
-      <div>
-        <div class="shot reveal">
-          <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">LodeStone / structure</span></div>
-          <img src="/assets/lodestone-structure.webp" alt="LodeStone showing structure labels, equilibrium and the value map building through the week" loading="lazy" width="742" height="857">
-        </div>
-        <p class="shot-cap">Structure labels, equilibrium and the value map as the week builds</p>
+      <div class="chart-note">Sessions: each session is boxed as it forms, and its high and low stay on the chart after it ends.</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="get">
+  <div class="wrap rail">
+    <header>
+      <h2>What it draws.</h2>
+      <p>One indicator carries the whole framework, labeled at the right edge and kept current.</p>
+    </header>
+    <div class="rows">
+      <div><h3>Session highs and lows</h3><p>Completed Asia, London, NY AM and NY PM highs and lows, plus prior day and prior week. Each level runs past the live bar with its name at the line, so you always know which pool of liquidity you are looking at.</p></div>
+      <div><h3>The dealing range</h3><p>Premium and discount, built from confirmed swing points, a completed session or the prior day, with an equilibrium line and subtle shading. One glance tells you which half of the range you are paying in.</p></div>
+      <div><h3>Resting liquidity</h3><p>Relative equal highs and lows are marked where they form. Extra equal swings reinforce the existing line instead of stacking duplicates.</p></div>
+      <div><h3>SMT divergence</h3><p>Your chart's swings compared against a correlated symbol, with automatic NQ and ES pairing and a manual override. A flag is stamped only when the swing confirms.</p></div>
+      <div><h3>A restrained volume profile</h3><p>No histogram. Only the finished levels print: naked points of control that remove themselves when price trades at them, or point of control with value area high and low.</p></div>
+      <div><h3>Labels that never overlap</h3><p>Names sit at a shared right edge. Levels that sit close together merge into one stacked label, each row carrying its exact price, so the chart stays readable at any zoom.</p></div>
+      <div><h3>A chart that cleans itself</h3><p>Swept levels fade or remove themselves and old levels age out. The map stays current instead of stacking clutter.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="control">
+  <div class="wrap rail">
+    <header>
+      <h2>Your rules, your levels.</h2>
+      <p>LodeStone maps the framework. You decide how it trades with you. Every module has a switch and every level has a setting.</p>
+      <ul class="ticks" style="margin-top:1.6rem">
+        <li>Set your timezone and the exact window for each session</li>
+        <li>Turn each module on or off independently</li>
+        <li>Tune swing strength, tolerances and value area percent</li>
+        <li>Levels print on confirmed bars and stay. Nothing repaints</li>
+      </ul>
+    </header>
+    <div>
+      <div class="window" style="max-width:34rem">
+        <div class="window-bar"><span class="dots"><i></i><i></i><i></i></span><span class="grow">LodeStone inputs on TradingView</span></div>
+        <img src="/assets/lodestone-inputs.webp" width="802" height="897" loading="lazy" decoding="async" alt="LodeStone inputs panel on TradingView showing session, premium and discount, resting liquidity, SMT divergence and volume profile settings">
       </div>
     </div>
   </div>
 </section>
 
-<section class="sec" id="levels">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Every line, defined</span>
-      <h2>What LodeStone draws.</h2>
-      <p class="kicker">The full vocabulary of the chart, so you know exactly what each label means the first time you load it.</p>
-    </div>
-    <div class="gloss">
-      <div class="g"><span class="gt">NYAM H / L</span><p>New York morning session high and low</p></div>
-      <div class="g"><span class="gt">NYPM H / L</span><p>New York afternoon session high and low</p></div>
-      <div class="g"><span class="gt">Asia H / L</span><p>Asia session extremes, marked overnight</p></div>
-      <div class="g"><span class="gt">London H / L</span><p>London session extremes into the New York open</p></div>
-      <div class="g"><span class="gt">PDH / PDL</span><p>Prior day high and low</p></div>
-      <div class="g"><span class="gt">PWH / PWL</span><p>Prior week high and low</p></div>
-      <div class="g"><span class="gt">VAH / VAL</span><p>Value area high and low for the profile period</p></div>
-      <div class="g"><span class="gt">POC</span><p>Point of control, the price with the most traded volume</p></div>
-      <div class="g"><span class="gt">EQ</span><p>Equilibrium of the dealing range</p></div>
-      <div class="g"><span class="gt">Premium / Discount</span><p>Shaded zones above and below equilibrium</p></div>
-      <div class="g"><span class="gt">Rel. equal H / L</span><p>Resting liquidity where swings match within your tolerance</p></div>
-      <div class="g"><span class="gt">SMT</span><p>Divergence flag when correlated indices stop agreeing</p></div>
-      <div class="g"><span class="gt">HH · HL · LH · LL</span><p>Structure labels as each swing confirms</p></div>
-      <div class="g"><span class="gt">Swept levels</span><p>Removed or faded automatically once price takes them</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="controls">
-  <div class="wrap">
-    <div class="controls-grid">
+<section class="sec" id="fit">
+  <div class="wrap rail">
+    <header>
+      <h2>Is LodeStone right for you?</h2>
+      <p>It is a map, not a signal service.</p>
+    </header>
+    <div class="fit-grid">
       <div>
-        <div class="sec-head reveal" style="margin-bottom:2rem">
-          <span class="eyebrow">Under the hood</span>
-          <h2>Your rules, your levels.</h2>
-          <p class="kicker">LodeStone maps the framework, but you decide how it trades with you. Every module has a switch and every level has a dial.</p>
-        </div>
-        <ul class="spec-list reveal">
-          <li><b>Sessions on your clock.</b> Set the timezone and the exact windows for Asia, London, NY AM and NY PM, each with its own color.</li>
-          <li><b>Draw only what you trade.</b> Prior levels, premium and discount, resting liquidity, SMT and the volume profile all toggle independently.</li>
-          <li><b>Tune the signal.</b> Swing strength, equal-high tolerance, value area percent, label size and extension are all yours to set.</li>
-          <li><b>Nothing repaints.</b> Levels and flags print and stay. What you see in review is what you would have seen live.</li>
-          <li><b>A self-cleaning chart.</b> When price sweeps a level, LodeStone removes or fades it, so the map stays current instead of stacking clutter.</li>
+        <h3>A good fit if</h3>
+        <ul class="ticks">
+          <li>You trade NQ, ES or YM, or the micros that track them</li>
+          <li>You already use session levels, prior highs and lows, or ICT concepts</li>
+          <li>You chart on Tradovate or TradingView</li>
+          <li>You want the drawing done so you can focus on the decision</li>
         </ul>
       </div>
-      <div class="shot reveal">
-        <div class="shot-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">LodeStone / inputs · TradingView</span></div>
-        <img src="/assets/lodestone-inputs.webp" alt="LodeStone inputs panel on TradingView showing session, premium and discount, resting liquidity, SMT divergence and volume profile settings" loading="lazy" width="802" height="897">
+      <div>
+        <h3>Probably not for you if</h3>
+        <ul class="ticks no">
+          <li>You want arrows that tell you when to buy or sell. LodeStone never draws one</li>
+          <li>You trade markets outside index futures. The logic is tuned to the indexes</li>
+          <li>You expect an indicator to guarantee an outcome. None can</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
 <section class="sec" id="pricing">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Get LodeStone</span>
-      <h2>One indicator. Two platforms.</h2>
-      <p class="kicker">Same toolkit either way. Pick the platform you actually chart on.</p>
-    </div>
-    <div class="plans">
-      <div class="plan feature">
-        <span class="plat"><span class="d"></span>Tradovate</span>
-        <svg class="pglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="position:absolute;top:2rem;right:2rem" aria-hidden="true"><circle cx="8" cy="12" r="3.2"/><path d="M11.2 12H20M16.5 12v3M19.2 12v2.2"/></svg>
-        <div class="price">$149</div>
-        <div class="per">One time · yours for good</div>
-        <ul>
-          <li>One purchase, no subscription, nothing to cancel</li>
-          <li>The indicator file ships to your checkout email</li>
-          <li>Load it into Tradovate and the map is on your chart</li>
-        </ul>
-        <a href="https://buy.stripe.com/8x200idJA0hAaiB9D82VG00" target="_blank" rel="noopener" class="btn accent">Buy for Tradovate<span class="sheen"></span></a>
+  <div class="wrap rail">
+    <header>
+      <h2>One indicator, two platforms.</h2>
+      <p>The same toolkit either way. Pick the platform you chart on.</p>
+    </header>
+    <div>
+      <div class="plans">
+        <div class="plan best">
+          <div class="name">Tradovate <small>Own it</small></div>
+          <div class="price">$149<small> once</small></div>
+          <div class="terms">One purchase. Nothing to cancel.</div>
+          <ul class="ticks">
+            <li>Yours for good, with no subscription</li>
+            <li>The indicator file ships to your checkout email</li>
+            <li>Load it into Tradovate and the map is on your chart</li>
+          </ul>
+          <a class="btn primary" href="https://buy.stripe.com/8x200idJA0hAaiB9D82VG00" target="_blank" rel="noopener">Buy for Tradovate</a>
+        </div>
+        <div class="plan">
+          <div class="name">TradingView</div>
+          <div class="price">$19.99<small> a month</small></div>
+          <div class="terms">Cancel anytime.</div>
+          <ul class="ticks">
+            <li>Subscription access on TradingView</li>
+            <li>Access is granted to your TradingView username</li>
+            <li>A free TradingView account is enough</li>
+            <li>Included at no extra cost with Korvus Operator</li>
+          </ul>
+          <a class="btn" href="https://buy.stripe.com/8x228qaxoe8q76p6qW2VG01" target="_blank" rel="noopener">Get it on TradingView</a>
+        </div>
       </div>
-      <div class="plan">
-        <span class="plat"><span class="d"></span>TradingView</span>
-        <svg class="pglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="position:absolute;top:2rem;right:2rem" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 0 1 12.8-5.3M19.5 12a7.5 7.5 0 0 1-12.8 5.3"/><path d="M17.3 3.4v3.4h-3.4M6.7 20.6v-3.4h3.4"/></svg>
-        <div class="price">$19.99</div>
-        <div class="per">Per month · cancel anytime</div>
-        <ul>
-          <li>Subscription access on TradingView</li>
-          <li>Also included free with a Korvus Operator subscription</li>
-          <li>Access delivered through the BlackCrown Discord</li>
-          <li>Keep it as long as it earns its place on your chart</li>
-        </ul>
-        <a href="https://buy.stripe.com/8x228qaxoe8q76p6qW2VG01" target="_blank" rel="noopener" class="btn ghost">Get on TradingView<span class="sheen"></span></a>
-      </div>
+      <p class="fine">Checkout runs through Stripe. Delivery help and questions live in the #korvus-indicator channel on the <a class="link" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">BlackCrown Discord</a>. Already a <a class="link" href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=lodestone" target="_blank" rel="noopener">Korvus Operator</a>? The TradingView indicator is included with your subscription.</p>
     </div>
-    <p class="plans-note reveal">Checkout runs through Stripe. Delivery help and questions live in the #korvus-indicator channel on the <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">BlackCrown Discord</a>. Already a Korvus Operator at <a href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=lodestone" target="_blank" rel="noopener">korvus.industries</a>? The TradingView indicator is included with your subscription.</p>
   </div>
 </section>
 
-<section class="sec" id="faq">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Questions</span>
-      <h2>Before you buy.</h2>
-    </div>
-    <div class="faq-grid">
+<section class="sec" id="labels">
+  <div class="wrap rail">
+    <header>
+      <h2>Every label, defined.</h2>
+      <p>The full vocabulary of the chart, so you know what each line means the first time you load it.</p>
+    </header>
+    <dl class="gloss">
+      <div><dt>NYAM H / L</dt><dd>New York morning session high and low</dd></div>
+      <div><dt>NYPM H / L</dt><dd>New York afternoon session high and low</dd></div>
+      <div><dt>Asia H / L</dt><dd>Asia session extremes, marked overnight</dd></div>
+      <div><dt>London H / L</dt><dd>London session extremes into the New York open</dd></div>
+      <div><dt>PDH / PDL</dt><dd>Prior day high and low</dd></div>
+      <div><dt>PWH / PWL</dt><dd>Prior week high and low</dd></div>
+      <div><dt>VAH / VAL</dt><dd>Value area high and low for the profile period</dd></div>
+      <div><dt>POC</dt><dd>Point of control, the price with the most traded volume</dd></div>
+      <div><dt>EQ</dt><dd>Equilibrium of the dealing range</dd></div>
+      <div><dt>Premium / Discount</dt><dd>Shaded zones above and below equilibrium</dd></div>
+      <div><dt>Rel. equal H / L</dt><dd>Resting liquidity where swings match within your tolerance</dd></div>
+      <div><dt>SMT</dt><dd>Divergence flag when correlated indexes stop agreeing</dd></div>
+      <div><dt>HH, HL, LH, LL</dt><dd>Structure labels as each swing confirms</dd></div>
+      <div><dt>Swept levels</dt><dd>Removed or faded automatically once price takes them</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="sec" id="questions">
+  <div class="wrap rail">
+    <header>
+      <h2>Questions.</h2>
+      <p>Not answered here? <a class="link" href="/support.html">Ask the desk.</a></p>
+    </header>
     <div class="faq">
-      <details class="qa reveal">
-        <summary>How does delivery work on Tradovate?<span class="qi" aria-hidden="true">+</span></summary>
+      <details>
+        <summary>How does delivery work on Tradovate?</summary>
         <p>After checkout the indicator file ships to the email you used at checkout. Load it into Tradovate and the map is on your chart. One purchase, yours for good, nothing to cancel.</p>
       </details>
-      <details class="qa reveal">
-        <summary>How does access work on TradingView?<span class="qi" aria-hidden="true">+</span></summary>
-        <p>TradingView runs as a monthly subscription. After checkout, access is granted through the BlackCrown Discord in the #korvus-indicator channel. Cancel anytime. It is also included at no extra cost with a Korvus Operator subscription.</p>
+      <details>
+        <summary>How does access work on TradingView?</summary>
+        <p>LodeStone is an invite-only script on TradingView, so access is granted to your exact TradingView username. If you subscribe here, the desk handles it with you in the #korvus-indicator channel on Discord. If you are a Korvus Operator, save your TradingView username on your Korvus account page and access is granted from there, normally within 24 hours. It then appears under Invite-only scripts in your Indicators panel.</p>
       </details>
-      <details class="qa reveal">
-        <summary>What markets is it built for?<span class="qi" aria-hidden="true">+</span></summary>
-        <p>Index futures first: NQ, ES and YM, and the micros that track them. The session map, value logic and SMT comparisons are tuned to how the indices trade.</p>
+      <details>
+        <summary>Do I need a paid TradingView plan?</summary>
+        <p>No. A free TradingView account can run LodeStone once access is granted to your username.</p>
       </details>
-      <details class="qa reveal">
-        <summary>Can I control what it draws?<span class="qi" aria-hidden="true">+</span></summary>
+      <details>
+        <summary>What markets is it built for?</summary>
+        <p>Index futures first: NQ, ES and YM, and the micros that track them. The session map, value logic and SMT comparisons are tuned to how the indexes trade.</p>
+      </details>
+      <details>
+        <summary>Can I control what it draws?</summary>
         <p>Yes. Every module has its own switch and the inputs are yours: session windows and timezone, swing strength, tolerances, value area percent, colors, labels and how swept levels are cleaned up.</p>
       </details>
-      <details class="qa reveal">
-        <summary>Where do I get help?<span class="qi" aria-hidden="true">+</span></summary>
+      <details>
+        <summary>Does it repaint?</summary>
+        <p>No. Every level, swing and profile updates on confirmed bars only. Nothing prints and then quietly disappears after the fact. What you screenshot is what happened.</p>
+      </details>
+      <details>
+        <summary>Where do I get help?</summary>
         <p>The #korvus-indicator channel on the BlackCrown Discord covers delivery, setup and questions. Email works too: BlackCrownVxJ.LLC@outlook.com.</p>
       </details>
     </div>
-    <div class="compass-wrap reveal" aria-hidden="true">
-      <svg class="compass" viewBox="0 0 220 220">
-        <circle cx="110" cy="110" r="100" fill="none" stroke="rgba(73,215,255,.28)" stroke-width="1.4" style="filter:drop-shadow(0 0 10px rgba(73,215,255,.35))"/>
-        <circle cx="110" cy="110" r="92" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="6" stroke-dasharray="1.5 22.6"/>
-        <circle cx="110" cy="110" r="70" fill="none" stroke="rgba(255,255,255,.07)"/>
-        <text x="110" y="27" text-anchor="middle" class="card n">N</text>
-        <text x="198" y="115" text-anchor="middle" class="card">E</text>
-        <text x="110" y="205" text-anchor="middle" class="card">S</text>
-        <text x="22" y="115" text-anchor="middle" class="card">W</text>
-        <g class="needle">
-          <polygon points="110,40 118,112 110,124 102,112" fill="#49D7FF" style="filter:drop-shadow(0 0 8px rgba(73,215,255,.7))"/>
-          <polygon points="104,112 116,112 110,180" fill="rgba(255,255,255,.28)"/>
-          <circle cx="110" cy="110" r="6" fill="#0A0A0D" stroke="#49D7FF" stroke-width="1.5"/>
-        </g>
-      </svg>
-      <span class="compass-label">TRUE NORTH <b>//</b> FOUND</span>
-    </div>
-    </div>
   </div>
 </section>
 
-<section class="cta-band">
-  <div class="aura"></div>
+<section class="closing">
   <div class="wrap">
-    <h2>Stop drawing. Start deciding.</h2>
-    <p>LodeStone runs on the same desk that built Korvus and trades these levels every session. Put the map on your chart tonight.</p>
-    <div class="cta-row">
-      <a href="#pricing" class="btn accent">Get LodeStone<span class="sheen"></span></a>
-      <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener" class="btn ghost">Ask in the Discord<span class="sheen"></span></a>
+    <div>
+      <h2>Stop drawing. Start deciding.</h2>
+      <p>LodeStone comes off the same desk that built Korvus and trades these levels every session.</p>
+    </div>
+    <div class="btn-row">
+      <a class="btn primary" href="#pricing">Get LodeStone</a>
+      <a class="btn" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Ask in the Discord</a>
     </div>
   </div>
 </section>
 
-<footer>
+</main>
+<footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
-      <div class="foot-brand reveal">
-        <span class="wordmark">
-          <svg width="24" height="20" viewBox="0 0 36 30" fill="none" stroke="#FF2D95" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" style="filter:drop-shadow(0 0 5px rgba(255,45,149,.7))" aria-hidden="true">
-            <path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/>
-            <line x1="7" y1="28" x2="29" y2="28"/>
-          </svg>
-          BlackCrown
-        </span>
-        <p>Market intelligence, AI, and a private network for independent operators.</p>
+      <div class="foot-brand">
+        <span class="brand"><svg viewBox="0 0 36 30" aria-hidden="true"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>BlackCrown</span>
+        <p>Tools for people who trade and build on their own: market intelligence, a chart indicator, a private AI workspace and a community.</p>
+        <div class="social">
+          <a href="https://www.tiktok.com/@blackcrown_vxj" target="_blank" rel="noopener" aria-label="BlackCrown on TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
+          <a href="https://www.instagram.com/blackcrownvxj.llc/" target="_blank" rel="noopener" aria-label="BlackCrown on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg></a>
+        </div>
       </div>
-      <div class="foot-col reveal">
+      <div>
         <h4>Products</h4>
-        <a href="/korvus.html">Korvus Industries</a>
-        <a href="/lodestone.html">LodeStone Indicator</a>
-        <a href="/intelligence.html">BlackCrown Intelligence</a>
-        <a href="/eclipse-x.html">Eclipse-X</a>
+        <nav aria-label="Products">
+          <a href="/korvus.html">Korvus</a>
+          <a href="/lodestone.html">LodeStone</a>
+          <a href="/intelligence.html">Crown by BlackCrown Intelligence</a>
+          <a href="/eclipse-x.html">Eclipse-X</a>
+        </nav>
       </div>
-      <div class="foot-col reveal">
+      <div>
         <h4>Company</h4>
-        <a href="/support.html">Support</a>
-        <a href="/terms.html">Terms of Service</a>
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/disclaimer.html">Disclaimer</a>
+        <nav aria-label="Company">
+          <a href="/#company">About BlackCrown</a>
+          <a href="/support.html">Support</a>
+          <a href="/terms.html">Terms of Service</a>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/disclaimer.html">Disclaimer</a>
+        </nav>
       </div>
-      <div class="foot-col reveal">
+      <div>
         <h4>Contact</h4>
-        <a href="mailto:BlackCrownVxJ.LLC@outlook.com">Email us</a>
-        <a href="tel:+17032989426">(703) 298-9426</a>
-        <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Discord</a>
+        <nav aria-label="Contact">
+          <a href="mailto:BlackCrownVxJ.LLC@outlook.com">BlackCrownVxJ.LLC@outlook.com</a>
+          <a href="tel:+17032989426">(703) 298-9426</a>
+          <a href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Eclipse-X on Discord</a>
+        </nav>
       </div>
     </div>
-    <p class="foot-disclaimer">LodeStone is a charting tool. Nothing on this page is financial, investment, legal, or tax advice, and no indicator guarantees any outcome. Trading futures carries a substantial risk of loss and is not suitable for every investor. Past performance, real or simulated, does not predict future results. You are solely responsible for your own decisions.</p>
-    <div class="foot-bottom reveal">
+    <p class="foot-note">LodeStone is a charting tool. Nothing on this page is financial, investment, legal, or tax advice, and no indicator guarantees any outcome. Trading futures carries a substantial risk of loss and is not suitable for every investor. Past performance, real or simulated, does not predict future results. You are solely responsible for your own decisions.</p>
+    <div class="foot-base">
       <span>&copy; 2026 BlackCrownVxJ LLC. All rights reserved.</span>
-      <span class="foot-links">
-        <a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/disclaimer.html">Disclaimer</a>
-      </span>
+      <span>Built and operated by BlackCrownVxJ LLC</span>
     </div>
   </div>
 </footer>
-
-<script>
-(function(){
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* preloader */
-  var pre = document.getElementById('preloader');
-  var bar = document.getElementById('plBar');
-  var pct = document.getElementById('plPct');
-  var seen = false; try { seen = sessionStorage.getItem('bcSeen') === '1'; } catch(err){}
-  if(pre && !reduce && !seen){
-    try { sessionStorage.setItem('bcSeen', '1'); } catch(err){}
-    var p = 0;
-    var iv = setInterval(function(){
-      p = Math.min(100, p + Math.random() * 30 + 12);
-      if(bar) bar.style.width = p + '%';
-      if(pct) pct.textContent = Math.round(p);
-      if(p >= 100){
-        clearInterval(iv);
-        setTimeout(function(){ pre.classList.add('done'); introIn(); }, 160);
-      }
-    }, 60);
-  } else {
-    if(pre){ pre.style.transition = 'none'; pre.classList.add('done'); }
-    setTimeout(introIn, 40);
-  }
-
-  function introIn(){
-    document.querySelectorAll('.intro-el').forEach(function(el,i){
-      setTimeout(function(){ el.classList.add('show'); }, 120 + i*140);
-    });
-    var h1 = document.querySelector('.phero h1');
-    if(h1) setTimeout(function(){ h1.classList.add('show'); }, 100);
-  }
-
-  /* backbar + scroll progress */
-  var backbar = document.getElementById('backbar');
-  var prog = document.getElementById('progress');
-  function onScroll(){
-    backbar.classList.toggle('scrolled', window.scrollY > 24);
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    prog.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
-  }
-  onScroll();
-  window.addEventListener('scroll', onScroll, {passive:true});
-
-  /* reveal on scroll */
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.14});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-
-  /* staggered cascade */
-  function stagger(container, childSel, step){
-    if(!container) return;
-    var kids = container.querySelectorAll(childSel);
-    var so = new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting) return;
-        kids.forEach(function(k, i){
-          if(reduce){ k.classList.add('in'); }
-          else { setTimeout(function(){ k.classList.add('in'); }, i*step); }
-        });
-        so.unobserve(e.target);
-      });
-    }, {threshold:0.18});
-    so.observe(container);
-  }
-  stagger(document.querySelector('.fit-grid'), '.fit-card, .fit-arrow', 160);
-  stagger(document.querySelector('.features'), '.feat', 110);
-  stagger(document.querySelector('.plans'), '.plan', 140);
-})();
-</script>
-
-<script>
-(function(){
-  var done = {};
-  document.addEventListener('mouseover', function(e){
-    var a = e.target.closest && e.target.closest('a[href]');
-    if(!a || a.host !== location.host) return;
-    var href = a.getAttribute('href');
-    if(!href || href.charAt(0) === '#' || done[a.pathname]) return;
-    done[a.pathname] = 1;
-    var l = document.createElement('link'); l.rel = 'prefetch'; l.href = a.pathname;
-    document.head.appendChild(l);
-  }, {passive:true});
-})();
-</script>
-
-<!-- BlackCrown analytics beacon -->
-<script>
-(function(){
-  var EP="https://admin.blackcrownvxj.com/api/track";
-  function hit(e,k,x){try{new Image().src=EP+"?e="+e+"&k="+encodeURIComponent(k)+(x||"")+"&_="+Date.now();}catch(_){}}
-  var d=(window.innerWidth<768)?"m":"d";
-  var r=encodeURIComponent((document.referrer||"").slice(0,200));
-  hit("visit","lodestone","&d="+d+"&r="+r);
-  document.addEventListener("click",function(ev){
-    var a=ev.target&&ev.target.closest?ev.target.closest("a[href]"):null;
-    if(!a)return;
-    var h=a.getAttribute("href")||"";
-    if(/korvus\.industries/i.test(h))hit("click","korvus");
-    else if(/blackcrown-intelligence\.com/i.test(h))hit("click","intelligence");
-    else if(/discord\.(gg|com)/i.test(h))hit("click","collective");
-  },true);
-})();
-</script>
+<script src="/assets/site.js?v=20261111" defer></script>
 </body>
 </html>
