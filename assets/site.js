@@ -1,8 +1,11 @@
 /* BlackCrown site behavior. Everything here answers something the visitor
-   does: open a menu, pick a need, drag the day, toggle a chart layer. */
+   does: open a menu, pick a need, scroll the gallery, drag a reel or the day,
+   toggle a chart layer, move the pointer across a panel. */
 (function () {
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(pointer:fine)').matches;
 
   /* ---- header: border on scroll, phone menu, close the dropdown on outside click ---- */
   var head = $('.site-head'), bar = $('.progress');
@@ -50,6 +53,11 @@
       var m = $('[data-meter="' + name + '"]');
       var b = buttons.filter(function (x) { return x.getAttribute('data-for') === id; })[0];
       if (m && b && b.hasAttribute('data-draw')) m.style.width = b.getAttribute('data-draw') + '%';
+      if (b) {
+        var cap = $('[data-cap-for="' + name + '"]');
+        if (cap && b.hasAttribute('data-cap')) cap.textContent = b.getAttribute('data-cap');
+        document.dispatchEvent(new CustomEvent('bc:pick', { detail: { name: name, id: id, art: b.getAttribute('data-art') } }));
+      }
     }
     buttons.forEach(function (b) {
       b.addEventListener('click', function () {
@@ -109,8 +117,16 @@
       var mins = Math.round(((18 + p) % 24) * 60), h = Math.floor(mins / 60), m = mins % 60, ap = h >= 12 ? 'PM' : 'AM';
       return ((h % 12) || 12) + ':' + (m < 10 ? '0' : '') + m + ' ' + ap;
     }
+    var orb = $('.day-orb', day), track = $('.day-track', day);
     function set(p) {
       needle.style.left = (p / 24) * 100 + '%';
+      if (orb) {
+        // night arc, then day arc: the same curve the two dashed paths draw
+        var u = p < 12 ? p / 12 : (p - 12) / 12;
+        orb.style.left = (p / 24) * 100 + '%';
+        orb.style.top = ((1 - u) * (1 - u) * 100 + 2 * (1 - u) * u * -70 + u * u * 100) + '%';
+        orb.classList.toggle('sun', p >= 12);
+      }
       clock.textContent = fmt(p);
       segs.forEach(function (s) {
         var on = p >= +s.getAttribute('data-from') && p < +s.getAttribute('data-to');
@@ -125,11 +141,10 @@
       });
     }
     range.addEventListener('input', function () { set(Math.min(23.99, +range.value)); });
-    segs.forEach(function (s) {
-      s.addEventListener('click', function () {
-        range.value = (+s.getAttribute('data-from') + +s.getAttribute('data-to')) / 2;
-        set(+range.value);
-      });
+    track.addEventListener('click', function (e) {
+      var r = track.getBoundingClientRect();
+      range.value = Math.round(Math.max(0, Math.min(23.75, ((e.clientX - r.left) / r.width) * 24)) * 4) / 4;
+      set(+range.value);
     });
     // open on the visitor's current New York time
     var now = 0;
@@ -255,6 +270,155 @@
       apply();
     });
   });
+
+  /* ---- the gallery: the page holds still while the products pass sideways ---- */
+  $$('[data-pin]').forEach(function (pin) {
+    var track = $('.pin-track', pin), slides = $$('.slide', pin), bar = $('.pin-bar i', pin), count = $('.pin-count', pin);
+    var prev = $('.prev', pin), next = $('.next', pin), dist = 0, native = false, cur = -1;
+    function update() {
+      var p;
+      if (native) {
+        var max = track.scrollWidth - track.clientWidth;
+        p = max > 0 ? track.scrollLeft / max : 0;
+      } else {
+        p = dist > 0 ? Math.min(1, Math.max(0, -pin.getBoundingClientRect().top / dist)) : 0;
+        track.style.transform = 'translate3d(' + (-p * dist).toFixed(1) + 'px,0,0)';
+      }
+      var mid = window.innerWidth / 2, best = 0, bd = 1e9;
+      slides.forEach(function (s, i) {
+        var r = s.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - mid);
+        if (d < bd) { bd = d; best = i; }
+      });
+      if (best !== cur) {
+        cur = best;
+        slides.forEach(function (s, i) { s.classList.toggle('on', i === best); });
+        if (count) count.textContent = (best + 1) + ' / ' + slides.length;
+        if (prev) prev.disabled = best === 0;
+        if (next) next.disabled = best === slides.length - 1;
+      }
+      if (bar) bar.style.transform = 'translateX(' + (p * 400).toFixed(1) + '%)';
+    }
+    function mode() {
+      native = reduce || window.innerWidth < 980 || window.innerHeight < 620;
+      pin.classList.toggle('native', native);
+      if (native) { pin.style.height = ''; track.style.transform = ''; dist = 0; }
+      else { dist = Math.max(0, track.offsetWidth - window.innerWidth); pin.style.height = (window.innerHeight + dist) + 'px'; }
+      update();
+    }
+    function go(i) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      if (native) { slides[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); return; }
+      var want = slides[i].offsetLeft + slides[i].offsetWidth / 2 - window.innerWidth / 2;
+      var top = pin.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: top + Math.max(0, Math.min(dist, want)), behavior: reduce ? 'auto' : 'smooth' });
+    }
+    if (prev) prev.addEventListener('click', function () { go(cur - 1); });
+    if (next) next.addEventListener('click', function () { go(cur + 1); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || '')) || e.target.closest('[data-pick]')) return;
+      var r = pin.getBoundingClientRect();
+      if (r.top > window.innerHeight * 0.5 || r.bottom < window.innerHeight * 0.5) return;
+      e.preventDefault();
+      go(cur + (e.key === 'ArrowRight' ? 1 : -1));
+    });
+    window.addEventListener('scroll', function () { if (!native) update(); }, { passive: true });
+    track.addEventListener('scroll', function () { if (native) update(); }, { passive: true });
+    window.addEventListener('resize', mode, { passive: true });
+    window.addEventListener('load', mode);
+    mode();
+  });
+
+  /* ---- reels: a row of tiles you drag, wheel or step through ---- */
+  $$('.rows.reel').forEach(function (reel) {
+    var wrap = document.createElement('div');
+    wrap.className = 'reel-wrap';
+    reel.parentNode.insertBefore(wrap, reel);
+    wrap.appendChild(reel);
+    var ctl = document.createElement('div');
+    ctl.className = 'reel-ctl';
+    ctl.innerHTML = '<div class="reel-bar"><i></i></div><button class="arrow-btn prev" type="button" aria-label="Scroll back"></button><button class="arrow-btn next" type="button" aria-label="Scroll forward"></button>';
+    wrap.appendChild(ctl);
+    var bar = $('.reel-bar i', ctl), prev = $('.prev', ctl), next = $('.next', ctl);
+    function upd() {
+      var max = reel.scrollWidth - reel.clientWidth, p = max > 0 ? reel.scrollLeft / max : 0;
+      bar.style.transform = 'translateX(' + (p * 400).toFixed(1) + '%)';
+      prev.disabled = reel.scrollLeft < 4;
+      next.disabled = reel.scrollLeft > max - 4;
+      ctl.hidden = max < 8;
+    }
+    function step(dir) {
+      var c = reel.children[0];
+      reel.scrollBy({ left: dir * (c ? c.offsetWidth + 16 : 320) * 2, behavior: reduce ? 'auto' : 'smooth' });
+    }
+    prev.addEventListener('click', function () { step(-1); });
+    next.addEventListener('click', function () { step(1); });
+    reel.addEventListener('scroll', upd, { passive: true });
+    window.addEventListener('resize', upd, { passive: true });
+    var down = false, sx = 0, sl = 0;
+    reel.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') return; down = true; sx = e.clientX; sl = reel.scrollLeft; });
+    window.addEventListener('pointermove', function (e) {
+      if (!down) return;
+      var dx = e.clientX - sx;
+      if (Math.abs(dx) > 4) reel.classList.add('drag');
+      reel.scrollLeft = sl - dx;
+    }, { passive: true });
+    window.addEventListener('pointerup', function () { down = false; reel.classList.remove('drag'); });
+    upd();
+  });
+
+  /* ---- panels catch the light under the pointer ---- */
+  if (fine) {
+    $$('.plan,.shift>div,.fit-grid>div,.rows>div,.principles>div,.steps li,.fit-answer,.day,.dock a,.slide').forEach(function (el) { el.classList.add('lit'); });
+    document.addEventListener('pointermove', function (e) {
+      var el = e.target.closest ? e.target.closest('.lit') : null;
+      if (!el) return;
+      var r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+  }
+
+  /* ---- windows lean toward the pointer ---- */
+  if (fine && !reduce) {
+    $$('[data-tilt]').forEach(function (el) {
+      var zone = el.parentElement;
+      zone.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = 'perspective(1500px) rotateY(' + (x * 5).toFixed(2) + 'deg) rotateX(' + (-y * 4).toFixed(2) + 'deg)';
+      }, { passive: true });
+      zone.addEventListener('pointerleave', function () { el.style.transform = ''; });
+    });
+  }
+
+  /* ---- stations: a short map of the page down the left edge ---- */
+  var NAMES = { fit: 'Find your fit', products: 'The four products', day: 'Your day', standard: 'How we work', company: 'Company and questions',
+    problem: 'The problem', demo: 'Try it', get: 'What you get', pricing: 'Pricing', questions: 'Questions', calendar: 'Calendar', compass: 'Compass',
+    readouts: 'Readouts', control: 'Your controls', labels: 'Chart labels', console: 'The console', credit: 'Room credit', division: 'The division',
+    join: 'How to join', rules: 'House rules' };
+  var secs = $$('main > section[id]');
+  if (secs.length >= 4 && 'IntersectionObserver' in window) {
+    var st = document.createElement('nav');
+    st.className = 'stations';
+    st.setAttribute('aria-label', 'On this page');
+    secs.forEach(function (s) {
+      var a = document.createElement('a');
+      a.href = '#' + s.id;
+      a.innerHTML = '<span></span>';
+      a.firstChild.textContent = NAMES[s.id] || (s.id.charAt(0).toUpperCase() + s.id.slice(1));
+      st.appendChild(a);
+    });
+    document.body.appendChild(st);
+    var dots = $$('a', st);
+    var so = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        dots.forEach(function (d) { d.classList.toggle('on', d.getAttribute('href') === '#' + e.target.id); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    secs.forEach(function (s) { so.observe(s); });
+  }
 
   /* ---- legal pages: build the contents list and follow the reader ---- */
   var toc = $('.toc');

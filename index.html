@@ -22,9 +22,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=20261111">
+<link rel="stylesheet" href="/assets/site.css?v=20261111b">
 </head>
 <body data-track="home">
+<div class="space" aria-hidden="true"><canvas class="space-neb"></canvas><canvas class="space-stars"></canvas></div>
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"></div>
 <header class="site-head">
@@ -50,50 +51,56 @@
 </header>
 <main id="main">
 
-<section class="hero">
-  <div class="hero-wash" aria-hidden="true"></div>
+<section class="hero hero-home">
   <div class="wrap hero-grid">
     <div>
-      <span class="tag" data-in style="--i:0">BlackCrownVxJ LLC</span>
-      <h1 data-in style="--i:1">Claim your crown.</h1>
-      <p class="lead" data-in style="--i:2">BlackCrown builds tools for people who trade and build on their own. A market terminal that reads the news for you. An indicator that draws your levels. A private AI workspace that stays yours. A community to check your thinking against.</p>
-      <div class="btn-row" data-in style="--i:3">
+      <h1 data-in style="--i:0">Claim your crown.</h1>
+      <p class="lead" data-in style="--i:1">You trade and build on your own. That should not mean doing it blind. BlackCrown makes four tools that do the watching, the drawing and the heavy thinking, so the calls you make are the ones that count.</p>
+      <div class="btn-row" data-in style="--i:2">
         <a class="btn primary" href="#fit">Find your fit</a>
-        <a class="btn" href="#products">See all four products</a>
+        <a class="btn" href="#products">Tour all four</a>
       </div>
-      <dl class="facts" data-in style="--i:4">
-        <div><dt>Free to start</dt><dd>Korvus, Crown, Eclipse-X</dd></div>
-        <div><dt>Your data</dt><dd>Never sold, never trained on</dd></div>
-        <div><dt>Built by</dt><dd>The desk that uses them</dd></div>
-      </dl>
+      <p class="sub" data-in style="--i:3;margin-top:1.2rem">Three of the four are free to start, with no card.</p>
     </div>
-    <div class="crown-stage" data-in style="--i:2" aria-hidden="true">
-      <svg class="fallback" viewBox="0 0 36 30"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>
-      <canvas id="bc3d"></canvas>
+    <div class="orbit-stage" data-sun="0.36" data-in style="--i:1">
+      <svg class="fallback" viewBox="0 0 36 30" aria-hidden="true"><path d="M4 24 L4 9 L12 16 L18 5 L24 16 L32 9 L32 24 Z"/><line x1="7" y1="28" x2="29" y2="28"/></svg>
+      <canvas id="bc3d" aria-hidden="true"></canvas>
+      <a class="orbit-label" href="/korvus.html" data-k="0" style="--c:#FF2D95">Korvus</a>
+      <a class="orbit-label" href="/lodestone.html" data-k="1" style="--c:#49D7FF">LodeStone</a>
+      <a class="orbit-label" href="/intelligence.html" data-k="2" style="--c:#FFE3F1">Crown</a>
+      <a class="orbit-label" href="/eclipse-x.html" data-k="3" style="--c:#FF6FB6">Eclipse-X</a>
     </div>
+  </div>
+  <div class="wrap">
+    <nav class="dock" aria-label="The four products" data-in style="--i:4">
+      <a href="/korvus.html" data-k="0" style="--c:#FF2D95"><b>Korvus</b><em>Free to start</em><span>Reads the news while you sleep</span></a>
+      <a href="/lodestone.html" data-k="1" style="--c:#49D7FF"><b>LodeStone</b><em>$149 once</em><span>Draws your levels for you</span></a>
+      <a href="/intelligence.html" data-k="2" style="--c:#FFE3F1"><b>Crown</b><em>Free to start</em><span>A private AI that stays yours</span></a>
+      <a href="/eclipse-x.html" data-k="3" style="--c:#FF6FB6"><b>Eclipse-X</b><em>Free</em><span>People to check your read</span></a>
+    </nav>
   </div>
 </section>
 
 <section class="sec" id="fit">
   <div class="wrap">
-    <div class="stack" style="margin-bottom:2.4rem">
-      <h2>Tell us what you need.<br>We will tell you if we have it.</h2>
-      <p class="sub">Pick the line that sounds most like you. If one of our tools fits, you will see what it does, what it costs and where to start. If none do, we will say that too.</p>
-    </div>
+    <header class="sec-head">
+      <h2>What is costing you right now?</h2>
+      <p>Pick the one that stings. If we make something that fixes it, you will see what it does, what it costs and where to start. If we do not, we will say so.</p>
+    </header>
     <div class="fit">
-      <div class="fit-needs" data-pick="fit" role="tablist" aria-label="What do you need?">
-        <button type="button" role="tab" data-for="news" aria-selected="true" style="--c:#FF2D95">News moves the market while I sleep, and I find out after the move.</button>
-        <button type="button" role="tab" data-for="levels" style="--c:#49D7FF">I redraw the same levels on my chart every night before the open.</button>
-        <button type="button" role="tab" data-for="ai" style="--c:#FF2D95">I want an AI I can trust with my real work, not one that learns from it.</button>
-        <button type="button" role="tab" data-for="room" style="--c:#FF6FB6">I trade or build alone and want people to check my thinking.</button>
-        <button type="button" role="tab" data-for="learn" style="--c:#35E08F">I am new to futures and want to understand how it works first.</button>
-        <button type="button" role="tab" data-for="none" style="--c:#9A98A6">None of these. I am looking for something else.</button>
+      <div class="fit-needs" data-pick="fit" role="tablist" aria-label="What is costing you right now?">
+        <button type="button" role="tab" data-for="news" data-art="korvus" data-cap="Korvus: three desks, read around the clock" aria-selected="true" style="--c:#FF2D95"><b>I got stopped out by a headline I never saw.</b><span>The news hit at 3 AM. You found out from the candle.</span></button>
+        <button type="button" role="tab" data-for="levels" data-art="lodestone" data-cap="LodeStone: the levels your chart is pulled toward" style="--c:#49D7FF"><b>The open is running and I am still drawing my levels.</b><span>Same highs, same lows, redrawn by hand every single night.</span></button>
+        <button type="button" role="tab" data-for="ai" data-art="crown" data-cap="Crown: four rooms, one vault, yours" style="--c:#FF2D95"><b>I will not paste my real work into an AI that keeps it.</b><span>Your numbers, your plans, your clients, feeding someone else's model.</span></button>
+        <button type="button" role="tab" data-for="room" data-art="eclipse" data-cap="Eclipse-X: the room, in orbit" style="--c:#FF6FB6"><b>Nobody around me trades. No one checks my read.</b><span>You win alone, lose alone and second-guess alone.</span></button>
+        <button type="button" role="tab" data-for="learn" data-art="learn" data-cap="Five free guides, in the order you need them" style="--c:#35E08F"><b>I want in on futures without paying the market to teach me.</b><span>Learning by blowing up an account is the expensive way.</span></button>
+        <button type="button" role="tab" data-for="none" data-art="none" data-cap="An open seat" style="--c:#9A98A6"><b>None of these is my problem.</b><span>Fair. Tell us what is, and you will get a straight answer.</span></button>
       </div>
 
       <div>
         <article class="fit-answer" data-view="fit" data-id="news" style="--c:#FF2D95">
           <span class="tag">Korvus fits</span>
-          <h3>Korvus reads the wires overnight so you start the session already briefed.</h3>
+          <h3>Wake up already briefed. Korvus read the wires while you slept.</h3>
           <p>It reads newswires in Asia, London and New York around the clock, plus SEC filings the moment they are accepted. Every story is scored for impact and direction on index futures, with the key numbers pulled out and a line on why it matters.</p>
           <dl>
             <div><dt>Cost</dt><dd>Free, or $9.99 a month</dd></div>
@@ -109,7 +116,7 @@
 
         <article class="fit-answer" data-view="fit" data-id="levels" style="--c:#49D7FF" hidden>
           <span class="tag">LodeStone fits</span>
-          <h3>LodeStone puts the whole map on your chart the moment it loads.</h3>
+          <h3>Open the chart and trade. LodeStone already drew the map.</h3>
           <p>Session highs and lows, prior day and week, value, equilibrium, resting liquidity and SMT divergence, drawn automatically on index futures and cleaned up as price takes each level. You spend the open deciding, not drawing.</p>
           <dl>
             <div><dt>Cost</dt><dd>$149 once, or $19.99 a month</dd></div>
@@ -124,7 +131,7 @@
 
         <article class="fit-answer" data-view="fit" data-id="ai" style="--c:#FF2D95" hidden>
           <span class="tag">Crown fits</span>
-          <h3>Crown is an AI workspace where your work stays yours.</h3>
+          <h3>Hand Crown the real work. It stays yours.</h3>
           <p>Nothing you write or upload is sold, and nothing is used to train a model. The paid plan opens four rooms tuned for different kinds of thinking, plus projects, uploads and live web access. You can judge the output yourself on the free tier, with no card.</p>
           <dl>
             <div><dt>Cost</dt><dd>Free, or $49.99 a month</dd></div>
@@ -140,8 +147,8 @@
 
         <article class="fit-answer" data-view="fit" data-id="room" style="--c:#FF6FB6" hidden>
           <span class="tag">Eclipse-X fits</span>
-          <h3>Eclipse-X is a room of people watching the same tape you are.</h3>
-          <p>It is our free Discord community. Scored news posts around the clock, the market floor talks through every session, and the person who builds these tools answers questions in the open. Read as long as you like before you say anything.</p>
+          <h3>Get a second set of eyes before you click.</h3>
+          <p>Eclipse-X is our free Discord community: a room of people watching the same tape you are. Scored news posts around the clock, the market floor talks through every session, and the person who builds these tools answers questions in the open. Read as long as you like before you say anything.</p>
           <dl>
             <div><dt>Cost</dt><dd>Free</dd></div>
             <div><dt>Where it runs</dt><dd>Discord</dd></div>
@@ -156,7 +163,7 @@
 
         <article class="fit-answer" data-view="fit" data-id="learn" style="--c:#35E08F" hidden>
           <span class="tag">Start with the free guides</span>
-          <h3>Learn the basics first. It costs nothing, and nothing needs to be bought.</h3>
+          <h3>Learn it free first. Nothing here needs buying.</h3>
           <p>Korvus publishes plain-English guides on sessions, margin, tick value, rollover and what moves the indexes. A free Observer account then shows you scored news on real sessions, and Eclipse-X is a good place to ask the questions the guides raise.</p>
           <dl>
             <div><dt>Cost</dt><dd>Free</dd></div>
@@ -172,7 +179,7 @@
 
         <article class="fit-answer" data-view="fit" data-id="none" style="--c:#9A98A6" hidden>
           <span class="tag">We may not be the right fit</span>
-          <h3>We would rather tell you that than sell you something you will not use.</h3>
+          <h3>We would rather tell you no than sell you something you will not use.</h3>
           <p>We make four things: a market news terminal, a chart indicator for index futures, a private AI workspace and a free community. If what you need sits outside those, we probably cannot help today. If it sits close, tell us what you are trying to do and we will give you a straight answer.</p>
           <dl>
             <div><dt>Email</dt><dd>A real person replies</dd></div>
@@ -185,52 +192,97 @@
           </div>
         </article>
       </div>
+
+      <figure class="fit-art" data-art-zone aria-hidden="true">
+        <canvas data-art="korvus" data-art-follow="fit"></canvas>
+        <figcaption data-cap-for="fit">Korvus: three desks, read around the clock</figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<section class="sec" id="products">
-  <div class="wrap rail">
-    <header>
-      <h2>Four products. Each one stands on its own.</h2>
-      <p>None of them requires another. Use the one that solves your problem, or run them together.</p>
-    </header>
-    <div class="lineup">
-      <a href="/korvus.html" style="--c:#FF2D95">
-        <div><h3>Korvus</h3><div class="kind">Market intelligence terminal</div></div>
-        <p>Reads three news desks and SEC filings around the clock, and scores every story for index futures so you know what moved and why.</p>
-        <div class="cost">Free<span>or $9.99 a month</span></div>
-        <span class="go" aria-hidden="true"></span>
-      </a>
-      <a href="/lodestone.html" style="--c:#49D7FF">
-        <div><h3>LodeStone</h3><div class="kind">Chart indicator</div></div>
-        <p>Draws session levels, prior highs and lows, value, structure and SMT divergence on your futures chart, and keeps them current.</p>
-        <div class="cost">$149 once<span>or $19.99 a month</span></div>
-        <span class="go" aria-hidden="true"></span>
-      </a>
-      <a href="/intelligence.html" style="--c:#FF2D95">
-        <div><h3>Crown</h3><div class="kind">Private AI workspace</div></div>
-        <p>An AI workspace with four rooms for different kinds of thinking. Nothing you write is sold or used to train a model.</p>
-        <div class="cost">Free<span>or $49.99 a month</span></div>
-        <span class="go" aria-hidden="true"></span>
-      </a>
-      <a href="/eclipse-x.html" style="--c:#FF6FB6">
-        <div><h3>Eclipse-X</h3><div class="kind">Community on Discord</div></div>
-        <p>Live market talk through every session, scored news posting around the clock, and the desk answering questions in the open.</p>
-        <div class="cost">Free<span>open invite</span></div>
-        <span class="go" aria-hidden="true"></span>
-      </a>
+<section class="pin" id="products" data-pin>
+  <div class="pin-sticky">
+    <div class="wrap pin-head">
+      <div>
+        <h2>Four products. Each one stands on its own.</h2>
+        <p>Keep scrolling and they pass one at a time. Use the one that solves your problem, or run them together.</p>
+      </div>
+      <div class="pin-ctl">
+        <span class="pin-count" aria-live="polite">1 / 4</span>
+        <button class="arrow-btn prev" type="button" aria-label="Previous product"></button>
+        <button class="arrow-btn next" type="button" aria-label="Next product"></button>
+      </div>
     </div>
+    <div class="pin-track">
+      <article class="slide" style="--c:#FF2D95" data-art-zone>
+        <div class="slide-copy">
+          <span class="kind">Market intelligence terminal</span>
+          <h3>Korvus</h3>
+          <p class="pitch">Know why it moved before you trade it.</p>
+          <ul class="ticks"><li>Asia, London and New York wires, read around the clock</li><li>SEC filings scored the moment they are accepted</li><li>SMT divergence and the macro picture beside the news</li></ul>
+          <div class="foot">
+            <a class="btn primary" href="/korvus.html">See how Korvus works</a>
+            <span class="cost">Free, or $9.99 a month</span>
+          </div>
+        </div>
+        <div class="slide-art" aria-hidden="true"><canvas data-art="korvus"></canvas></div>
+      </article>
+      <article class="slide" style="--c:#49D7FF" data-art-zone>
+        <div class="slide-copy">
+          <span class="kind">Chart indicator</span>
+          <h3>LodeStone</h3>
+          <p class="pitch">Open your chart. The levels are already there.</p>
+          <ul class="ticks"><li>Session highs and lows, prior day and week</li><li>Value, equilibrium and resting liquidity</li><li>Each level clears once price takes it</li></ul>
+          <div class="foot">
+            <a class="btn primary" href="/lodestone.html">See it on a chart</a>
+            <span class="cost">$149 once, or $19.99 a month</span>
+          </div>
+        </div>
+        <div class="slide-art" aria-hidden="true"><canvas data-art="lodestone"></canvas></div>
+      </article>
+      <article class="slide" style="--c:#FF2D95" data-art-zone>
+        <div class="slide-copy">
+          <span class="kind">Private AI workspace</span>
+          <h3>Crown</h3>
+          <p class="pitch">An AI you can hand your real work to.</p>
+          <ul class="ticks"><li>Never sold, never used to train a model</li><li>Four rooms for four kinds of thinking</li><li>Free to start, with no card</li></ul>
+          <div class="foot">
+            <a class="btn primary" href="/intelligence.html">See how Crown works</a>
+            <span class="cost">Free, or $49.99 a month</span>
+          </div>
+        </div>
+        <div class="slide-art" aria-hidden="true"><canvas data-art="crown"></canvas></div>
+      </article>
+      <article class="slide" style="--c:#FF6FB6" data-art-zone>
+        <div class="slide-copy">
+          <span class="kind">Community on Discord</span>
+          <h3>Eclipse-X</h3>
+          <p class="pitch">A room watching the same tape you are.</p>
+          <ul class="ticks"><li>Scored news posting around the clock</li><li>The market floor talks through every session</li><li>The desk answers questions in the open</li></ul>
+          <div class="foot">
+            <a class="btn primary" href="/eclipse-x.html">See what is inside</a>
+            <span class="cost">Free, open invite</span>
+          </div>
+        </div>
+        <div class="slide-art" aria-hidden="true"><canvas data-art="eclipse"></canvas></div>
+      </article>
+    </div>
+    <div class="wrap"><div class="pin-bar" aria-hidden="true" style="margin-top:clamp(.9rem,2.2vh,1.6rem)"><i></i></div></div>
   </div>
 </section>
 
 <section class="sec" id="day">
   <div class="wrap">
-    <div class="stack" style="margin-bottom:2.2rem">
-      <h2>Where each tool earns its place in your day.</h2>
-      <p class="sub">The futures day starts at 6 PM New York time. Drag across it to see what is working for you at each hour.</p>
-    </div>
+    <header class="sec-head">
+      <h2>Something is working for you at every hour.</h2>
+      <p>The futures day starts at 6 PM New York time. Drag across it and see what is on your side at each point.</p>
+    </header>
     <div class="day">
+      <div class="day-sky" aria-hidden="true">
+        <svg viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0 100 Q250 -70 500 100"/><path d="M500 100 Q750 -70 1000 100"/></svg>
+        <span class="day-orb"></span>
+      </div>
       <div class="day-track" style="grid-template-columns:repeat(48,1fr)">
         <i style="grid-column:1/13;--c:#FF2D95" data-from="0" data-to="6" data-title="Korvus is reading the Asia desk." data-text="Nikkei Asia, CNBC Asia, the Bank of Japan and the other Asia wires are read and scored as they publish. You do not need to be awake for any of it." data-link="How Korvus scores a story" data-href="/korvus.html#demo">Asia session</i>
         <i style="grid-column:13/25;--c:#FF2D95" data-from="6" data-to="12" data-title="Korvus is reading London while you sleep." data-text="The London desk and the European central banks are covered through the night. On Operator, a high-impact story sends you an email, and everything else waits on your screen, already read." data-link="See the three desks" data-href="/korvus.html#get">London session</i>
@@ -246,8 +298,8 @@
         <div>
           <h3>Everything is live, and the floor is talking.</h3>
           <p></p>
-          <a class="link" href="/korvus.html">How Korvus scores a story</a>
         </div>
+        <a class="btn" href="/korvus.html">How Korvus scores a story</a>
       </div>
     </div>
   </div>
@@ -260,16 +312,17 @@
       <p>Four rules every BlackCrown product is held to.</p>
     </header>
     <div class="principles">
-      <div><h3>Built by the desk that uses it</h3><p>These tools come off a working trading and building desk. If something is in the product, it is because it earned its place in a real session.</p></div>
-      <div><h3>Information, never signals</h3><p>We tell you what happened, how much it matters and what to watch. We do not tell you to buy or sell, and we do not promise results.</p></div>
-      <div><h3>Your data stays yours</h3><p>Nothing you write, track or upload in a BlackCrown product is sold or used to train a model. That is the default, not a setting.</p></div>
-      <div><h3>Try it before you pay</h3><p>Korvus, Crown and Eclipse-X are free to start with no card. Paid plans cancel anytime, and LodeStone on Tradovate is a single purchase.</p></div>
+      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v11H3z"/><path d="M8 20h8M12 16v4"/><path d="M7 12l3-3 2.5 2L17 8"/></svg><h3>Built by the desk that uses it</h3><p>These tools come off a working trading and building desk. If something is in the product, it is because it earned its place in a real session.</p></div>
+      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><h3>Information, never signals</h3><p>We tell you what happened, how much it matters and what to watch. We do not tell you to buy or sell, and we do not promise results.</p></div>
+      <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><path d="M12 14.5v2.5"/></svg><h3>Your data stays yours</h3><p>Nothing you write, track or upload in a BlackCrown product is sold or used to train a model. That is the default, not a setting.</p></div>
+      <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5l9-2v18z"/><path d="M14 6h5v15h-5"/><path d="M10.5 12.5v.5"/></svg><h3>Try it before you pay</h3><p>Korvus, Crown and Eclipse-X are free to start with no card. Paid plans cancel anytime, and LodeStone on Tradovate is a single purchase.</p></div>
     </div>
   </div>
 </section>
 
 <section class="sec" id="company">
-  <div class="wrap rail">
+  <div class="wrap duo">
+    <div class="rail">
     <header>
       <h2>The company.</h2>
       <p>BlackCrown is a small, independent firm. One desk builds, runs and supports everything on this site.</p>
@@ -283,13 +336,10 @@
       <div><dt>Phone</dt><dd><a class="link" href="tel:+17032989426">(703) 298-9426</a>. If we miss you, leave a voicemail and we will call back.</dd></div>
       <div><dt>Community</dt><dd><a class="link" href="https://discord.gg/xmuSA5mMTN" target="_blank" rel="noopener">Eclipse-X on Discord</a>, where product questions are usually answered fastest</dd></div>
     </dl>
-  </div>
-</section>
-
-<section class="sec" id="questions">
-  <div class="wrap rail">
+    </div>
+    <div class="rail" id="questions">
     <header>
-      <h2>Questions.</h2>
+      <h2>Questions, answered straight.</h2>
       <p>Not answered here? <a class="link" href="/support.html">Ask the desk.</a></p>
     </header>
     <div class="faq">
@@ -318,6 +368,7 @@
         <p>The <a class="link" href="/support.html">support desk</a> routes billing, bugs and product questions to the right place. The product rooms in Eclipse-X usually answer fastest, and email reaches the desk directly at BlackCrownVxJ.LLC@outlook.com.</p>
       </details>
     </div>
+    </div>
   </div>
 </section>
 
@@ -335,6 +386,7 @@
 </section>
 
 </main>
+<div class="horizon" data-art-zone aria-hidden="true"><canvas class="skyline" data-art="skyline"></canvas></div>
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
@@ -382,7 +434,9 @@
   </div>
 </footer>
 <script src="/assets/bc3d.js" defer></script>
-<script src="/assets/crown3d.js?v=20261111" defer></script>
-<script src="/assets/site.js?v=20261111" defer></script>
+<script src="/assets/crown3d.js?v=20261111b" defer></script>
+<script src="/assets/space.js?v=20261111b" defer></script>
+<script src="/assets/site.js?v=20261111b" defer></script>
+<script src="/assets/art.js?v=20261111b" defer></script>
 </body>
 </html>

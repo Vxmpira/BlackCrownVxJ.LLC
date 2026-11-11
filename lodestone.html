@@ -22,9 +22,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=20261111">
+<link rel="stylesheet" href="/assets/site.css?v=20261111b">
 </head>
 <body data-product="lodestone" data-track="lodestone">
+<div class="space" aria-hidden="true"><canvas class="space-neb"></canvas><canvas class="space-stars"></canvas></div>
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"></div>
 <header class="site-head">
@@ -67,12 +68,15 @@
         <div><dt>Repainting</dt><dd>Never. Confirmed bars only.</dd></div>
       </dl>
     </div>
-    <div class="window" data-in style="--i:2">
+    <div class="art-behind" data-sun="0.6" data-art-zone data-in style="--i:2">
+      <canvas data-art="lodestone" data-bare aria-hidden="true"></canvas>
+      <div class="window" data-tilt>
       <div class="window-bar">
         <span class="dots"><i></i><i></i><i></i></span>
         <span class="grow">LodeStone on a futures chart</span>
       </div>
       <img src="/assets/lodestone-sessions.webp" width="1132" height="857" decoding="async" alt="LodeStone indicator on an index futures chart showing session highs and lows, prior day and week levels, value areas, equilibrium and SMT flags">
+    </div>
     </div>
   </div>
 </section>
@@ -133,7 +137,7 @@
       <h2>What it draws.</h2>
       <p>One indicator carries the whole framework, labeled at the right edge and kept current.</p>
     </header>
-    <div class="rows">
+    <div class="rows reel">
       <div><h3>Session highs and lows</h3><p>Completed Asia, London, NY AM and NY PM highs and lows, plus prior day and prior week. Each level runs past the live bar with its name at the line, so you always know which pool of liquidity you are looking at.</p></div>
       <div><h3>The dealing range</h3><p>Premium and discount, built from confirmed swing points, a completed session or the prior day, with an equilibrium line and subtle shading. One glance tells you which half of the range you are paying in.</p></div>
       <div><h3>Resting liquidity</h3><p>Relative equal highs and lows are marked where they form. Extra equal swings reinforce the existing line instead of stacking duplicates.</p></div>
@@ -309,6 +313,7 @@
 </section>
 
 </main>
+<div class="horizon" data-art-zone aria-hidden="true"><canvas class="skyline" data-art="skyline"></canvas></div>
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
@@ -355,6 +360,8 @@
     </div>
   </div>
 </footer>
-<script src="/assets/site.js?v=20261111" defer></script>
+<script src="/assets/space.js?v=20261111b" defer></script>
+<script src="/assets/site.js?v=20261111b" defer></script>
+<script src="/assets/art.js?v=20261111b" defer></script>
 </body>
 </html>

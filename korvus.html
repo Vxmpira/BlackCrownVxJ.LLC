@@ -22,9 +22,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=20261111">
+<link rel="stylesheet" href="/assets/site.css?v=20261111b">
 </head>
 <body data-product="korvus" data-track="korvus">
+<div class="space" aria-hidden="true"><canvas class="space-neb"></canvas><canvas class="space-stars"></canvas></div>
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"></div>
 <header class="site-head">
@@ -51,26 +52,28 @@
 <main id="main">
 
 <section class="hero">
-  <div class="hero-wash" aria-hidden="true"></div>
-  <div class="wrap">
-    <a class="crumb" href="/#products" data-in style="--i:0">All products</a>
-    <div class="hero-wide">
+  <div class="wrap hero-grid">
+    <div>
+      <a class="crumb" href="/#products" data-in style="--i:0">All products</a>
       <h1 data-in style="--i:1">Your edge while the world sleeps.</h1>
-      <div data-in style="--i:2">
-        <p class="lead">Korvus is a market terminal for index futures traders. It reads the newswires in Asia, London and New York around the clock, and SEC filings the moment they are accepted, then scores each one and tells you in plain English why it matters.</p>
-        <div class="btn-row">
+      <p class="lead" data-in style="--i:2">Korvus is a market terminal for index futures traders. It reads the newswires in Asia, London and New York around the clock, and SEC filings the moment they are accepted, then scores each one and tells you in plain English why it matters.</p>
+      <div class="btn-row" data-in style="--i:3">
           <a class="btn primary" href="https://korvus.industries?utm_source=blackcrownvxj&utm_medium=site&utm_campaign=house&utm_content=korvus" target="_blank" rel="noopener">Open a free account</a>
           <a class="btn" href="#demo">Try the feed</a>
         </div>
-      </div>
     </div>
-    <div class="window hero-shot" data-in style="--i:3">
+    <div class="art-stage" data-sun="0.36" data-art-zone data-in style="--i:2" aria-hidden="true"><canvas data-art="korvus" data-bare></canvas></div>
+  </div>
+  <div class="wrap">
+    <div data-in style="--i:4">
+      <div class="window hero-shot" data-tilt>
       <div class="window-bar">
         <span class="dots"><i></i><i></i><i></i></span>
         <span class="grow">korvus.industries / terminal</span>
         <span class="sample">Shown with sample data</span>
       </div>
       <img src="/assets/korvus-terminal-dark.webp" width="1600" height="870" decoding="async" alt="The Korvus terminal during a US session: futures board, macro confluence, session map with live levels, scored news with desk badges and key numbers, SMT divergence and the funds watchlist">
+      </div>
     </div>
     <dl class="facts across" data-in style="--i:4">
       <div><dt>Price</dt><dd>Free, or $9.99 a month</dd></div>
@@ -168,7 +171,7 @@
       <h2>What you get.</h2>
       <p>Four tools share one terminal. Everything marked Operator is part of the paid plan; the rest is free.</p>
     </header>
-    <div class="rows">
+    <div class="rows reel">
       <div><h3>Scored news from three desks</h3><p>Asia, London and New York are read around the clock across a 59-instrument universe. Each card carries a clean title, the key numbers, why it matters and a badge for the desk it came from.</p></div>
       <div><h3>SEC filings at the source</h3><p>Korvus checks EDGAR every 20 seconds for 8-K and 6-K filings from the Nasdaq and S&amp;P heavyweights and reads the release itself, often ahead of the headlines. Operators see it at once, Observers about 15 minutes later.</p></div>
       <div><h3>Impact, direction and confidence</h3><p>Every item is rated high, medium or low impact and tagged bullish, bearish or neutral with a confidence read, so you see what it means before you read a word of the story.</p></div>
@@ -370,6 +373,7 @@
 </section>
 
 </main>
+<div class="horizon" data-art-zone aria-hidden="true"><canvas class="skyline" data-art="skyline"></canvas></div>
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
@@ -416,6 +420,8 @@
     </div>
   </div>
 </footer>
-<script src="/assets/site.js?v=20261111" defer></script>
+<script src="/assets/space.js?v=20261111b" defer></script>
+<script src="/assets/site.js?v=20261111b" defer></script>
+<script src="/assets/art.js?v=20261111b" defer></script>
 </body>
 </html>

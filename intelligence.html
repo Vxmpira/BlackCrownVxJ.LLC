@@ -22,9 +22,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=20261111">
+<link rel="stylesheet" href="/assets/site.css?v=20261111b">
 </head>
 <body data-product="crown" data-track="intelligence">
+<div class="space" aria-hidden="true"><canvas class="space-neb"></canvas><canvas class="space-stars"></canvas></div>
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"></div>
 <header class="site-head">
@@ -67,7 +68,9 @@
         <div><dt>To start</dt><dd>No card</dd></div>
       </dl>
     </div>
-    <div class="window" id="demo" data-in style="--i:2">
+    <div class="art-behind" data-sun="0.6" data-art-zone data-in style="--i:2">
+      <canvas data-art="crown" data-bare aria-hidden="true"></canvas>
+      <div class="window" id="demo">
       <div class="window-bar">
         <span class="dots"><i></i><i></i><i></i></span>
         <span class="grow">The four rooms, on Crowned</span>
@@ -103,6 +106,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -148,7 +152,7 @@
       <h2>What you get.</h2>
       <p>Everything marked Crowned is part of the paid plan. The rest is free.</p>
     </header>
-    <div class="rows">
+    <div class="rows reel">
       <div><h3>Private by design</h3><p>Nothing you write is sold and nothing is used to train a model. What happens in Crown stays in Crown.</p></div>
       <div><h3>The Crown console</h3><p>Your private everyday AI, with a real monthly allowance that refreshes every 30 days. The free tier is the full console, not a demo with the good parts removed.</p></div>
       <div><h3>Streaming replies and saved chats</h3><p>Answers appear as they are written, and your conversations are there when you come back.</p></div>
@@ -317,6 +321,7 @@
 </section>
 
 </main>
+<div class="horizon" data-art-zone aria-hidden="true"><canvas class="skyline" data-art="skyline"></canvas></div>
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
@@ -363,6 +368,8 @@
     </div>
   </div>
 </footer>
-<script src="/assets/site.js?v=20261111" defer></script>
+<script src="/assets/space.js?v=20261111b" defer></script>
+<script src="/assets/site.js?v=20261111b" defer></script>
+<script src="/assets/art.js?v=20261111b" defer></script>
 </body>
 </html>
