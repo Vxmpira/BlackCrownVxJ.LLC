@@ -28,8 +28,8 @@
   var camera = new THREE.PerspectiveCamera(36, w / h, 0.1, 100);
   camera.position.set(0, 0, 11);
   scene.add(new THREE.AmbientLight(0x241019, 1.2));
-  var key = new THREE.PointLight(PINK, 46, 60); key.position.set(6, 8, 9); scene.add(key);
-  var fill = new THREE.PointLight(0xff6fb6, 16, 60); fill.position.set(-8, -4, 6); scene.add(fill);
+  var key = new THREE.PointLight(PINK, 30, 60); key.position.set(6, 8, 9); scene.add(key);
+  var fill = new THREE.PointLight(0xff6fb6, 9, 60); fill.position.set(-8, -4, 6); scene.add(fill);
   var rim = new THREE.DirectionalLight(0xffffff, 0.6); rim.position.set(0, 2, -6); scene.add(rim);
 
   var crown = new THREE.Group();
@@ -44,7 +44,7 @@
   geo.computeBoundingBox();
   var size = new THREE.Vector3(); geo.boundingBox.getSize(size);
   var fit = 2.85 / Math.max(size.x, size.y);
-  var faceMat = new THREE.MeshStandardMaterial({ color: 0x0b0b10, metalness: 0.7, roughness: 0.34, emissive: PINK, emissiveIntensity: 0.22, transparent: true });
+  var faceMat = new THREE.MeshStandardMaterial({ color: 0x0b0b10, metalness: 0.7, roughness: 0.34, emissive: PINK, emissiveIntensity: 0.15, transparent: true });
   var edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 22), new THREE.LineBasicMaterial({ color: PINK, transparent: true }));
   crown.add(new THREE.Mesh(geo, faceMat));
   crown.add(edges);
@@ -53,8 +53,8 @@
   // the four products, in orbit
   var orbit = new THREE.Group();
   scene.add(orbit);
-  var sats = [0xff2d95, 0x49d7ff, 0xffe3f1, 0xff6fb6].map(function (c, i) {
-    var m = new THREE.Mesh(new THREE.SphereGeometry(0.13, 20, 14), new THREE.MeshBasicMaterial({ color: c }));
+  var sats = [0xd92680, 0x3eb7d9, 0xd9c1cd, 0xd95e9b].map(function (c, i) {
+    var m = new THREE.Mesh(new THREE.SphereGeometry(0.105, 20, 14), new THREE.MeshBasicMaterial({ color: c }));
     var a = (i / 4) * Math.PI * 2;
     m.position.set(Math.cos(a) * ORBIT_R, 0, Math.sin(a) * ORBIT_R);
     m.userData.a = a;
@@ -85,7 +85,7 @@
 
   var composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
-  var bloom = new UnrealBloomPass(new THREE.Vector2(w, h), 0.95, 0.6, 0.06);
+  var bloom = new UnrealBloomPass(new THREE.Vector2(w, h), 0.6, 0.55, 0.1);
   composer.addPass(bloom);
   // last pass: turn brightness into transparency, so the glow lies over the
   // eclipse behind the canvas instead of sitting in a black square

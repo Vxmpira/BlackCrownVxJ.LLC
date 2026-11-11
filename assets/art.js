@@ -22,7 +22,7 @@
   function core(c, cx, cy, r, col, bare) {
     if (!bare) {
       var g = c.createRadialGradient(cx, cy, r * 0.97, cx, cy, r * 2.2);
-      g.addColorStop(0, rgba(col, 0.6)); g.addColorStop(0.1, rgba(col, 0.24)); g.addColorStop(0.45, rgba(col, 0.07)); g.addColorStop(1, rgba(col, 0));
+      g.addColorStop(0, rgba(col, 0.42)); g.addColorStop(0.1, rgba(col, 0.16)); g.addColorStop(0.45, rgba(col, 0.05)); g.addColorStop(1, rgba(col, 0));
       c.fillStyle = g; c.beginPath(); c.arc(cx, cy, r * 2.2, 0, TAU); c.fill();
     }
     c.fillStyle = '#030106'; c.beginPath(); c.arc(cx, cy, r, 0, TAU); c.fill();
